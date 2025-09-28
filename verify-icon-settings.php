@@ -62,7 +62,7 @@ class Andw_Icon_Settings_Verifier {
 
         foreach ($button_types as $button_type) {
             echo '<div style="margin: 10px 0; border: 1px solid #555; padding: 10px;">';
-            echo '<strong>' . $button_type . ':</strong><br>';
+            echo '<strong>' . esc_html($button_type) . ':</strong><br>';
 
             $custom_icon = isset($fontawesome_icons[$button_type]) ? $fontawesome_icons[$button_type] : '';
 
@@ -72,7 +72,7 @@ class Andw_Icon_Settings_Verifier {
                 if (class_exists('Andw_FontAwesome_Icons')) {
                     $icon_html = Andw_FontAwesome_Icons::get_button_icon($button_type, $custom_icon);
                     echo '処理結果: ' . esc_html($icon_html) . '<br>';
-                    echo 'プレビュー: ' . $icon_html;
+                    echo 'プレビュー: ' . wp_kses_post($icon_html);
                 } else {
                     echo 'FontAwesome アイコンクラスが読み込まれていません';
                 }
@@ -81,7 +81,7 @@ class Andw_Icon_Settings_Verifier {
 
                 if (class_exists('Andw_FontAwesome_Icons')) {
                     $default_icon_html = Andw_FontAwesome_Icons::get_button_icon($button_type, '');
-                    echo 'デフォルトアイコン: ' . $default_icon_html;
+                    echo 'デフォルトアイコン: ' . wp_kses_post($default_icon_html);
                 }
             }
             echo '</div>';
