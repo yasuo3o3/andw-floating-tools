@@ -10,7 +10,6 @@
         lastFocusedElement: null,
         displayMode: 'anchor-sheet',
         sheetSettings: {},
-        initialState: 'closed',
 
         init: function() {
             if (this.initialized) return;
@@ -27,7 +26,6 @@
             if (window.andwFloatingTools) {
                 this.displayMode = window.andwFloatingTools.tocDisplayMode || 'anchor-sheet';
                 this.sheetSettings = window.andwFloatingTools.sheetSettings || {};
-                this.initialState = window.andwFloatingTools.initialState || 'closed';
             }
         },
 
@@ -139,10 +137,6 @@
                 backdrop.addEventListener('click', function() { self.closeTOC(); });
             }
 
-            // 初期状態の設定
-            if (this.initialState === 'peek') {
-                this.setPeekState();
-            }
 
             // リサイズイベント
             window.addEventListener('resize', function() { self.updateAnchorPosition(); });
@@ -218,9 +212,6 @@
 
             if (this.displayMode === 'anchor-sheet') {
                 document.body.classList.remove('andw-toc-sheet-open');
-                if (this.initialState === 'peek') {
-                    this.setPeekState();
-                }
             } else {
                 document.body.classList.remove('andw-toc-drawer-open');
             }
@@ -327,13 +318,6 @@
             );
         },
 
-        setPeekState: function() {
-            if (!this.tocAnchorSheet) return;
-
-            this.tocAnchorSheet.setAttribute('aria-hidden', 'false');
-            this.tocAnchorSheet.classList.add('andw-toc-peek');
-            this.updateAnchorPosition();
-        },
 
         updateAnchorPosition: function() {
             if (!this.tocAnchorSheet || !this.tocToggleButton) return;

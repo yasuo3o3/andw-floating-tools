@@ -412,7 +412,6 @@ class Andw_Floating_Tools_Render {
             $l10n['hasToc'] = $this->toc_instance->has_toc();
             $l10n['tocDisplayMode'] = $this->get_toc_display_mode();
             $l10n['sheetSettings'] = $this->get_sheet_settings();
-            $l10n['initialState'] = $this->get_initial_state();
 
             return $l10n;
         }
@@ -420,7 +419,4 @@ class Andw_Floating_Tools_Render {
         return $l10n;
     }
 
-    private function get_initial_state() {
-        return isset($this->options['initial_state']) ? $this->options['initial_state'] : 'closed';
-    }
 }

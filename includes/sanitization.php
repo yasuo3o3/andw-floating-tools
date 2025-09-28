@@ -119,10 +119,6 @@ function andw_sanitize_anchor_offset_y($value) {
     return min(max($offset, 0), 50);
 }
 
-function andw_sanitize_initial_state($value) {
-    $allowed_states = array('peek', 'closed');
-    return in_array($value, $allowed_states, true) ? $value : 'closed';
-}
 
 function andw_sanitize_svg_path($value) {
     // SVGコンテンツの基本的なサニタイゼーション

@@ -347,9 +347,6 @@
     transform: translateY(0);
 }
 
-.andw-toc-anchor-sheet.andw-toc-peek .andw-toc-sheet-content {
-    transform: translateY(calc(100% - 32px));
-}
 
 .andw-toc-sheet-content .andw-toc-header {
     display: flex;

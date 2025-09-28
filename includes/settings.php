@@ -565,7 +565,6 @@ class Andw_Floating_Tools_Settings {
         $gap_right = isset($options['gap_right']) ? $options['gap_right'] : 12;
         $gap_left = isset($options['gap_left']) ? $options['gap_left'] : 16;
         $anchor_offset_y = isset($options['anchor_offset_y']) ? $options['anchor_offset_y'] : 8;
-        $initial_state = isset($options['initial_state']) ? $options['initial_state'] : 'closed';
 
         echo '<table class="form-table" style="margin: 0;">';
         echo '<tr><th>' . esc_html__('最大幅', 'andw-floating-tools') . '</th><td><input type="number" name="' . esc_attr($this->option_name) . '[sheet_max_width]" value="' . esc_attr($sheet_max_width) . '" min="200" max="800" style="width: 80px;"> px</td></tr>';
@@ -573,10 +572,6 @@ class Andw_Floating_Tools_Settings {
         echo '<tr><th>' . esc_html__('右余白', 'andw-floating-tools') . '</th><td><input type="number" name="' . esc_attr($this->option_name) . '[gap_right]" value="' . esc_attr($gap_right) . '" min="0" max="100" style="width: 80px;"> px</td></tr>';
         echo '<tr><th>' . esc_html__('左余白', 'andw-floating-tools') . '</th><td><input type="number" name="' . esc_attr($this->option_name) . '[gap_left]" value="' . esc_attr($gap_left) . '" min="0" max="100" style="width: 80px;"> px</td></tr>';
         echo '<tr><th>' . esc_html__('ボタン間隔', 'andw-floating-tools') . '</th><td><input type="number" name="' . esc_attr($this->option_name) . '[anchor_offset_y]" value="' . esc_attr($anchor_offset_y) . '" min="0" max="50" style="width: 80px;"> px</td></tr>';
-        echo '<tr><th>' . esc_html__('初期状態', 'andw-floating-tools') . '</th><td>';
-        echo '<label><input type="radio" name="' . esc_attr($this->option_name) . '[initial_state]" value="closed"' . ($initial_state === 'closed' ? ' checked' : '') . '> ' . esc_html__('閉じた状態', 'andw-floating-tools') . '</label>&nbsp;&nbsp;';
-        echo '<label><input type="radio" name="' . esc_attr($this->option_name) . '[initial_state]" value="peek"' . ($initial_state === 'peek' ? ' checked' : '') . '> ' . esc_html__('ピーク状態（少し見える）', 'andw-floating-tools') . '</label>';
-        echo '</td></tr>';
         echo '</table>';
         echo '<p class="description">' . esc_html__('目次がボタン直上に表示されるアンカーシートモードの詳細設定です。幅や高さを調整できます。', 'andw-floating-tools') . '</p>';
     }
@@ -763,10 +758,6 @@ class Andw_Floating_Tools_Settings {
 
         if (isset($input['anchor_offset_y'])) {
             $sanitized['anchor_offset_y'] = andw_sanitize_anchor_offset_y($input['anchor_offset_y']);
-        }
-
-        if (isset($input['initial_state'])) {
-            $sanitized['initial_state'] = andw_sanitize_initial_state($input['initial_state']);
         }
 
 
