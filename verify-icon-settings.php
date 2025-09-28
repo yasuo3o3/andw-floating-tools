@@ -25,7 +25,7 @@ class Andw_Icon_Settings_Verifier {
 
         echo '<h4 style="margin: 10px 0 5px 0; color: #ff0;">全設定:</h4>';
         echo '<pre style="background: #222; padding: 10px; margin: 5px 0; border: 1px solid #555; max-height: 150px; overflow-y: auto;">';
-        echo esc_html(print_r($options, true));
+        echo esc_html(wp_json_encode($options, JSON_PRETTY_PRINT));
         echo '</pre>';
 
         // FontAwesome アイコン設定の確認
@@ -35,7 +35,7 @@ class Andw_Icon_Settings_Verifier {
         if (empty($fontawesome_icons)) {
             echo 'FontAwesome アイコンが設定されていません';
         } else {
-            echo esc_html(print_r($fontawesome_icons, true));
+            echo esc_html(wp_json_encode($fontawesome_icons, JSON_PRETTY_PRINT));
         }
         echo '</pre>';
 
