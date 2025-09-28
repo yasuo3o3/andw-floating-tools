@@ -301,7 +301,7 @@ class Andw_Floating_Tools_Settings {
     }
 
     public function render_toc_section() {
-        echo '<p>' . esc_html__('目次機能の設定を行います。', 'andw-floating-tools') . '</p>';
+        echo '<p>' . esc_html__('目次機能の設定を行います。デフォルトでアンカーシート（画面下部に表示）モードになっています。', 'andw-floating-tools') . '</p>';
     }
 
     public function render_cta_section() {
@@ -314,7 +314,7 @@ class Andw_Floating_Tools_Settings {
         echo '<a href="https://feathericons.com/" target="_blank">Feather Icons</a>, ';
         echo '<a href="https://tabler-icons.io/" target="_blank">Tabler Icons</a>, ';
         echo '<a href="https://lucide.dev/" target="_blank">Lucide</a>';
-        echo '<br>' . esc_html__('SVGタグの中身（&lt;path&gt;、&lt;circle&gt;等のタグ）をそのまま貼り付けてください。', 'andw-floating-tools') . '</p>';
+        echo '<br>' . esc_html__('SVGコード全体、またはSVGタグの中身だけ、どちらでも貼り付けできます。', 'andw-floating-tools') . '</p>';
     }
 
     public function render_custom_svg_field($args) {
@@ -325,10 +325,10 @@ class Andw_Floating_Tools_Settings {
 
         echo '<textarea name="' . esc_attr($this->option_name) . '[custom_svg_paths][' . esc_attr($button_type) . ']" ';
         echo 'rows="4" cols="80" class="regular-text" ';
-        echo 'placeholder="例: <path d=&quot;m15 11-1 9&quot;/><path d=&quot;m19 11-4-7&quot;/><path d=&quot;M2 11h20&quot;/>">';
+        echo 'placeholder="例: <svg ...><path d=&quot;...&quot;/></svg> または <path d=&quot;...&quot;/>">';
         echo esc_textarea($value);
         echo '</textarea>';
-        echo '<p class="description">' . esc_html__('空の場合はデフォルトアイコンを使用します。複数のpath、circle、rect等のタグをそのまま貼り付けできます。', 'andw-floating-tools') . '</p>';
+        echo '<p class="description">' . esc_html__('空の場合はデフォルトアイコンを使用します。SVGコード全体またはタグの中身だけ、どちらでも貼り付けできます。', 'andw-floating-tools') . '</p>';
     }
 
     public function render_utm_section() {
@@ -451,7 +451,7 @@ class Andw_Floating_Tools_Settings {
     public function render_sheet_settings_fields() {
         $options = get_option($this->option_name, array());
         $sheet_max_width = isset($options['sheet_max_width']) ? $options['sheet_max_width'] : 480;
-        $max_height_vh = isset($options['max_height_vh']) ? $options['max_height_vh'] : 80;
+        $max_height_vh = isset($options['max_height_vh']) ? $options['max_height_vh'] : 33;
         $gap_right = isset($options['gap_right']) ? $options['gap_right'] : 12;
         $gap_left = isset($options['gap_left']) ? $options['gap_left'] : 16;
         $anchor_offset_y = isset($options['anchor_offset_y']) ? $options['anchor_offset_y'] : 8;
@@ -459,7 +459,7 @@ class Andw_Floating_Tools_Settings {
 
         echo '<table class="form-table" style="margin: 0;">';
         echo '<tr><th>' . esc_html__('最大幅', 'andw-floating-tools') . '</th><td><input type="number" name="' . esc_attr($this->option_name) . '[sheet_max_width]" value="' . esc_attr($sheet_max_width) . '" min="200" max="800" style="width: 80px;"> px</td></tr>';
-        echo '<tr><th>' . esc_html__('最大高さ', 'andw-floating-tools') . '</th><td><input type="number" name="' . esc_attr($this->option_name) . '[max_height_vh]" value="' . esc_attr($max_height_vh) . '" min="20" max="100" style="width: 80px;"> vh</td></tr>';
+        echo '<tr><th>' . esc_html__('最大高さ', 'andw-floating-tools') . '</th><td><input type="number" name="' . esc_attr($this->option_name) . '[max_height_vh]" value="' . esc_attr($max_height_vh) . '" min="20" max="100" style="width: 80px;"> vh<br><small>' . esc_html__('画面の高さに対する割合（33vh = 画面の約3分の1）', 'andw-floating-tools') . '</small></td></tr>';
         echo '<tr><th>' . esc_html__('右余白', 'andw-floating-tools') . '</th><td><input type="number" name="' . esc_attr($this->option_name) . '[gap_right]" value="' . esc_attr($gap_right) . '" min="0" max="100" style="width: 80px;"> px</td></tr>';
         echo '<tr><th>' . esc_html__('左余白', 'andw-floating-tools') . '</th><td><input type="number" name="' . esc_attr($this->option_name) . '[gap_left]" value="' . esc_attr($gap_left) . '" min="0" max="100" style="width: 80px;"> px</td></tr>';
         echo '<tr><th>' . esc_html__('ボタン間隔', 'andw-floating-tools') . '</th><td><input type="number" name="' . esc_attr($this->option_name) . '[anchor_offset_y]" value="' . esc_attr($anchor_offset_y) . '" min="0" max="50" style="width: 80px;"> px</td></tr>';
@@ -468,7 +468,7 @@ class Andw_Floating_Tools_Settings {
         echo '<label><input type="radio" name="' . esc_attr($this->option_name) . '[initial_state]" value="peek"' . ($initial_state === 'peek' ? ' checked' : '') . '> ' . esc_html__('ピーク状態（少し見える）', 'andw-floating-tools') . '</label>';
         echo '</td></tr>';
         echo '</table>';
-        echo '<p class="description">' . esc_html__('アンカーシートモード時の詳細設定です。', 'andw-floating-tools') . '</p>';
+        echo '<p class="description">' . esc_html__('目次がボタン直上に表示されるアンカーシートモードの詳細設定です。幅や高さを調整できます。', 'andw-floating-tools') . '</p>';
     }
 
     public function render_apply_fields() {

@@ -257,11 +257,24 @@ class Andw_Floating_Tools_Render {
         // カスタムSVGパスが設定されている場合は優先使用
         $custom_svg_paths = isset($this->options['custom_svg_paths']) ? $this->options['custom_svg_paths'] : array();
         if (!empty($custom_svg_paths[$button_type])) {
-            // SVGタグ内の内容をそのまま使用（pathタグ、circle、rect等すべて対応）
-            return sprintf(
-                '<svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">%s</svg>',
-                $custom_svg_paths[$button_type]
-            );
+            $svg_content = trim($custom_svg_paths[$button_type]);
+
+            // SVGタグ全体が含まれている場合は、統一した属性に置換
+            if (strpos($svg_content, '<svg') !== false) {
+                // 既存のSVGタグの属性を統一した属性に置換
+                $svg_content = preg_replace(
+                    '/<svg[^>]*>/i',
+                    '<svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">',
+                    $svg_content
+                );
+                return $svg_content;
+            } else {
+                // SVGタグの中身だけの場合は従来通り
+                return sprintf(
+                    '<svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">%s</svg>',
+                    $svg_content
+                );
+            }
         }
 
         // 設定からアイコン名を取得

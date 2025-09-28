@@ -135,8 +135,8 @@ function andw_sanitize_svg_path($value) {
     $value = preg_replace('/on\w+\s*=\s*["\'].*?["\']/i', '', $value);
     $value = preg_replace('/javascript\s*:/i', '', $value);
 
-    // 許可するSVGタグのみを通す
-    $allowed_tags = '<path><circle><rect><line><polygon><polyline><ellipse><g><defs><use><clipPath><mask>';
+    // 許可するSVGタグのみを通す（svg要素も含める）
+    $allowed_tags = '<svg><path><circle><rect><line><polygon><polyline><ellipse><g><defs><use><clipPath><mask>';
     $value = strip_tags($value, $allowed_tags);
 
     return trim($value);

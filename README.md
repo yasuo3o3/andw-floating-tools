@@ -62,33 +62,37 @@ andW Floating Toolsは、Webサイトのユーザビリティを向上させる4
 
 ### ボタンのアイコンを変更する
 
-ボタンのアイコンは `includes/render.php` の `get_svg_icons()` メソッドで定義されています。
+ボタンのアイコンは管理画面から簡単に変更できます。
 
-```php
-// includes/render.php 259行目付近
-private function get_svg_icons() {
-    return array(
-        'apply' => '<svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="新しいアイコンのpath"/></svg>',
-        // 他のアイコン...
-    );
-}
+#### 管理画面での設定
+
+1. WordPress管理画面 → **設定** → **Floating Tools**
+2. **アイコン設定** セクション
+3. 各ボタンの **SVGパス** フィールドに好きなアイコンを貼り付け
+4. 保存
+
+#### おすすめアイコンサイト
+
+- **[Heroicons](https://heroicons.com/)** - 無料、シンプル、綺麗
+- **[Feather Icons](https://feathericons.com/)** - 軽量で統一感がある
+- **[Tabler Icons](https://tabler-icons.io/)** - 大量の無料アイコン
+- **[Lucide](https://lucide.dev/)** - 高品質
+
+#### 使用方法
+
+**2つの方法で貼り付け可能：**
+
+1. **SVGコード全体をそのまま貼り付け（推奨）**
+```xml
+<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m15 11-1 9"/><path d="m19 11-4-7"/><path d="M2 11h20"/></svg>
 ```
 
-#### アイコンの例
-
-```php
-// フォームアイコン
-'apply' => '<svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8l-6-6zM16 18H8v-2h8v2zm0-4H8v-2h8v2zm0-4H8V8h8v2z"/></svg>',
-
-// ドキュメントアイコン
-'apply' => '<svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8l-6-6zM14 8V4l4 4h-4z"/></svg>',
-
-// プラスアイコン
-'apply' => '<svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true" stroke="currentColor" stroke-width="2"><path d="M12 4v8m0 0v8m0-8h8m-8 0H4"/></svg>',
-
-// チェックアイコン
-'apply' => '<svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true" stroke="currentColor" stroke-width="2"><path d="M5 13l4 4L19 7"/></svg>',
+2. **SVGタグの中身だけ**
+```xml
+<path d="m15 11-1 9"/><path d="m19 11-4-7"/><path d="M2 11h20"/>
 ```
+
+どちらでも自動で正しく処理されます。
 
 ### ボタンの色を変更する
 

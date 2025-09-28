@@ -135,6 +135,25 @@ andW Floating Toolsは、Webサイトのユーザビリティを向上させる4
 2. サイドバーで詳細設定を行う
 3. 空の項目はサイト既定設定を使用
 
+= アイコンのカスタマイズ =
+
+各ボタンのアイコンは管理画面から簡単に変更できます。
+
+**設定方法:**
+1. 管理画面「設定」→「Floating Tools」
+2. 「アイコン設定」セクション
+3. SVGコードを貼り付けて保存
+
+**おすすめアイコンサイト:**
+* Heroicons (https://heroicons.com/)
+* Feather Icons (https://feathericons.com/)
+* Tabler Icons (https://tabler-icons.io/)
+* Lucide (https://lucide.dev/)
+
+**使用方法:**
+SVGコード全体またはタグの中身だけ、どちらでも貼り付けできます。
+自動で適切な属性に変換されて表示されます。
+
 == 技術仕様 ==
 
 * WordPress 6.3以上
