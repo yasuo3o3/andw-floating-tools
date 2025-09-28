@@ -122,16 +122,9 @@ function andw_sanitize_anchor_offset_y($value) {
 
 function andw_sanitize_svg_path($value) {
     // SVGコンテンツの基本的なサニタイゼーション
-    if (defined('WP_DEBUG') && WP_DEBUG) {
-        error_log("ANDW Sanitize Debug - Input: '" . $value . "'");
-        error_log("ANDW Sanitize Debug - Input length: " . strlen($value));
-        error_log("ANDW Sanitize Debug - Input empty check: " . (empty($value) ? 'EMPTY' : 'NOT EMPTY'));
-    }
+    // 開発時は apply_filters で外部ロガーを利用
 
     if (empty($value)) {
-        if (defined('WP_DEBUG') && WP_DEBUG) {
-            error_log("ANDW Sanitize Debug - Returning empty due to empty input");
-        }
         return '';
     }
 
@@ -148,12 +141,6 @@ function andw_sanitize_svg_path($value) {
 
     $result = trim($value);
 
-    if (defined('WP_DEBUG') && WP_DEBUG) {
-        error_log("ANDW Sanitize Debug - After processing: '" . $result . "'");
-        error_log("ANDW Sanitize Debug - Result length: " . strlen($result));
-        error_log("ANDW Sanitize Debug - Result empty check: " . (empty($result) ? 'EMPTY' : 'NOT EMPTY'));
-        error_log("ANDW Sanitize Debug - Value changed: " . ($original_value !== $result ? 'YES' : 'NO'));
-    }
 
     return $result;
 }
