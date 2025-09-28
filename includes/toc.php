@@ -245,7 +245,6 @@ class Andw_Floating_Tools_TOC {
         }
 
         $html = '<nav class="andw-toc-nav" aria-label="' . esc_attr__('目次', 'andw-floating-tools') . '">';
-        $html .= '<div class="andw-toc-title">' . esc_html__('目次', 'andw-floating-tools') . '</div>';
         $html .= $this->render_toc_list($this->toc_data);
         $html .= '</nav>';
 
