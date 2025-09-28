@@ -52,21 +52,19 @@ class Andw_Floating_Tools_TOC {
             return false;
         }
 
-        // 目次ボタンが有効設定されている場合のみコンテンツを処理
-        // ただし、見出しがない場合でも目次ボタン自体は表示される
+        // ブロック設定優先・メイン設定フォールバックで目次の有効性をチェック
+        $block_attributes = $this->get_block_attributes();
+
+        if (isset($block_attributes['enabled'])) {
+            // ブロック設定がある場合：ブロック設定の目次有効性をチェック
+            return in_array('toc', $block_attributes['enabled'], true);
+        }
+
+        // ブロック設定がない場合：メイン設定の目次有効性をチェック
         $options = get_option('andw_floating_tools_options', array());
         $enabled_buttons = isset($options['enabled_buttons']) ? $options['enabled_buttons'] : array();
 
-        if (!in_array('toc', $enabled_buttons, true)) {
-            return false;
-        }
-
-        $block_attributes = $this->get_block_attributes();
-        if (isset($block_attributes['enabled']) && !in_array('toc', $block_attributes['enabled'], true)) {
-            return false;
-        }
-
-        return true;
+        return in_array('toc', $enabled_buttons, true);
     }
 
     private function get_toc_depth() {
