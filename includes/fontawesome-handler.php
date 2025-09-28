@@ -41,9 +41,6 @@ class Andw_FontAwesome_Handler {
                     $this->fa_source = $handle;
                     $this->fa_version = $this->extract_version($style->src);
 
-                    if (defined('WP_DEBUG') && WP_DEBUG) {
-                        error_log("ANDW FontAwesome Debug - Detected existing FontAwesome: {$handle} (version: {$this->fa_version})");
-                    }
                     break;
                 }
             }
@@ -74,9 +71,6 @@ class Andw_FontAwesome_Handler {
                 $this->fa_source = 'plugin-' . dirname($plugin_file);
                 $this->fa_version = 'plugin';
 
-                if (defined('WP_DEBUG') && WP_DEBUG) {
-                    error_log("ANDW FontAwesome Debug - Detected FontAwesome plugin: {$plugin_name}");
-                }
                 break;
             }
         }
@@ -105,9 +99,6 @@ class Andw_FontAwesome_Handler {
                 $this->fa_detected = true;
                 $this->fa_source = 'cdn';
 
-                if (defined('WP_DEBUG') && WP_DEBUG) {
-                    error_log("ANDW FontAwesome Debug - Detected FontAwesome CDN in HTML");
-                }
                 break;
             }
         }
@@ -122,9 +113,6 @@ class Andw_FontAwesome_Handler {
         if (!$this->fa_detected) {
             $this->enqueue_fontawesome();
         } else {
-            if (defined('WP_DEBUG') && WP_DEBUG) {
-                error_log("ANDW FontAwesome Debug - Skipping FontAwesome load (already detected)");
-            }
         }
     }
 
@@ -158,9 +146,6 @@ class Andw_FontAwesome_Handler {
 
         wp_add_inline_style('andw-fontawesome', $custom_css);
 
-        if (defined('WP_DEBUG') && WP_DEBUG) {
-            error_log("ANDW FontAwesome Debug - Loading FontAwesome 6.5.1 with custom CSS");
-        }
     }
 
     /**
