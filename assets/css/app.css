@@ -98,28 +98,28 @@
 }
 
 /* Button Type Specific Styles */
-.andw-button-apply {
-    background: #059669;
-}
-
-.andw-button-apply:hover {
-    background: #047857;
-}
-
 .andw-button-contact {
-    background: #dc2626;
+    background: #1b5f4a;
 }
 
 .andw-button-contact:hover {
-    background: #b91c1c;
+    background: #298065;
+}
+
+.andw-button-apply {
+    background: #7d1a1a;
+}
+
+.andw-button-apply:hover {
+    background: #9a2525;
 }
 
 .andw-button-toc {
-    background: #7c3aed;
+    background: #21204b;
 }
 
 .andw-button-toc:hover {
-    background: #6d28d9;
+    background: #302f6c;
 }
 
 .andw-button-top {

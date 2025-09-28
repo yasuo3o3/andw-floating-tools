@@ -41,7 +41,43 @@ class Andw_Floating_Tools_Render {
             return false;
         }
 
+        // 表示モードによる制御
+        $display_mode = isset($this->options['display_mode']) ? $this->options['display_mode'] : 'global';
+
+        if ($display_mode === 'block_only') {
+            // ブロック設置ページのみモード
+            return $this->has_floating_tools_block();
+        }
+
+        // グローバル表示モード（デフォルト）
         return true;
+    }
+
+    /**
+     * 現在のページにFloating Tools ブロックが配置されているかチェック
+     */
+    private function has_floating_tools_block() {
+        global $post;
+
+        // 投稿・固定ページのみ対象
+        if (!$post || !is_singular()) {
+            return false;
+        }
+
+        // ブロックが含まれているかチェック
+        if (!has_blocks($post->post_content)) {
+            return false;
+        }
+
+        $blocks = parse_blocks($post->post_content);
+
+        foreach ($blocks as $block) {
+            if ($block['blockName'] === 'andw-floating-tools/toc') {
+                return true;
+            }
+        }
+
+        return false;
     }
 
     private function get_enabled_buttons() {

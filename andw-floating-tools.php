@@ -137,6 +137,7 @@ class Andw_Floating_Tools {
             'gap_left' => 16,
             'anchor_offset_y' => 8,
             'initial_state' => 'closed',
+            'display_mode' => 'global',
             'apply_url' => '',
             'apply_label' => __('お申し込み', 'andw-floating-tools'),
             'apply_target' => '_blank',
