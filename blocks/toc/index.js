@@ -28,11 +28,6 @@
         { label: __('新しいウィンドウ', 'andw-floating-tools'), value: '_blank' }
     ];
 
-    const DISPLAY_MODE_OPTIONS = [
-        { label: __('アンカーシート（ボタン直上に展開）', 'andw-floating-tools'), value: 'anchor-sheet' },
-        { label: __('右側ドロワー', 'andw-floating-tools'), value: 'drawer' },
-        { label: __('アンカーパネル', 'andw-floating-tools'), value: 'anchor-panel' }
-    ];
 
 
     registerBlockType('andw-floating-tools/toc', {
