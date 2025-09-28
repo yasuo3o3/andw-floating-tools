@@ -95,7 +95,7 @@ function andw_sanitize_utm_key($value) {
 }
 
 function andw_sanitize_toc_display_mode($value) {
-    $allowed_modes = array('anchor-sheet', 'drawer', 'anchor-panel');
+    $allowed_modes = array('anchor-sheet', 'drawer');
     return in_array($value, $allowed_modes, true) ? $value : 'anchor-sheet';
 }
 

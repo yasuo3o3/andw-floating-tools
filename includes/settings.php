@@ -550,7 +550,6 @@ class Andw_Floating_Tools_Settings {
         $modes = array(
             'anchor-sheet' => __('アンカーシート（ボタン直上に展開）', 'andw-floating-tools'),
             'drawer' => __('右側ドロワー', 'andw-floating-tools'),
-            'anchor-panel' => __('アンカーパネル', 'andw-floating-tools'),
         );
 
         foreach ($modes as $key => $label) {

@@ -331,12 +331,6 @@ class Andw_Floating_Tools_Render {
     }
 
     private function get_toc_display_mode() {
-        $block_attributes = $this->get_block_attributes();
-
-        if (isset($block_attributes['tocDisplayMode']) && !empty($block_attributes['tocDisplayMode'])) {
-            return andw_sanitize_toc_display_mode($block_attributes['tocDisplayMode']);
-        }
-
         return isset($this->options['toc_display_mode']) ? $this->options['toc_display_mode'] : 'anchor-sheet';
     }
 
