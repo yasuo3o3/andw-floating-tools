@@ -665,7 +665,20 @@ class Andw_Floating_Tools_Settings {
             $allowed_buttons = array('apply', 'contact', 'toc', 'top');
             foreach ($allowed_buttons as $button_type) {
                 if (isset($input['custom_svg_paths'][$button_type])) {
-                    $sanitized['custom_svg_paths'][$button_type] = andw_sanitize_svg_path($input['custom_svg_paths'][$button_type]);
+                    $original = $input['custom_svg_paths'][$button_type];
+                    $sanitized_value = andw_sanitize_svg_path($original);
+                    $sanitized['custom_svg_paths'][$button_type] = $sanitized_value;
+
+                    // 拡張デバッグ: 保存時のログ（開発時のみ）
+                    if (defined('WP_DEBUG') && WP_DEBUG) {
+                        error_log("ANDW Save Extended Debug - {$button_type}:");
+                        error_log("  Original input: '" . $original . "'");
+                        error_log("  Original length: " . strlen($original));
+                        error_log("  Original empty check: " . (empty($original) ? 'EMPTY' : 'NOT EMPTY'));
+                        error_log("  Sanitized output: '" . $sanitized_value . "'");
+                        error_log("  Sanitized length: " . strlen($sanitized_value));
+                        error_log("  Sanitized empty check: " . (empty($sanitized_value) ? 'EMPTY' : 'NOT EMPTY'));
+                    }
                 }
             }
         }

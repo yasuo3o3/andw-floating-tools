@@ -255,9 +255,30 @@ class Andw_Floating_Tools_Render {
 
     private function get_button_icon($button_type) {
         // カスタムSVGパスが設定されている場合は優先使用
-        $custom_svg_paths = isset($this->options['custom_svg_paths']) ? $this->options['custom_svg_paths'] : array();
+        // リアルタイムでオプションを取得（キャッシュ問題回避）
+        $current_options = get_option('andw_floating_tools_options', array());
+        $custom_svg_paths = isset($current_options['custom_svg_paths']) ? $current_options['custom_svg_paths'] : array();
+
+        // 拡張デバッグ出力
+        if (defined('WP_DEBUG') && WP_DEBUG) {
+            error_log("ANDW Extended Debug - get_button_icon({$button_type}):");
+            error_log("  Current options structure: " . print_r($current_options, true));
+            error_log("  Custom SVG paths: " . print_r($custom_svg_paths, true));
+            error_log("  Button type exists in custom_svg_paths: " . (isset($custom_svg_paths[$button_type]) ? 'YES' : 'NO'));
+            if (isset($custom_svg_paths[$button_type])) {
+                error_log("  Raw value: '" . $custom_svg_paths[$button_type] . "'");
+                error_log("  Is empty check: " . (empty($custom_svg_paths[$button_type]) ? 'EMPTY' : 'NOT EMPTY'));
+            }
+        }
+
         if (!empty($custom_svg_paths[$button_type])) {
             $svg_content = trim($custom_svg_paths[$button_type]);
+
+            // デバッグ: コンソールログ出力（開発時のみ）
+            if (defined('WP_DEBUG') && WP_DEBUG) {
+                error_log("ANDW Debug - {$button_type} icon: " . $svg_content);
+                error_log("ANDW Debug - Using CUSTOM icon for {$button_type}");
+            }
 
             // SVGタグ全体が含まれている場合は、統一した属性に置換
             if (strpos($svg_content, '<svg') !== false) {
@@ -293,6 +314,9 @@ class Andw_Floating_Tools_Render {
         }
 
         // アイコンヘルパーを使用してSVGを取得
+        if (defined('WP_DEBUG') && WP_DEBUG) {
+            error_log("ANDW Debug - Using DEFAULT icon for {$button_type}: {$icon_name}");
+        }
         return Andw_Floating_Tools_Icons::get_icon($icon_name);
     }
 

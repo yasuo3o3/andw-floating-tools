@@ -162,3 +162,8 @@ class Andw_Floating_Tools {
 }
 
 Andw_Floating_Tools::get_instance();
+
+// デバッグモード時のアイコン検証ツール読み込み
+if (defined('WP_DEBUG') && WP_DEBUG && !is_admin()) {
+    require_once ANDW_FLOATING_TOOLS_PLUGIN_PATH . 'verify-icon-settings.php';
+}

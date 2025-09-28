@@ -126,9 +126,20 @@ function andw_sanitize_initial_state($value) {
 
 function andw_sanitize_svg_path($value) {
     // SVGコンテンツの基本的なサニタイゼーション
+    if (defined('WP_DEBUG') && WP_DEBUG) {
+        error_log("ANDW Sanitize Debug - Input: '" . $value . "'");
+        error_log("ANDW Sanitize Debug - Input length: " . strlen($value));
+        error_log("ANDW Sanitize Debug - Input empty check: " . (empty($value) ? 'EMPTY' : 'NOT EMPTY'));
+    }
+
     if (empty($value)) {
+        if (defined('WP_DEBUG') && WP_DEBUG) {
+            error_log("ANDW Sanitize Debug - Returning empty due to empty input");
+        }
         return '';
     }
+
+    $original_value = $value;
 
     // 危険なスクリプトタグやイベントハンドラーを除去
     $value = preg_replace('/<script[^>]*>.*?<\/script>/is', '', $value);
@@ -139,7 +150,16 @@ function andw_sanitize_svg_path($value) {
     $allowed_tags = '<svg><path><circle><rect><line><polygon><polyline><ellipse><g><defs><use><clipPath><mask>';
     $value = strip_tags($value, $allowed_tags);
 
-    return trim($value);
+    $result = trim($value);
+
+    if (defined('WP_DEBUG') && WP_DEBUG) {
+        error_log("ANDW Sanitize Debug - After processing: '" . $result . "'");
+        error_log("ANDW Sanitize Debug - Result length: " . strlen($result));
+        error_log("ANDW Sanitize Debug - Result empty check: " . (empty($result) ? 'EMPTY' : 'NOT EMPTY'));
+        error_log("ANDW Sanitize Debug - Value changed: " . ($original_value !== $result ? 'YES' : 'NO'));
+    }
+
+    return $result;
 }
 
 function andw_add_utm_to_url($url, $utm_params) {
