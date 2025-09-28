@@ -163,36 +163,36 @@ class Andw_Floating_Tools_Settings {
         );
 
         add_settings_field(
-            'custom_svg_apply',
-            __('お申し込みアイコン SVGパス', 'andw-floating-tools'),
-            array($this, 'render_custom_svg_field'),
+            'fontawesome_apply',
+            __('お申し込みアイコン', 'andw-floating-tools'),
+            array($this, 'render_fontawesome_field'),
             $this->page_slug,
             'andw_floating_tools_icons',
             array('button_type' => 'apply')
         );
 
         add_settings_field(
-            'custom_svg_contact',
-            __('お問い合わせアイコン SVGパス', 'andw-floating-tools'),
-            array($this, 'render_custom_svg_field'),
+            'fontawesome_contact',
+            __('お問い合わせアイコン', 'andw-floating-tools'),
+            array($this, 'render_fontawesome_field'),
             $this->page_slug,
             'andw_floating_tools_icons',
             array('button_type' => 'contact')
         );
 
         add_settings_field(
-            'custom_svg_toc',
-            __('目次アイコン SVGパス', 'andw-floating-tools'),
-            array($this, 'render_custom_svg_field'),
+            'fontawesome_toc',
+            __('目次アイコン', 'andw-floating-tools'),
+            array($this, 'render_fontawesome_field'),
             $this->page_slug,
             'andw_floating_tools_icons',
             array('button_type' => 'toc')
         );
 
         add_settings_field(
-            'custom_svg_top',
-            __('ページトップアイコン SVGパス', 'andw-floating-tools'),
-            array($this, 'render_custom_svg_field'),
+            'fontawesome_top',
+            __('ページトップアイコン', 'andw-floating-tools'),
+            array($this, 'render_fontawesome_field'),
             $this->page_slug,
             'andw_floating_tools_icons',
             array('button_type' => 'top')
@@ -309,26 +309,56 @@ class Andw_Floating_Tools_Settings {
     }
 
     public function render_icons_section() {
-        echo '<p>' . esc_html__('各ボタンのアイコンをカスタマイズできます。参考サイト: ', 'andw-floating-tools');
-        echo '<a href="https://heroicons.com/" target="_blank">Heroicons</a>, ';
-        echo '<a href="https://feathericons.com/" target="_blank">Feather Icons</a>, ';
-        echo '<a href="https://tabler-icons.io/" target="_blank">Tabler Icons</a>, ';
-        echo '<a href="https://lucide.dev/" target="_blank">Lucide</a>';
-        echo '<br>' . esc_html__('SVGコード全体、またはSVGタグの中身だけ、どちらでも貼り付けできます。', 'andw-floating-tools') . '</p>';
+        echo '<p>' . esc_html__('各ボタンのアイコンをFontAwesome から選択できます。', 'andw-floating-tools');
+        echo '<br>' . esc_html__('FontAwesome の豊富なアイコンライブラリからお好みのアイコンを選択してください。', 'andw-floating-tools');
+        echo '<br><a href="https://fontawesome.com/icons" target="_blank">FontAwesome アイコン一覧を見る</a></p>';
+
+        // FontAwesome検出状況を表示
+        if (class_exists('Andw_FontAwesome_Handler')) {
+            $fa_handler = Andw_FontAwesome_Handler::get_instance();
+            $detection_info = $fa_handler->get_detection_info();
+
+            if ($detection_info['detected']) {
+                echo '<div style="background: #d1ecf1; padding: 10px; border-radius: 4px; margin-bottom: 15px;">';
+                echo '<strong>✅ FontAwesome検出済み:</strong> ';
+                echo 'バージョン ' . esc_html($detection_info['version']) . ' ';
+                echo '（ソース: ' . esc_html($detection_info['source']) . '）';
+                echo '</div>';
+            } else {
+                echo '<div style="background: #f8d7da; padding: 10px; border-radius: 4px; margin-bottom: 15px;">';
+                echo '<strong>ℹ️ FontAwesome自動読み込み:</strong> ';
+                echo 'FontAwesome CDNを自動で読み込みます。';
+                echo '</div>';
+            }
+        }
     }
 
-    public function render_custom_svg_field($args) {
+    public function render_fontawesome_field($args) {
         $button_type = $args['button_type'];
         $options = get_option($this->option_name, array());
-        $custom_svg_paths = isset($options['custom_svg_paths']) ? $options['custom_svg_paths'] : array();
-        $value = isset($custom_svg_paths[$button_type]) ? $custom_svg_paths[$button_type] : '';
+        $fontawesome_icons = isset($options['fontawesome_icons']) ? $options['fontawesome_icons'] : array();
+        $selected_icon = isset($fontawesome_icons[$button_type]) ? $fontawesome_icons[$button_type] : '';
 
-        echo '<textarea name="' . esc_attr($this->option_name) . '[custom_svg_paths][' . esc_attr($button_type) . ']" ';
-        echo 'rows="4" cols="80" class="regular-text" ';
-        echo 'placeholder="例: <svg ...><path d=&quot;...&quot;/></svg> または <path d=&quot;...&quot;/>">';
-        echo esc_textarea($value);
-        echo '</textarea>';
-        echo '<p class="description">' . esc_html__('空の場合はデフォルトアイコンを使用します。SVGコード全体またはタグの中身だけ、どちらでも貼り付けできます。', 'andw-floating-tools') . '</p>';
+        // FontAwesome アイコン選択肢取得
+        $icon_options = Andw_FontAwesome_Icons::get_select_options();
+
+        echo '<select name="' . esc_attr($this->option_name) . '[fontawesome_icons][' . esc_attr($button_type) . ']" class="regular-text">';
+        foreach ($icon_options as $icon_key => $icon_label) {
+            $selected = selected($selected_icon, $icon_key, false);
+            echo '<option value="' . esc_attr($icon_key) . '"' . $selected . '>' . esc_html($icon_label) . '</option>';
+        }
+        echo '</select>';
+
+        // プレビュー表示
+        if (!empty($selected_icon)) {
+            echo '<div style="margin-top: 10px;">';
+            echo '<strong>プレビュー:</strong> ';
+            echo Andw_FontAwesome_Icons::get_icon_html($selected_icon);
+            echo ' <span style="margin-left: 10px; color: #666;">(' . esc_html($selected_icon) . ')</span>';
+            echo '</div>';
+        }
+
+        echo '<p class="description">FontAwesome アイコンを選択してください。デフォルトを選択すると標準アイコンが使用されます。</p>';
     }
 
     public function render_utm_section() {
@@ -659,25 +689,28 @@ class Andw_Floating_Tools_Settings {
             $sanitized['initial_state'] = andw_sanitize_initial_state($input['initial_state']);
         }
 
-        // カスタムSVGパスのサニタイゼーション
-        if (isset($input['custom_svg_paths']) && is_array($input['custom_svg_paths'])) {
-            $sanitized['custom_svg_paths'] = array();
+        // FontAwesome アイコンのサニタイゼーション
+        if (isset($input['fontawesome_icons']) && is_array($input['fontawesome_icons'])) {
+            $sanitized['fontawesome_icons'] = array();
             $allowed_buttons = array('apply', 'contact', 'toc', 'top');
-            foreach ($allowed_buttons as $button_type) {
-                if (isset($input['custom_svg_paths'][$button_type])) {
-                    $original = $input['custom_svg_paths'][$button_type];
-                    $sanitized_value = andw_sanitize_svg_path($original);
-                    $sanitized['custom_svg_paths'][$button_type] = $sanitized_value;
+            $available_icons = Andw_FontAwesome_Icons::get_available_icons();
 
-                    // 拡張デバッグ: 保存時のログ（開発時のみ）
+            foreach ($allowed_buttons as $button_type) {
+                if (isset($input['fontawesome_icons'][$button_type])) {
+                    $icon_key = sanitize_text_field($input['fontawesome_icons'][$button_type]);
+
+                    // 空文字列または有効なアイコンキーのみ許可
+                    if (empty($icon_key) || isset($available_icons[$icon_key])) {
+                        $sanitized['fontawesome_icons'][$button_type] = $icon_key;
+                    } else {
+                        // 無効なアイコンキーの場合はデフォルトを使用
+                        $defaults = Andw_FontAwesome_Icons::get_default_icons();
+                        $sanitized['fontawesome_icons'][$button_type] = isset($defaults[$button_type]) ? $defaults[$button_type] : '';
+                    }
+
+                    // デバッグログ
                     if (defined('WP_DEBUG') && WP_DEBUG) {
-                        error_log("ANDW Save Extended Debug - {$button_type}:");
-                        error_log("  Original input: '" . $original . "'");
-                        error_log("  Original length: " . strlen($original));
-                        error_log("  Original empty check: " . (empty($original) ? 'EMPTY' : 'NOT EMPTY'));
-                        error_log("  Sanitized output: '" . $sanitized_value . "'");
-                        error_log("  Sanitized length: " . strlen($sanitized_value));
-                        error_log("  Sanitized empty check: " . (empty($sanitized_value) ? 'EMPTY' : 'NOT EMPTY'));
+                        error_log("ANDW FontAwesome Save Debug - {$button_type}: " . $sanitized['fontawesome_icons'][$button_type]);
                     }
                 }
             }

@@ -54,12 +54,21 @@ class Andw_Floating_Tools {
             new Andw_Floating_Tools_Render();
         }
 
+        $this->init_fontawesome();
         $this->register_blocks();
+    }
+
+    private function init_fontawesome() {
+        if (class_exists('Andw_FontAwesome_Handler')) {
+            Andw_FontAwesome_Handler::get_instance();
+        }
     }
 
     private function load_includes() {
         require_once ANDW_FLOATING_TOOLS_PLUGIN_DIR . 'includes/sanitization.php';
         require_once ANDW_FLOATING_TOOLS_PLUGIN_DIR . 'includes/icon-helper.php';
+        require_once ANDW_FLOATING_TOOLS_PLUGIN_DIR . 'includes/fontawesome-handler.php';
+        require_once ANDW_FLOATING_TOOLS_PLUGIN_DIR . 'includes/fontawesome-icons.php';
         require_once ANDW_FLOATING_TOOLS_PLUGIN_DIR . 'includes/settings.php';
         require_once ANDW_FLOATING_TOOLS_PLUGIN_DIR . 'includes/toc.php';
         require_once ANDW_FLOATING_TOOLS_PLUGIN_DIR . 'includes/render.php';
@@ -145,11 +154,11 @@ class Andw_Floating_Tools {
                 'toc' => 'list',
                 'top' => 'arrow-up',
             ),
-            'custom_svg_paths' => array(
-                'apply' => '',
-                'contact' => '',
-                'toc' => '',
-                'top' => '',
+            'fontawesome_icons' => array(
+                'apply' => 'shopping-cart',
+                'contact' => 'envelope',
+                'toc' => 'list',
+                'top' => 'arrow-up',
             ),
         );
 

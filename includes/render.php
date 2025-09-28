@@ -254,88 +254,25 @@ class Andw_Floating_Tools_Render {
     }
 
     private function get_button_icon($button_type) {
-        // カスタムSVGパスが設定されている場合は優先使用
-        // リアルタイムでオプションを取得（キャッシュ問題回避）
+        // FontAwesome アイコンシステムを使用
         $current_options = get_option('andw_floating_tools_options', array());
-        $custom_svg_paths = isset($current_options['custom_svg_paths']) ? $current_options['custom_svg_paths'] : array();
+        $fontawesome_icons = isset($current_options['fontawesome_icons']) ? $current_options['fontawesome_icons'] : array();
 
-        // 拡張デバッグ出力
+        // デバッグ出力
         if (defined('WP_DEBUG') && WP_DEBUG) {
-            error_log("ANDW Extended Debug - get_button_icon({$button_type}):");
-            error_log("  Current options structure: " . print_r($current_options, true));
-            error_log("  Custom SVG paths: " . print_r($custom_svg_paths, true));
-            error_log("  Button type exists in custom_svg_paths: " . (isset($custom_svg_paths[$button_type]) ? 'YES' : 'NO'));
-            if (isset($custom_svg_paths[$button_type])) {
-                error_log("  Raw value: '" . $custom_svg_paths[$button_type] . "'");
-                error_log("  Is empty check: " . (empty($custom_svg_paths[$button_type]) ? 'EMPTY' : 'NOT EMPTY'));
-            }
+            error_log("ANDW FontAwesome Debug - get_button_icon({$button_type}):");
+            error_log("  FontAwesome icons: " . print_r($fontawesome_icons, true));
         }
 
-        if (!empty($custom_svg_paths[$button_type])) {
-            $svg_content = trim($custom_svg_paths[$button_type]);
+        // カスタムFontAwesomeアイコンが設定されている場合
+        $custom_icon = isset($fontawesome_icons[$button_type]) ? $fontawesome_icons[$button_type] : '';
 
-            // デバッグ: コンソールログ出力（開発時のみ）
-            if (defined('WP_DEBUG') && WP_DEBUG) {
-                error_log("ANDW Debug - {$button_type} icon: " . $svg_content);
-                error_log("ANDW Debug - Using CUSTOM icon for {$button_type}");
-            }
-
-            // SVGタグ全体が含まれている場合は、統一した属性に置換
-            if (strpos($svg_content, '<svg') !== false) {
-                // 元のSVGからfillとstroke属性を抽出
-                $fill_value = 'currentColor'; // デフォルト
-                $stroke_attributes = '';
-
-                if (preg_match('/<svg[^>]*fill=["\']([^"\']*)["\']/', $svg_content, $fill_match)) {
-                    $fill_value = $fill_match[1];
-                }
-
-                // stroke関連の属性を抽出
-                $stroke_attrs = array('stroke', 'stroke-width', 'stroke-linecap', 'stroke-linejoin');
-                foreach ($stroke_attrs as $attr) {
-                    if (preg_match('/<svg[^>]*' . preg_quote($attr) . '=["\']([^"\']*)["\']/', $svg_content, $stroke_match)) {
-                        $stroke_attributes .= ' ' . $attr . '="' . esc_attr($stroke_match[1]) . '"';
-                    }
-                }
-
-                // 統一した属性で置換（元のfillとstrokeを保持）
-                $replacement = '<svg width="24" height="24" viewBox="0 0 24 24" fill="' . esc_attr($fill_value) . '"' . $stroke_attributes . ' aria-hidden="true">';
-
-                $svg_content = preg_replace(
-                    '/<svg[^>]*>/i',
-                    $replacement,
-                    $svg_content
-                );
-                return $svg_content;
-            } else {
-                // SVGタグの中身だけの場合は従来通り
-                return sprintf(
-                    '<svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">%s</svg>',
-                    $svg_content
-                );
-            }
-        }
-
-        // 設定からアイコン名を取得
-        $button_icons = isset($this->options['button_icons']) ? $this->options['button_icons'] : array();
-        $icon_name = isset($button_icons[$button_type]) ? $button_icons[$button_type] : '';
-
-        // デフォルトアイコン名の設定
-        if (empty($icon_name)) {
-            $defaults = array(
-                'top' => 'arrow-up',
-                'apply' => 'clipboard',
-                'contact' => 'contact',
-                'toc' => 'list',
-            );
-            $icon_name = isset($defaults[$button_type]) ? $defaults[$button_type] : 'clipboard';
-        }
-
-        // アイコンヘルパーを使用してSVGを取得
         if (defined('WP_DEBUG') && WP_DEBUG) {
-            error_log("ANDW Debug - Using DEFAULT icon for {$button_type}: {$icon_name}");
+            error_log("ANDW FontAwesome Debug - Using icon for {$button_type}: " . ($custom_icon ?: 'default'));
         }
-        return Andw_Floating_Tools_Icons::get_icon($icon_name);
+
+        // FontAwesome アイコンヘルパーを使用
+        return Andw_FontAwesome_Icons::get_button_icon($button_type, $custom_icon);
     }
 
     private function render_toc_drawer() {
