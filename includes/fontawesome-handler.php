@@ -109,8 +109,26 @@ class Andw_FontAwesome_Handler {
             '6.5.1'
         );
 
+        // FontAwesome 6 の重要なCSSプロパティを追加
+        $custom_css = '
+        .fa-solid, .fas {
+            font-family: "Font Awesome 6 Free" !important;
+            font-weight: 900;
+            font-style: normal;
+            font-variant: normal;
+            text-rendering: auto;
+            -webkit-font-smoothing: antialiased;
+        }
+        .fa-fw {
+            text-align: center;
+            width: 1.25em;
+        }
+        ';
+
+        wp_add_inline_style('andw-fontawesome', $custom_css);
+
         if (defined('WP_DEBUG') && WP_DEBUG) {
-            error_log("ANDW FontAwesome Debug - Loading FontAwesome 6.5.1");
+            error_log("ANDW FontAwesome Debug - Loading FontAwesome 6.5.1 with custom CSS");
         }
     }
 

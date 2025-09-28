@@ -5,189 +5,144 @@ if (!defined('ABSPATH')) {
 
 class Andw_FontAwesome_Icons {
     /**
-     * 利用可能なFontAwesomeアイコン一覧
-     */
-    public static function get_available_icons() {
-        return array(
-            // 申し込み・ショッピング関連
-            'shopping-cart' => array(
-                'label' => '🛒 ショッピングカート',
-                'class' => 'fas fa-shopping-cart'
-            ),
-            'shopping-bag' => array(
-                'label' => '🛍️ ショッピングバッグ',
-                'class' => 'fas fa-shopping-bag'
-            ),
-            'credit-card' => array(
-                'label' => '💳 クレジットカード',
-                'class' => 'fas fa-credit-card'
-            ),
-            'clipboard-check' => array(
-                'label' => '📋 申し込み',
-                'class' => 'fas fa-clipboard-check'
-            ),
-            'file-contract' => array(
-                'label' => '📄 契約書',
-                'class' => 'fas fa-file-contract'
-            ),
-            'handshake' => array(
-                'label' => '🤝 握手',
-                'class' => 'fas fa-handshake'
-            ),
-
-            // お問い合わせ関連
-            'envelope' => array(
-                'label' => '✉️ メール',
-                'class' => 'fas fa-envelope'
-            ),
-            'comments' => array(
-                'label' => '💬 コメント',
-                'class' => 'fas fa-comments'
-            ),
-            'phone' => array(
-                'label' => '📞 電話',
-                'class' => 'fas fa-phone'
-            ),
-            'headset' => array(
-                'label' => '🎧 サポート',
-                'class' => 'fas fa-headset'
-            ),
-            'question-circle' => array(
-                'label' => '❓ 質問',
-                'class' => 'fas fa-question-circle'
-            ),
-
-            // 目次関連
-            'list' => array(
-                'label' => '📋 リスト',
-                'class' => 'fas fa-list'
-            ),
-            'list-ul' => array(
-                'label' => '📝 箇条書き',
-                'class' => 'fas fa-list-ul'
-            ),
-            'bars' => array(
-                'label' => '☰ ハンバーガーメニュー',
-                'class' => 'fas fa-bars'
-            ),
-            'book-open' => array(
-                'label' => '📖 本を開く',
-                'class' => 'fas fa-book-open'
-            ),
-            'bookmark' => array(
-                'label' => '🔖 ブックマーク',
-                'class' => 'fas fa-bookmark'
-            ),
-
-            // ページトップ関連
-            'arrow-up' => array(
-                'label' => '⬆️ 上矢印',
-                'class' => 'fas fa-arrow-up'
-            ),
-            'chevron-up' => array(
-                'label' => '⬆️ シェブロン上',
-                'class' => 'fas fa-chevron-up'
-            ),
-            'angle-up' => array(
-                'label' => '⬆️ アングル上',
-                'class' => 'fas fa-angle-up'
-            ),
-            'arrow-circle-up' => array(
-                'label' => '⬆️ 円矢印上',
-                'class' => 'fas fa-arrow-circle-up'
-            ),
-            'rocket' => array(
-                'label' => '🚀 ロケット',
-                'class' => 'fas fa-rocket'
-            ),
-
-            // その他汎用
-            'home' => array(
-                'label' => '🏠 ホーム',
-                'class' => 'fas fa-home'
-            ),
-            'star' => array(
-                'label' => '⭐ 星',
-                'class' => 'fas fa-star'
-            ),
-            'heart' => array(
-                'label' => '❤️ ハート',
-                'class' => 'fas fa-heart'
-            ),
-            'info-circle' => array(
-                'label' => 'ℹ️ 情報',
-                'class' => 'fas fa-info-circle'
-            ),
-            'cog' => array(
-                'label' => '⚙️ 設定',
-                'class' => 'fas fa-cog'
-            ),
-        );
-    }
-
-    /**
-     * デフォルトアイコン設定
+     * デフォルトアイコン設定（Unicode）
      */
     public static function get_default_icons() {
         return array(
-            'apply' => 'shopping-cart',
-            'contact' => 'envelope',
-            'toc' => 'list',
-            'top' => 'arrow-up',
+            'apply' => 'f07a',     // shopping-cart
+            'contact' => 'f0e0',   // envelope
+            'toc' => 'f03a',       // list
+            'top' => 'f062',       // arrow-up
         );
     }
 
     /**
-     * アイコンHTMLを生成
+     * よく使われるアイコンのサンプル（ユーザー参考用）
      */
-    public static function get_icon_html($icon_key, $additional_classes = '') {
-        $icons = self::get_available_icons();
+    public static function get_popular_icons() {
+        return array(
+            // 申し込み・ショッピング関連
+            'f07a' => 'ショッピングカート',
+            'f290' => 'ショッピングバッグ',
+            'f09d' => 'クレジットカード',
+            'f46c' => 'クリップボードチェック',
+            'f56c' => '契約書',
+            'f2b5' => '握手',
 
-        if (!isset($icons[$icon_key])) {
+            // お問い合わせ関連
+            'f0e0' => 'メール',
+            'f086' => 'コメント',
+            'f095' => '電話',
+            'f590' => 'ヘッドセット',
+            'f059' => '質問',
+
+            // 目次関連
+            'f03a' => 'リスト',
+            'f0ca' => '箇条書き',
+            'f0c9' => 'ハンバーガーメニュー',
+            'f518' => '本を開く',
+            'f02e' => 'ブックマーク',
+
+            // ページトップ関連
+            'f062' => '上矢印',
+            'f077' => 'シェブロン上',
+            'f106' => 'アングル上',
+            'f0aa' => '円矢印上',
+            'f135' => 'ロケット',
+
+            // その他汎用
+            'f015' => 'ホーム',
+            'f005' => '星',
+            'f004' => 'ハート',
+            'f05a' => '情報',
+            'f013' => '設定',
+        );
+    }
+
+    /**
+     * FontAwesome Unicode からアイコンHTMLを生成
+     */
+    public static function get_icon_html($unicode_code, $additional_classes = '') {
+        // Unicode コードをサニタイズ
+        $unicode_code = self::sanitize_unicode($unicode_code);
+
+        if (empty($unicode_code)) {
             // フォールバック：デフォルトアイコン
-            $defaults = self::get_default_icons();
-            $icon_key = isset($defaults[$icon_key]) ? $defaults[$icon_key] : 'question-circle';
+            $unicode_code = 'f059'; // question-circle
         }
 
-        if (!isset($icons[$icon_key])) {
-            $icon_key = 'question-circle';
-        }
-
-        $icon_class = $icons[$icon_key]['class'];
+        // FontAwesome 6 の新しいクラス形式を使用
+        $icon_class = 'fa-solid fa-fw';
         if (!empty($additional_classes)) {
             $icon_class .= ' ' . $additional_classes;
         }
 
-        return '<i class="' . esc_attr($icon_class) . '" aria-hidden="true"></i>';
+        // Unicode を使用したアイコン表示（複数のフォントファミリーでフォールバック）
+        return '<i class="' . esc_attr($icon_class) . '" style="font-family: \'Font Awesome 6 Free\', \'FontAwesome\', \'Font Awesome 5 Free\', sans-serif; font-weight: 900;">&#x' . $unicode_code . ';</i>';
     }
 
     /**
      * ボタンタイプごとのアイコン取得
      */
-    public static function get_button_icon($button_type, $custom_icon = '') {
-        // カスタムアイコンが設定されている場合
-        if (!empty($custom_icon)) {
-            return self::get_icon_html($custom_icon);
+    public static function get_button_icon($button_type, $custom_unicode = '') {
+        // カスタムUnicodeが設定されている場合
+        if (!empty($custom_unicode)) {
+            return self::get_icon_html($custom_unicode);
         }
 
-        // デフォルトアイコン
+        // デフォルトUnicode
         $defaults = self::get_default_icons();
-        $icon_key = isset($defaults[$button_type]) ? $defaults[$button_type] : 'question-circle';
+        $unicode = isset($defaults[$button_type]) ? $defaults[$button_type] : 'f059';
 
-        return self::get_icon_html($icon_key);
+        return self::get_icon_html($unicode);
     }
 
     /**
-     * 管理画面用アイコン選択オプション
+     * Unicode コードのサニタイゼーション
      */
-    public static function get_select_options() {
-        $icons = self::get_available_icons();
-        $options = array('' => '-- デフォルトアイコンを使用 --');
+    private static function sanitize_unicode($unicode) {
+        // 不要な文字を除去（英数字のみ許可）
+        $unicode = preg_replace('/[^a-fA-F0-9]/', '', $unicode);
 
-        foreach ($icons as $key => $icon) {
-            $options[$key] = $icon['label'];
+        // 長さ制限（FontAwesome は通常4文字）
+        if (strlen($unicode) > 6) {
+            $unicode = substr($unicode, 0, 6);
         }
 
-        return $options;
+        return strtolower($unicode);
+    }
+
+    /**
+     * 管理画面用の説明テキスト
+     */
+    public static function get_admin_help_text() {
+        $popular = self::get_popular_icons();
+        $help_text = '<p><strong>FontAwesome Unicode 入力:</strong></p>';
+        $help_text .= '<p>4-6桁の英数字コードを入力してください（例: f46c, f0e0）</p>';
+        $help_text .= '<p><strong>よく使われるアイコン:</strong></p>';
+        $help_text .= '<div style="max-height: 200px; overflow-y: auto; border: 1px solid #ddd; padding: 10px; background: #f9f9f9;">';
+
+        foreach ($popular as $code => $name) {
+            $help_text .= '<span style="display: inline-block; margin: 2px 8px 2px 0; white-space: nowrap;">';
+            $help_text .= '<code>' . $code . '</code> ' . $name;
+            $help_text .= '</span>';
+        }
+
+        $help_text .= '</div>';
+        $help_text .= '<p><a href="https://fontawesome.com/search?o=r&m=free" target="_blank">FontAwesome公式サイトでアイコンを検索</a></p>';
+
+        return $help_text;
+    }
+
+    /**
+     * 管理画面用プレビュー
+     */
+    public static function get_preview_html($unicode) {
+        if (empty($unicode)) {
+            return '<span style="color: #666;">（未設定）</span>';
+        }
+
+        $icon_html = self::get_icon_html($unicode);
+        return '<span style="font-size: 18px;">' . $icon_html . '</span> <code>' . $unicode . '</code>';
     }
 }

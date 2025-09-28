@@ -22,7 +22,7 @@ echo '<pre>';
 print_r($options);
 echo '</pre>';
 
-echo '<h2>fontawesome_icons:</h2>';
+echo '<h2>fontawesome_icons (Unicode):</h2>';
 $fontawesome_icons = isset($options['fontawesome_icons']) ? $options['fontawesome_icons'] : array();
 echo '<pre>';
 print_r($fontawesome_icons);
@@ -50,13 +50,13 @@ echo '<h2>アイコン表示テスト:</h2>';
 foreach ($button_types as $button_type) {
     echo '<h3>' . $button_type . ' ボタン:</h3>';
 
-    $custom_icon = isset($fontawesome_icons[$button_type]) ? $fontawesome_icons[$button_type] : '';
+    $custom_unicode = isset($fontawesome_icons[$button_type]) ? $fontawesome_icons[$button_type] : '';
 
-    if (!empty($custom_icon)) {
-        echo '<p>設定値: <code>' . esc_html($custom_icon) . '</code></p>';
+    if (!empty($custom_unicode)) {
+        echo '<p>設定値 (Unicode): <code>' . esc_html($custom_unicode) . '</code></p>';
 
         if (class_exists('Andw_FontAwesome_Icons')) {
-            $icon_html = Andw_FontAwesome_Icons::get_button_icon($button_type, $custom_icon);
+            $icon_html = Andw_FontAwesome_Icons::get_button_icon($button_type, $custom_unicode);
             echo '<p>結果: </p>';
             echo '<div style="border: 1px solid #ccc; padding: 10px; background: #f9f9f9; font-size: 24px;">';
             echo $icon_html;
@@ -66,7 +66,7 @@ foreach ($button_types as $button_type) {
             echo '<p>FontAwesome アイコンクラスが読み込まれていません</p>';
         }
     } else {
-        echo '<p>カスタムアイコンが設定されていません（デフォルトアイコンを使用）</p>';
+        echo '<p>カスタムUnicodeが設定されていません（デフォルトアイコンを使用）</p>';
 
         if (class_exists('Andw_FontAwesome_Icons')) {
             $default_icon_html = Andw_FontAwesome_Icons::get_button_icon($button_type, '');

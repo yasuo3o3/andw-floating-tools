@@ -337,28 +337,51 @@ class Andw_Floating_Tools_Settings {
         $button_type = $args['button_type'];
         $options = get_option($this->option_name, array());
         $fontawesome_icons = isset($options['fontawesome_icons']) ? $options['fontawesome_icons'] : array();
-        $selected_icon = isset($fontawesome_icons[$button_type]) ? $fontawesome_icons[$button_type] : '';
+        $current_unicode = isset($fontawesome_icons[$button_type]) ? $fontawesome_icons[$button_type] : '';
 
-        // FontAwesome アイコン選択肢取得
-        $icon_options = Andw_FontAwesome_Icons::get_select_options();
+        // Unicode 入力フィールド
+        echo '<input type="text" name="' . esc_attr($this->option_name) . '[fontawesome_icons][' . esc_attr($button_type) . ']" ';
+        echo 'value="' . esc_attr($current_unicode) . '" ';
+        echo 'class="regular-text" ';
+        echo 'placeholder="例: f46c, f0e0" ';
+        echo 'pattern="[a-fA-F0-9]{1,6}" ';
+        echo 'maxlength="6" ';
+        echo 'style="font-family: monospace;">';
 
-        echo '<select name="' . esc_attr($this->option_name) . '[fontawesome_icons][' . esc_attr($button_type) . ']" class="regular-text">';
-        foreach ($icon_options as $icon_key => $icon_label) {
-            $selected = selected($selected_icon, $icon_key, false);
-            echo '<option value="' . esc_attr($icon_key) . '"' . $selected . '>' . esc_html($icon_label) . '</option>';
-        }
-        echo '</select>';
-
-        // プレビュー表示
-        if (!empty($selected_icon)) {
-            echo '<div style="margin-top: 10px;">';
+        // リアルタイムプレビュー用のJavaScript
+        $field_id = 'fontawesome_' . $button_type;
+        echo '<div id="preview_' . $field_id . '" style="margin-top: 10px;">';
+        if (!empty($current_unicode)) {
             echo '<strong>プレビュー:</strong> ';
-            echo Andw_FontAwesome_Icons::get_icon_html($selected_icon);
-            echo ' <span style="margin-left: 10px; color: #666;">(' . esc_html($selected_icon) . ')</span>';
-            echo '</div>';
+            echo Andw_FontAwesome_Icons::get_preview_html($current_unicode);
         }
+        echo '</div>';
 
-        echo '<p class="description">FontAwesome アイコンを選択してください。デフォルトを選択すると標準アイコンが使用されます。</p>';
+        // JavaScript でリアルタイムプレビュー
+        echo '<script>
+        (function() {
+            var input = document.querySelector(\'input[name="' . esc_js($this->option_name) . '[fontawesome_icons][' . esc_js($button_type) . ']"]\');
+            var preview = document.getElementById(\'preview_' . $field_id . '\');
+
+            if (input && preview) {
+                input.addEventListener(\'input\', function() {
+                    var unicode = this.value.trim();
+                    if (unicode && /^[a-fA-F0-9]{1,6}$/.test(unicode)) {
+                        preview.innerHTML = \'<strong>プレビュー:</strong> <span style="font-size: 18px;"><i class="fa-solid fa-fw" style="font-family: \\\'Font Awesome 6 Free\\\', \\\'FontAwesome\\\', \\\'Font Awesome 5 Free\\\', sans-serif; font-weight: 900;">&#x\' + unicode + \';</i></span> <code>\' + unicode + \'</code>\';
+                    } else if (unicode === \'\') {
+                        preview.innerHTML = \'<span style="color: #666;">（デフォルトアイコンを使用）</span>\';
+                    } else {
+                        preview.innerHTML = \'<span style="color: #d63638;">無効なコード形式</span>\';
+                    }
+                });
+            }
+        })();
+        </script>';
+
+        // ヘルプテキスト
+        echo '<div class="description" style="margin-top: 10px;">';
+        echo Andw_FontAwesome_Icons::get_admin_help_text();
+        echo '</div>';
     }
 
     public function render_utm_section() {
@@ -689,28 +712,35 @@ class Andw_Floating_Tools_Settings {
             $sanitized['initial_state'] = andw_sanitize_initial_state($input['initial_state']);
         }
 
-        // FontAwesome アイコンのサニタイゼーション
+        // FontAwesome Unicode のサニタイゼーション
         if (isset($input['fontawesome_icons']) && is_array($input['fontawesome_icons'])) {
             $sanitized['fontawesome_icons'] = array();
             $allowed_buttons = array('apply', 'contact', 'toc', 'top');
-            $available_icons = Andw_FontAwesome_Icons::get_available_icons();
 
             foreach ($allowed_buttons as $button_type) {
                 if (isset($input['fontawesome_icons'][$button_type])) {
-                    $icon_key = sanitize_text_field($input['fontawesome_icons'][$button_type]);
+                    $unicode_input = sanitize_text_field($input['fontawesome_icons'][$button_type]);
 
-                    // 空文字列または有効なアイコンキーのみ許可
-                    if (empty($icon_key) || isset($available_icons[$icon_key])) {
-                        $sanitized['fontawesome_icons'][$button_type] = $icon_key;
+                    // Unicode コードのサニタイゼーション
+                    $sanitized_unicode = preg_replace('/[^a-fA-F0-9]/', '', $unicode_input);
+                    $sanitized_unicode = strtolower($sanitized_unicode);
+
+                    // 長さ制限（1-6文字）
+                    if (strlen($sanitized_unicode) > 6) {
+                        $sanitized_unicode = substr($sanitized_unicode, 0, 6);
+                    }
+
+                    // 空文字列または有効なUnicodeパターンのみ許可
+                    if (empty($sanitized_unicode) || preg_match('/^[a-f0-9]{1,6}$/', $sanitized_unicode)) {
+                        $sanitized['fontawesome_icons'][$button_type] = $sanitized_unicode;
                     } else {
-                        // 無効なアイコンキーの場合はデフォルトを使用
-                        $defaults = Andw_FontAwesome_Icons::get_default_icons();
-                        $sanitized['fontawesome_icons'][$button_type] = isset($defaults[$button_type]) ? $defaults[$button_type] : '';
+                        // 無効な場合は空文字（デフォルト使用）
+                        $sanitized['fontawesome_icons'][$button_type] = '';
                     }
 
                     // デバッグログ
                     if (defined('WP_DEBUG') && WP_DEBUG) {
-                        error_log("ANDW FontAwesome Save Debug - {$button_type}: " . $sanitized['fontawesome_icons'][$button_type]);
+                        error_log("ANDW FontAwesome Unicode Save Debug - {$button_type}: '{$unicode_input}' -> '{$sanitized['fontawesome_icons'][$button_type]}'");
                     }
                 }
             }

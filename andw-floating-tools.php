@@ -155,10 +155,10 @@ class Andw_Floating_Tools {
                 'top' => 'arrow-up',
             ),
             'fontawesome_icons' => array(
-                'apply' => 'shopping-cart',
-                'contact' => 'envelope',
-                'toc' => 'list',
-                'top' => 'arrow-up',
+                'apply' => 'f07a',     // shopping-cart
+                'contact' => 'f0e0',   // envelope
+                'toc' => 'f03a',       // list
+                'top' => 'f062',       // arrow-up
             ),
         );
 
