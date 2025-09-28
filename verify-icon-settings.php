@@ -1,6 +1,6 @@
 <?php
 /**
- * アイコン設定の検証ツール（フロントエンド用）
+ * FontAwesome アイコン設定の検証ツール（フロントエンド用）
  * 任意のページの末尾に追加されるデバッグ情報を表示
  */
 
@@ -18,7 +18,7 @@ if (!current_user_can('manage_options')) {
 class Andw_Icon_Settings_Verifier {
     public static function verify_and_display() {
         echo '<div style="position: fixed; bottom: 0; left: 0; right: 0; background: #333; color: #fff; padding: 20px; z-index: 99999; max-height: 300px; overflow-y: auto; font-family: monospace; font-size: 12px;">';
-        echo '<h3 style="margin: 0 0 10px 0; color: #fff;">ANDW アイコン設定デバッグ情報</h3>';
+        echo '<h3 style="margin: 0 0 10px 0; color: #fff;">ANDW FontAwesome アイコンデバッグ情報</h3>';
 
         // 現在の設定を取得
         $options = get_option('andw_floating_tools_options', array());
@@ -28,61 +28,64 @@ class Andw_Icon_Settings_Verifier {
         print_r($options);
         echo '</pre>';
 
-        // カスタムSVGパスの確認
-        $custom_svg_paths = isset($options['custom_svg_paths']) ? $options['custom_svg_paths'] : array();
-        echo '<h4 style="margin: 10px 0 5px 0; color: #ff0;">カスタムSVGパス:</h4>';
+        // FontAwesome アイコン設定の確認
+        $fontawesome_icons = isset($options['fontawesome_icons']) ? $options['fontawesome_icons'] : array();
+        echo '<h4 style="margin: 10px 0 5px 0; color: #ff0;">FontAwesome アイコン設定:</h4>';
         echo '<pre style="background: #222; padding: 10px; margin: 5px 0; border: 1px solid #555;">';
-        if (empty($custom_svg_paths)) {
-            echo 'カスタムSVGパスが設定されていません';
+        if (empty($fontawesome_icons)) {
+            echo 'FontAwesome アイコンが設定されていません';
         } else {
-            print_r($custom_svg_paths);
+            print_r($fontawesome_icons);
         }
         echo '</pre>';
 
+        // FontAwesome 検出状況
+        echo '<h4 style="margin: 10px 0 5px 0; color: #ff0;">FontAwesome 検出状況:</h4>';
+        echo '<div style="background: #222; padding: 10px; margin: 5px 0; border: 1px solid #555;">';
+        if (class_exists('Andw_FontAwesome_Handler')) {
+            $fa_handler = Andw_FontAwesome_Handler::get_instance();
+            $detection_info = $fa_handler->get_detection_info();
+
+            echo '検出済み: ' . ($detection_info['detected'] ? 'はい' : 'いいえ') . '<br>';
+            if ($detection_info['detected']) {
+                echo 'バージョン: ' . esc_html($detection_info['version']) . '<br>';
+                echo 'ソース: ' . esc_html($detection_info['source']) . '<br>';
+            }
+        } else {
+            echo 'FontAwesome ハンドラーが読み込まれていません';
+        }
+        echo '</div>';
+
         // 各ボタンタイプのアイコン取得テスト
         $button_types = array('apply', 'contact', 'toc', 'top');
-        echo '<h4 style="margin: 10px 0 5px 0; color: #ff0;">アイコン取得テスト:</h4>';
+        echo '<h4 style="margin: 10px 0 5px 0; color: #ff0;">アイコン表示テスト:</h4>';
 
         foreach ($button_types as $button_type) {
             echo '<div style="margin: 10px 0; border: 1px solid #555; padding: 10px;">';
             echo '<strong>' . $button_type . ':</strong><br>';
 
-            if (!empty($custom_svg_paths[$button_type])) {
-                $svg_content = trim($custom_svg_paths[$button_type]);
-                echo '設定値: ' . esc_html($svg_content) . '<br>';
+            $custom_icon = isset($fontawesome_icons[$button_type]) ? $fontawesome_icons[$button_type] : '';
 
-                // SVGタグの判定
-                if (strpos($svg_content, '<svg') !== false) {
-                    echo '判定: SVGタグ全体<br>';
-                    $result = preg_replace(
-                        '/<svg[^>]*>/i',
-                        '<svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">',
-                        $svg_content
-                    );
+            if (!empty($custom_icon)) {
+                echo '設定値: ' . esc_html($custom_icon) . '<br>';
+
+                if (class_exists('Andw_FontAwesome_Icons')) {
+                    $icon_html = Andw_FontAwesome_Icons::get_button_icon($button_type, $custom_icon);
+                    echo '処理結果: ' . esc_html($icon_html) . '<br>';
+                    echo 'プレビュー: ' . $icon_html;
                 } else {
-                    echo '判定: SVGタグの中身のみ<br>';
-                    $result = sprintf(
-                        '<svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">%s</svg>',
-                        $svg_content
-                    );
+                    echo 'FontAwesome アイコンクラスが読み込まれていません';
                 }
-
-                echo '処理結果: ' . esc_html($result) . '<br>';
-                echo 'プレビュー: ' . $result;
             } else {
-                echo 'カスタムアイコン未設定';
+                echo 'カスタムアイコン未設定（デフォルト使用）<br>';
+
+                if (class_exists('Andw_FontAwesome_Icons')) {
+                    $default_icon_html = Andw_FontAwesome_Icons::get_button_icon($button_type, '');
+                    echo 'デフォルトアイコン: ' . $default_icon_html;
+                }
             }
             echo '</div>';
         }
-
-        // リアルタイム取得テスト
-        echo '<h4 style="margin: 10px 0 5px 0; color: #ff0;">リアルタイム取得テスト:</h4>';
-        $realtime_options = get_option('andw_floating_tools_options', array());
-        $realtime_custom_svg = isset($realtime_options['custom_svg_paths']) ? $realtime_options['custom_svg_paths'] : array();
-        echo '<pre style="background: #222; padding: 10px; margin: 5px 0; border: 1px solid #555;">';
-        echo 'リアルタイム取得結果:' . "\n";
-        print_r($realtime_custom_svg);
-        echo '</pre>';
 
         echo '<button onclick="this.parentElement.style.display=\'none\'" style="position: absolute; top: 10px; right: 10px; background: #666; color: #fff; border: none; padding: 5px 10px; cursor: pointer;">閉じる</button>';
         echo '</div>';

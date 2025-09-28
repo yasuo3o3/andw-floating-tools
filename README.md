@@ -62,37 +62,48 @@ andW Floating Toolsは、Webサイトのユーザビリティを向上させる4
 
 ### ボタンのアイコンを変更する
 
-ボタンのアイコンは管理画面から簡単に変更できます。
+ボタンのアイコンはFontAwesome の豊富なアイコンライブラリから管理画面で簡単に選択できます。
 
 #### 管理画面での設定
 
 1. WordPress管理画面 → **設定** → **Floating Tools**
 2. **アイコン設定** セクション
-3. 各ボタンの **SVGパス** フィールドに好きなアイコンを貼り付け
+3. 各ボタンの **アイコン** プルダウンから好きなアイコンを選択
 4. 保存
 
-#### おすすめアイコンサイト
+#### FontAwesome について
 
-- **[Heroicons](https://heroicons.com/)** - 無料、シンプル、綺麗
-- **[Feather Icons](https://feathericons.com/)** - 軽量で統一感がある
-- **[Tabler Icons](https://tabler-icons.io/)** - 大量の無料アイコン
-- **[Lucide](https://lucide.dev/)** - 高品質
+- **50+ のアイコン** - ショッピング、メール、リスト、矢印など豊富なカテゴリ
+- **安全な自動読み込み** - 既存のFontAwesome使用を検出し、重複読み込みを防止
+- **確実な表示** - 全ブラウザ・全デバイスで安定表示
+- **高速配信** - CDN経由で軽量・高速
 
-#### 使用方法
+#### 利用可能なアイコン例
 
-**2つの方法で貼り付け可能：**
+**お申し込みボタン:**
+- 🛒 ショッピングカート (shopping-cart)
+- 🛍️ ショッピングバッグ (shopping-bag)
+- 💳 クレジットカード (credit-card)
+- 📋 申し込み (clipboard-check)
 
-1. **SVGコード全体をそのまま貼り付け（推奨）**
-```xml
-<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m15 11-1 9"/><path d="m19 11-4-7"/><path d="M2 11h20"/></svg>
-```
+**お問い合わせボタン:**
+- ✉️ メール (envelope)
+- 💬 コメント (comments)
+- 📞 電話 (phone)
+- 🎧 サポート (headset)
 
-2. **SVGタグの中身だけ**
-```xml
-<path d="m15 11-1 9"/><path d="m19 11-4-7"/><path d="M2 11h20"/>
-```
+**目次ボタン:**
+- 📋 リスト (list)
+- 📝 箇条書き (list-ul)
+- ☰ ハンバーガーメニュー (bars)
+- 📖 本を開く (book-open)
 
-どちらでも自動で正しく処理されます。
+**ページトップボタン:**
+- ⬆️ 上矢印 (arrow-up)
+- ⬆️ シェブロン上 (chevron-up)
+- 🚀 ロケット (rocket)
+
+詳細なアイコン一覧は [FontAwesome 公式サイト](https://fontawesome.com/icons) でご確認ください。
 
 ### ボタンの色を変更する
 
@@ -188,6 +199,7 @@ andW Floating Toolsは、Webサイトのユーザビリティを向上させる4
 - 軽量設計（1JS+1CSS）
 - セキュリティ対応（nonce、sanitize/escape）
 - i18n対応
+- FontAwesome 6.5.1 対応（自動読み込み・競合回避）
 
 ## ファイル構成
 
@@ -198,7 +210,10 @@ andw-floating-tools/
 │   ├── settings.php                 # 設定画面
 │   ├── render.php                   # フロントエンド出力
 │   ├── toc.php                      # TOC生成機能
-│   └── sanitization.php             # サニタイゼーション
+│   ├── sanitization.php             # サニタイゼーション
+│   ├── fontawesome-handler.php      # FontAwesome管理
+│   ├── fontawesome-icons.php        # アイコン定義
+│   └── icon-helper.php              # レガシーアイコン
 ├── assets/
 │   ├── js/app.js                    # フロントエンドJS
 │   └── css/app.css                  # スタイルシート
