@@ -461,7 +461,7 @@ class Andw_Floating_Tools_Settings {
         );
 
         foreach ($buttons as $key => $label) {
-            $checked = checked(in_array($key, $enabled, true), true, false);
+            $checked = esc_attr(checked(in_array($key, $enabled, true), true, false));
             echo '<label><input type="checkbox" name="' . esc_attr($this->option_name) . '[enabled_buttons][]" value="' . esc_attr($key) . '" ' . $checked . '> ' . esc_html($label) . '</label><br>';
         }
     }
@@ -517,8 +517,8 @@ class Andw_Floating_Tools_Settings {
         $options = get_option($this->option_name, array());
         $offset = isset($options[$field_name]) ? $options[$field_name] : array('bottom' => 16, 'right' => 16);
 
-        echo '<label>' . esc_html__('下', 'andw-floating-tools') . ': <input type="number" name="' . esc_attr($this->option_name) . '[' . $field_name . '][bottom]" value="' . esc_attr($offset['bottom']) . '" min="0" max="999" style="width: 80px;"> px</label>&nbsp;&nbsp;';
-        echo '<label>' . esc_html__('右', 'andw-floating-tools') . ': <input type="number" name="' . esc_attr($this->option_name) . '[' . $field_name . '][right]" value="' . esc_attr($offset['right']) . '" min="0" max="999" style="width: 80px;"> px</label>';
+        echo '<label>' . esc_html__('下', 'andw-floating-tools') . ': <input type="number" name="' . esc_attr($this->option_name) . '[' . esc_attr($field_name) . '][bottom]" value="' . esc_attr($offset['bottom']) . '" min="0" max="999" style="width: 80px;"> px</label>&nbsp;&nbsp;';
+        echo '<label>' . esc_html__('右', 'andw-floating-tools') . ': <input type="number" name="' . esc_attr($this->option_name) . '[' . esc_attr($field_name) . '][right]" value="' . esc_attr($offset['right']) . '" min="0" max="999" style="width: 80px;"> px</label>';
     }
 
     public function render_toc_depth_field() {
@@ -592,10 +592,10 @@ class Andw_Floating_Tools_Settings {
 
         echo '<table class="form-table" style="margin: 0;">';
         echo '<tr><th>URL</th><td><input type="url" name="' . esc_attr($this->option_name) . '[' . esc_attr($type) . '_url]" value="' . esc_attr($url) . '" style="width: 100%; max-width: 400px;"></td></tr>';
-        echo '<tr><th>' . esc_html__('ラベル', 'andw-floating-tools') . '</th><td><input type="text" name="' . esc_attr($this->option_name) . '[' . $type . '_label]" value="' . esc_attr($button_label) . '" style="width: 200px;"></td></tr>';
+        echo '<tr><th>' . esc_html__('ラベル', 'andw-floating-tools') . '</th><td><input type="text" name="' . esc_attr($this->option_name) . '[' . esc_attr($type) . '_label]" value="' . esc_attr($button_label) . '" style="width: 200px;"></td></tr>';
         echo '<tr><th>' . esc_html__('ターゲット', 'andw-floating-tools') . '</th><td>';
-        echo '<label><input type="radio" name="' . esc_attr($this->option_name) . '[' . $type . '_target]" value="_self"' . ($target === '_self' ? ' checked' : '') . '> ' . esc_html__('同じウィンドウ', 'andw-floating-tools') . '</label>&nbsp;&nbsp;';
-        echo '<label><input type="radio" name="' . esc_attr($this->option_name) . '[' . $type . '_target]" value="_blank"' . ($target === '_blank' ? ' checked' : '') . '> ' . esc_html__('新しいウィンドウ', 'andw-floating-tools') . '</label>';
+        echo '<label><input type="radio" name="' . esc_attr($this->option_name) . '[' . esc_attr($type) . '_target]" value="_self"' . checked($target, '_self', false) . '> ' . esc_html__('同じウィンドウ', 'andw-floating-tools') . '</label>&nbsp;&nbsp;';
+        echo '<label><input type="radio" name="' . esc_attr($this->option_name) . '[' . esc_attr($type) . '_target]" value="_blank"' . checked($target, '_blank', false) . '> ' . esc_html__('新しいウィンドウ', 'andw-floating-tools') . '</label>';
         echo '</td></tr>';
         echo '</table>';
     }
