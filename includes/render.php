@@ -271,6 +271,34 @@ class Of_Floating_Tools_Render {
             return;
         }
 
+        $display_mode = $this->get_toc_display_mode();
+
+        if ($display_mode === 'anchor-sheet') {
+            $this->render_toc_anchor_sheet();
+        } else {
+            $this->render_toc_drawer_legacy();
+        }
+    }
+
+    private function render_toc_anchor_sheet() {
+        echo '<div id="of-toc-anchor-sheet" class="of-toc-anchor-sheet" role="dialog" aria-modal="true" aria-labelledby="of-toc-title" aria-hidden="true">';
+        echo '<div class="of-toc-backdrop" data-toc-close="true"></div>';
+        echo '<div class="of-toc-sheet-content">';
+        echo '<div class="of-toc-header">';
+        echo '<div class="of-toc-handle"></div>';
+        echo '<h2 id="of-toc-title" class="of-toc-title">' . esc_html__('目次', 'andw-floating-tools') . '</h2>';
+        echo '<button type="button" class="of-toc-close" data-toc-close="true" aria-label="' . esc_attr__('目次を閉じる', 'andw-floating-tools') . '">';
+        echo '<svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>';
+        echo '</button>';
+        echo '</div>';
+        echo '<div class="of-toc-body">';
+        echo $this->toc_instance->render_toc_html();
+        echo '</div>';
+        echo '</div>';
+        echo '</div>';
+    }
+
+    private function render_toc_drawer_legacy() {
         echo '<div id="of-toc-drawer" class="of-toc-drawer" role="dialog" aria-modal="true" aria-labelledby="of-toc-title" aria-hidden="true">';
         echo '<div class="of-toc-backdrop" data-toc-close="true"></div>';
         echo '<div class="of-toc-content">';
@@ -286,11 +314,23 @@ class Of_Floating_Tools_Render {
         echo '</div>';
     }
 
+    private function get_toc_display_mode() {
+        $block_attributes = $this->get_block_attributes();
+
+        if (isset($block_attributes['tocDisplayMode']) && !empty($block_attributes['tocDisplayMode'])) {
+            return of_sanitize_toc_display_mode($block_attributes['tocDisplayMode']);
+        }
+
+        return isset($this->options['toc_display_mode']) ? $this->options['toc_display_mode'] : 'anchor-sheet';
+    }
+
     private function render_custom_css() {
         $offset_desktop = $this->get_offset('desktop');
         $offset_mobile = $this->get_offset('mobile');
         $offset_tablet = $this->get_offset('tablet');
         $z_index = isset($this->options['z_index']) ? $this->options['z_index'] : 999;
+
+        $sheet_settings = $this->get_sheet_settings();
 
         echo '<style id="of-floating-tools-inline-css">';
         echo '.of-floating-tools { z-index: ' . esc_attr($z_index) . '; }';
@@ -307,7 +347,48 @@ class Of_Floating_Tools_Render {
         echo '.of-floating-tools { bottom: ' . esc_attr($offset_mobile['bottom']) . 'px; right: ' . esc_attr($offset_mobile['right']) . 'px; }';
         echo '}';
 
+        // Anchor sheet settings
+        echo ':root {';
+        echo '--of-sheet-max-width: ' . esc_attr($sheet_settings['sheetMaxWidth']) . 'px;';
+        echo '--of-max-height-vh: ' . esc_attr($sheet_settings['maxHeightVh']) . 'vh;';
+        echo '--of-gap-right: ' . esc_attr($sheet_settings['gapRight']) . 'px;';
+        echo '--of-gap-left: ' . esc_attr($sheet_settings['gapLeft']) . 'px;';
+        echo '--of-anchor-offset-y: ' . esc_attr($sheet_settings['anchorOffsetY']) . 'px;';
+        echo '}';
+
         echo '</style>';
+    }
+
+    private function get_sheet_settings() {
+        $block_attributes = $this->get_block_attributes();
+
+        $sheet_max_width = isset($block_attributes['sheetMaxWidth']) && $block_attributes['sheetMaxWidth'] > 0 ?
+            $block_attributes['sheetMaxWidth'] :
+            (isset($this->options['sheet_max_width']) ? $this->options['sheet_max_width'] : 480);
+
+        $max_height_vh = isset($block_attributes['maxHeightVh']) && $block_attributes['maxHeightVh'] > 0 ?
+            $block_attributes['maxHeightVh'] :
+            (isset($this->options['max_height_vh']) ? $this->options['max_height_vh'] : 80);
+
+        $gap_right = isset($block_attributes['gapRight']) && $block_attributes['gapRight'] > 0 ?
+            $block_attributes['gapRight'] :
+            (isset($this->options['gap_right']) ? $this->options['gap_right'] : 12);
+
+        $gap_left = isset($block_attributes['gapLeft']) && $block_attributes['gapLeft'] > 0 ?
+            $block_attributes['gapLeft'] :
+            (isset($this->options['gap_left']) ? $this->options['gap_left'] : 16);
+
+        $anchor_offset_y = isset($block_attributes['anchorOffsetY']) && $block_attributes['anchorOffsetY'] > 0 ?
+            $block_attributes['anchorOffsetY'] :
+            (isset($this->options['anchor_offset_y']) ? $this->options['anchor_offset_y'] : 8);
+
+        return array(
+            'sheetMaxWidth' => $sheet_max_width,
+            'maxHeightVh' => $max_height_vh,
+            'gapRight' => $gap_right,
+            'gapLeft' => $gap_left,
+            'anchorOffsetY' => $anchor_offset_y,
+        );
     }
 
     private function get_offset($device) {
@@ -325,10 +406,23 @@ class Of_Floating_Tools_Render {
         if ($handle === 'of-floating-tools-app' && $object_name === 'ofFloatingTools') {
             $l10n['tocOffset'] = $this->toc_instance->get_toc_scroll_offset();
             $l10n['hasToc'] = $this->toc_instance->has_toc();
+            $l10n['tocDisplayMode'] = $this->get_toc_display_mode();
+            $l10n['sheetSettings'] = $this->get_sheet_settings();
+            $l10n['initialState'] = $this->get_initial_state();
 
             return $l10n;
         }
 
         return $l10n;
+    }
+
+    private function get_initial_state() {
+        $block_attributes = $this->get_block_attributes();
+
+        if (isset($block_attributes['initialState']) && !empty($block_attributes['initialState'])) {
+            return of_sanitize_initial_state($block_attributes['initialState']);
+        }
+
+        return isset($this->options['initial_state']) ? $this->options['initial_state'] : 'closed';
     }
 }

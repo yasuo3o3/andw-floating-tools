@@ -28,6 +28,17 @@
         { label: __('新しいウィンドウ', 'andw-floating-tools'), value: '_blank' }
     ];
 
+    const DISPLAY_MODE_OPTIONS = [
+        { label: __('アンカーシート（ボタン直上に展開）', 'andw-floating-tools'), value: 'anchor-sheet' },
+        { label: __('右側ドロワー', 'andw-floating-tools'), value: 'drawer' },
+        { label: __('アンカーパネル', 'andw-floating-tools'), value: 'anchor-panel' }
+    ];
+
+    const INITIAL_STATE_OPTIONS = [
+        { label: __('閉じた状態', 'andw-floating-tools'), value: 'closed' },
+        { label: __('ピーク状態（少し見える）', 'andw-floating-tools'), value: 'peek' }
+    ];
+
     registerBlockType('andw-floating-tools/toc', {
         edit: function( props ) {
             const { attributes, setAttributes } = props;
@@ -46,7 +57,14 @@
                 contactUrl,
                 contactLabel,
                 contactTarget,
-                presetId
+                presetId,
+                tocDisplayMode,
+                sheetMaxWidth,
+                maxHeightVh,
+                gapRight,
+                gapLeft,
+                anchorOffsetY,
+                initialState
             } = attributes;
 
             return wp.element.createElement(
@@ -167,6 +185,105 @@
                                 min: 0,
                                 max: 999,
                                 help: __('固定ヘッダーの高さに応じて調整', 'andw-floating-tools')
+                            }
+                        ),
+                        wp.element.createElement(
+                            SelectControl,
+                            {
+                                label: __('表示モード', 'andw-floating-tools'),
+                                value: tocDisplayMode,
+                                options: [{ label: __('サイト既定', 'andw-floating-tools'), value: '' }].concat(DISPLAY_MODE_OPTIONS),
+                                onChange: function( value ) { setAttributes({ tocDisplayMode: value }); },
+                                help: __('空の場合はサイト既定の設定を使用', 'andw-floating-tools')
+                            }
+                        )
+                    ),
+
+                    wp.element.createElement(
+                        PanelBody,
+                        { title: __('アンカーシート設定', 'andw-floating-tools'), initialOpen: false },
+                        wp.element.createElement(
+                            'div',
+                            { style: { marginBottom: '16px' } },
+                            wp.element.createElement('label', {}, __('最大幅 (px)', 'andw-floating-tools')),
+                            wp.element.createElement('input', {
+                                type: 'number',
+                                value: sheetMaxWidth,
+                                onChange: function( e ) { setAttributes({ sheetMaxWidth: parseInt(e.target.value) || 0 }); },
+                                min: 0,
+                                max: 800,
+                                style: { width: '100%' },
+                                placeholder: __('既定値を使用', 'andw-floating-tools')
+                            })
+                        ),
+                        wp.element.createElement(
+                            'div',
+                            { style: { marginBottom: '16px' } },
+                            wp.element.createElement('label', {}, __('最大高さ (vh)', 'andw-floating-tools')),
+                            wp.element.createElement('input', {
+                                type: 'number',
+                                value: maxHeightVh,
+                                onChange: function( e ) { setAttributes({ maxHeightVh: parseInt(e.target.value) || 0 }); },
+                                min: 0,
+                                max: 100,
+                                style: { width: '100%' },
+                                placeholder: __('既定値を使用', 'andw-floating-tools')
+                            })
+                        ),
+                        wp.element.createElement(
+                            'div',
+                            { style: { display: 'flex', gap: '8px', marginBottom: '16px' } },
+                            wp.element.createElement(
+                                'div',
+                                { style: { flex: '1' } },
+                                wp.element.createElement('label', {}, __('左余白 (px)', 'andw-floating-tools')),
+                                wp.element.createElement('input', {
+                                    type: 'number',
+                                    value: gapLeft,
+                                    onChange: function( e ) { setAttributes({ gapLeft: parseInt(e.target.value) || 0 }); },
+                                    min: 0,
+                                    max: 100,
+                                    style: { width: '100%' },
+                                    placeholder: __('既定値', 'andw-floating-tools')
+                                })
+                            ),
+                            wp.element.createElement(
+                                'div',
+                                { style: { flex: '1' } },
+                                wp.element.createElement('label', {}, __('右余白 (px)', 'andw-floating-tools')),
+                                wp.element.createElement('input', {
+                                    type: 'number',
+                                    value: gapRight,
+                                    onChange: function( e ) { setAttributes({ gapRight: parseInt(e.target.value) || 0 }); },
+                                    min: 0,
+                                    max: 100,
+                                    style: { width: '100%' },
+                                    placeholder: __('既定値', 'andw-floating-tools')
+                                })
+                            )
+                        ),
+                        wp.element.createElement(
+                            'div',
+                            { style: { marginBottom: '16px' } },
+                            wp.element.createElement('label', {}, __('ボタン間隔 (px)', 'andw-floating-tools')),
+                            wp.element.createElement('input', {
+                                type: 'number',
+                                value: anchorOffsetY,
+                                onChange: function( e ) { setAttributes({ anchorOffsetY: parseInt(e.target.value) || 0 }); },
+                                min: 0,
+                                max: 50,
+                                style: { width: '100%' },
+                                placeholder: __('既定値を使用', 'andw-floating-tools')
+                            })
+                        ),
+                        wp.element.createElement(
+                            SelectControl,
+                            {
+                                label: __('初期状態', 'andw-floating-tools'),
+                                value: initialState,
+                                options: [{ label: __('サイト既定', 'andw-floating-tools'), value: '' }].concat(INITIAL_STATE_OPTIONS),
+                                onChange: function( value ) { setAttributes({ initialState: value }); },
+                                help: __('アンカーシートモード時の初期表示状態', 'andw-floating-tools')
                             }
                         )
                     ),

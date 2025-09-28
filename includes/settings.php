@@ -116,6 +116,22 @@ class Of_Floating_Tools_Settings {
             'of_floating_tools_toc'
         );
 
+        add_settings_field(
+            'toc_display_mode',
+            __('表示モード', 'andw-floating-tools'),
+            array($this, 'render_toc_display_mode_field'),
+            $this->page_slug,
+            'of_floating_tools_toc'
+        );
+
+        add_settings_field(
+            'sheet_settings',
+            __('アンカーシート設定', 'andw-floating-tools'),
+            array($this, 'render_sheet_settings_fields'),
+            $this->page_slug,
+            'of_floating_tools_toc'
+        );
+
         add_settings_section(
             'of_floating_tools_cta',
             __('CTAボタン設定', 'andw-floating-tools'),
@@ -351,6 +367,44 @@ class Of_Floating_Tools_Settings {
         echo '<p class="description">' . esc_html__('固定ヘッダーの高さに応じて調整してください。', 'andw-floating-tools') . '</p>';
     }
 
+    public function render_toc_display_mode_field() {
+        $options = get_option($this->option_name, array());
+        $mode = isset($options['toc_display_mode']) ? $options['toc_display_mode'] : 'anchor-sheet';
+        $modes = array(
+            'anchor-sheet' => __('アンカーシート（ボタン直上に展開）', 'andw-floating-tools'),
+            'drawer' => __('右側ドロワー', 'andw-floating-tools'),
+            'anchor-panel' => __('アンカーパネル', 'andw-floating-tools'),
+        );
+
+        foreach ($modes as $key => $label) {
+            $checked = $mode === $key ? 'checked' : '';
+            echo '<label><input type="radio" name="' . esc_attr($this->option_name) . '[toc_display_mode]" value="' . esc_attr($key) . '" ' . $checked . '> ' . esc_html($label) . '</label><br>';
+        }
+    }
+
+    public function render_sheet_settings_fields() {
+        $options = get_option($this->option_name, array());
+        $sheet_max_width = isset($options['sheet_max_width']) ? $options['sheet_max_width'] : 480;
+        $max_height_vh = isset($options['max_height_vh']) ? $options['max_height_vh'] : 80;
+        $gap_right = isset($options['gap_right']) ? $options['gap_right'] : 12;
+        $gap_left = isset($options['gap_left']) ? $options['gap_left'] : 16;
+        $anchor_offset_y = isset($options['anchor_offset_y']) ? $options['anchor_offset_y'] : 8;
+        $initial_state = isset($options['initial_state']) ? $options['initial_state'] : 'closed';
+
+        echo '<table class="form-table" style="margin: 0;">';
+        echo '<tr><th>' . esc_html__('最大幅', 'andw-floating-tools') . '</th><td><input type="number" name="' . esc_attr($this->option_name) . '[sheet_max_width]" value="' . esc_attr($sheet_max_width) . '" min="200" max="800" style="width: 80px;"> px</td></tr>';
+        echo '<tr><th>' . esc_html__('最大高さ', 'andw-floating-tools') . '</th><td><input type="number" name="' . esc_attr($this->option_name) . '[max_height_vh]" value="' . esc_attr($max_height_vh) . '" min="20" max="100" style="width: 80px;"> vh</td></tr>';
+        echo '<tr><th>' . esc_html__('右余白', 'andw-floating-tools') . '</th><td><input type="number" name="' . esc_attr($this->option_name) . '[gap_right]" value="' . esc_attr($gap_right) . '" min="0" max="100" style="width: 80px;"> px</td></tr>';
+        echo '<tr><th>' . esc_html__('左余白', 'andw-floating-tools') . '</th><td><input type="number" name="' . esc_attr($this->option_name) . '[gap_left]" value="' . esc_attr($gap_left) . '" min="0" max="100" style="width: 80px;"> px</td></tr>';
+        echo '<tr><th>' . esc_html__('ボタン間隔', 'andw-floating-tools') . '</th><td><input type="number" name="' . esc_attr($this->option_name) . '[anchor_offset_y]" value="' . esc_attr($anchor_offset_y) . '" min="0" max="50" style="width: 80px;"> px</td></tr>';
+        echo '<tr><th>' . esc_html__('初期状態', 'andw-floating-tools') . '</th><td>';
+        echo '<label><input type="radio" name="' . esc_attr($this->option_name) . '[initial_state]" value="closed"' . ($initial_state === 'closed' ? ' checked' : '') . '> ' . esc_html__('閉じた状態', 'andw-floating-tools') . '</label>&nbsp;&nbsp;';
+        echo '<label><input type="radio" name="' . esc_attr($this->option_name) . '[initial_state]" value="peek"' . ($initial_state === 'peek' ? ' checked' : '') . '> ' . esc_html__('ピーク状態（少し見える）', 'andw-floating-tools') . '</label>';
+        echo '</td></tr>';
+        echo '</table>';
+        echo '<p class="description">' . esc_html__('アンカーシートモード時の詳細設定です。', 'andw-floating-tools') . '</p>';
+    }
+
     public function render_apply_fields() {
         $this->render_cta_fields('apply', __('お申し込み', 'andw-floating-tools'));
     }
@@ -509,6 +563,34 @@ class Of_Floating_Tools_Settings {
 
         if (isset($input['z_index'])) {
             $sanitized['z_index'] = of_sanitize_z_index($input['z_index']);
+        }
+
+        if (isset($input['toc_display_mode'])) {
+            $sanitized['toc_display_mode'] = of_sanitize_toc_display_mode($input['toc_display_mode']);
+        }
+
+        if (isset($input['sheet_max_width'])) {
+            $sanitized['sheet_max_width'] = of_sanitize_sheet_max_width($input['sheet_max_width']);
+        }
+
+        if (isset($input['max_height_vh'])) {
+            $sanitized['max_height_vh'] = of_sanitize_max_height_vh($input['max_height_vh']);
+        }
+
+        if (isset($input['gap_right'])) {
+            $sanitized['gap_right'] = of_sanitize_gap($input['gap_right']);
+        }
+
+        if (isset($input['gap_left'])) {
+            $sanitized['gap_left'] = of_sanitize_gap($input['gap_left']);
+        }
+
+        if (isset($input['anchor_offset_y'])) {
+            $sanitized['anchor_offset_y'] = of_sanitize_anchor_offset_y($input['anchor_offset_y']);
+        }
+
+        if (isset($input['initial_state'])) {
+            $sanitized['initial_state'] = of_sanitize_initial_state($input['initial_state']);
         }
 
         return $sanitized;

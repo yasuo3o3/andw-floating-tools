@@ -84,6 +84,34 @@
     "presetId": {
       "type": "string",
       "default": ""
+    },
+    "tocDisplayMode": {
+      "type": "string",
+      "default": ""
+    },
+    "sheetMaxWidth": {
+      "type": "number",
+      "default": 0
+    },
+    "maxHeightVh": {
+      "type": "number",
+      "default": 0
+    },
+    "gapRight": {
+      "type": "number",
+      "default": 0
+    },
+    "gapLeft": {
+      "type": "number",
+      "default": 0
+    },
+    "anchorOffsetY": {
+      "type": "number",
+      "default": 0
+    },
+    "initialState": {
+      "type": "string",
+      "default": ""
     }
   }
 }

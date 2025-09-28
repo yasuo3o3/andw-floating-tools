@@ -4,17 +4,30 @@
     const FloatingTools = {
         initialized: false,
         tocDrawer: null,
+        tocAnchorSheet: null,
         tocToggleButton: null,
         focusableElements: [],
         lastFocusedElement: null,
+        displayMode: 'anchor-sheet',
+        sheetSettings: {},
+        initialState: 'closed',
 
         init: function() {
             if (this.initialized) return;
 
+            this.loadSettings();
             this.bindEvents();
             this.setupTOC();
             this.setupScrollBehavior();
             this.initialized = true;
+        },
+
+        loadSettings: function() {
+            if (window.ofFloatingTools) {
+                this.displayMode = window.ofFloatingTools.tocDisplayMode || 'anchor-sheet';
+                this.sheetSettings = window.ofFloatingTools.sheetSettings || {};
+                this.initialState = window.ofFloatingTools.initialState || 'closed';
+            }
         },
 
         bindEvents: function() {
@@ -101,9 +114,40 @@
         },
 
         setupTOC: function() {
-            this.tocDrawer = document.getElementById('of-toc-drawer');
             this.tocToggleButton = document.querySelector('[data-toc-toggle]');
 
+            if (this.displayMode === 'anchor-sheet') {
+                this.tocAnchorSheet = document.getElementById('of-toc-anchor-sheet');
+                this.setupAnchorSheet();
+            } else {
+                this.tocDrawer = document.getElementById('of-toc-drawer');
+                this.setupDrawer();
+            }
+        },
+
+        setupAnchorSheet: function() {
+            if (!this.tocAnchorSheet) return;
+
+            this.focusableElements = this.tocAnchorSheet.querySelectorAll(
+                'button, [href], input, select, textarea, [tabindex]:not([tabindex="-1"])'
+            );
+
+            var self = this;
+            var backdrop = this.tocAnchorSheet.querySelector('.of-toc-backdrop');
+            if (backdrop) {
+                backdrop.addEventListener('click', function() { self.closeTOC(); });
+            }
+
+            // 初期状態の設定
+            if (this.initialState === 'peek') {
+                this.setPeekState();
+            }
+
+            // リサイズイベント
+            window.addEventListener('resize', function() { self.updateAnchorPosition(); });
+        },
+
+        setupDrawer: function() {
             if (!this.tocDrawer) return;
 
             this.focusableElements = this.tocDrawer.querySelectorAll(
@@ -118,9 +162,10 @@
         },
 
         toggleTOC: function() {
-            if (!this.tocDrawer) return;
+            var container = this.displayMode === 'anchor-sheet' ? this.tocAnchorSheet : this.tocDrawer;
+            if (!container) return;
 
-            var isHidden = this.tocDrawer.getAttribute('aria-hidden') === 'true';
+            var isHidden = container.getAttribute('aria-hidden') === 'true';
 
             if (isHidden) {
                 this.openTOC();
@@ -130,22 +175,29 @@
         },
 
         openTOC: function() {
-            if (!this.tocDrawer) return;
+            var container = this.displayMode === 'anchor-sheet' ? this.tocAnchorSheet : this.tocDrawer;
+            if (!container) return;
 
             this.lastFocusedElement = document.activeElement;
 
-            this.tocDrawer.setAttribute('aria-hidden', 'false');
-            this.tocDrawer.classList.add('of-toc-open');
+            if (this.displayMode === 'anchor-sheet') {
+                this.updateAnchorPosition();
+                container.setAttribute('aria-hidden', 'false');
+                container.classList.add('of-toc-open');
+                document.body.classList.add('of-toc-sheet-open');
+            } else {
+                container.setAttribute('aria-hidden', 'false');
+                container.classList.add('of-toc-open');
+                document.body.classList.add('of-toc-drawer-open');
+            }
 
             if (this.tocToggleButton) {
                 this.tocToggleButton.setAttribute('aria-expanded', 'true');
             }
 
-            document.body.classList.add('of-toc-drawer-open');
-
             var self = this;
             setTimeout(function() {
-                var firstFocusable = self.tocDrawer.querySelector('.of-toc-close');
+                var firstFocusable = container.querySelector('.of-toc-close');
                 if (firstFocusable) {
                     firstFocusable.focus();
                 }
@@ -153,16 +205,24 @@
         },
 
         closeTOC: function() {
-            if (!this.tocDrawer) return;
+            var container = this.displayMode === 'anchor-sheet' ? this.tocAnchorSheet : this.tocDrawer;
+            if (!container) return;
 
-            this.tocDrawer.setAttribute('aria-hidden', 'true');
-            this.tocDrawer.classList.remove('of-toc-open');
+            container.setAttribute('aria-hidden', 'true');
+            container.classList.remove('of-toc-open');
 
             if (this.tocToggleButton) {
                 this.tocToggleButton.setAttribute('aria-expanded', 'false');
             }
 
-            document.body.classList.remove('of-toc-drawer-open');
+            if (this.displayMode === 'anchor-sheet') {
+                document.body.classList.remove('of-toc-sheet-open');
+                if (this.initialState === 'peek') {
+                    this.setPeekState();
+                }
+            } else {
+                document.body.classList.remove('of-toc-drawer-open');
+            }
 
             if (this.lastFocusedElement && typeof this.lastFocusedElement.focus === 'function') {
                 this.lastFocusedElement.focus();
@@ -258,11 +318,46 @@
         },
 
         updateFocusableElements: function() {
-            if (!this.tocDrawer) return;
+            var container = this.displayMode === 'anchor-sheet' ? this.tocAnchorSheet : this.tocDrawer;
+            if (!container) return;
 
-            this.focusableElements = this.tocDrawer.querySelectorAll(
+            this.focusableElements = container.querySelectorAll(
                 'button, [href], input, select, textarea, [tabindex]:not([tabindex="-1"])'
             );
+        },
+
+        setPeekState: function() {
+            if (!this.tocAnchorSheet) return;
+
+            this.tocAnchorSheet.setAttribute('aria-hidden', 'false');
+            this.tocAnchorSheet.classList.add('of-toc-peek');
+            this.updateAnchorPosition();
+        },
+
+        updateAnchorPosition: function() {
+            if (!this.tocAnchorSheet || !this.tocToggleButton) return;
+
+            var buttonRect = this.tocToggleButton.getBoundingClientRect();
+            var sheetContent = this.tocAnchorSheet.querySelector('.of-toc-sheet-content');
+
+            if (!sheetContent) return;
+
+            var gapRight = this.sheetSettings.gapRight || 12;
+            var gapLeft = this.sheetSettings.gapLeft || 16;
+            var maxWidth = this.sheetSettings.sheetMaxWidth || 480;
+            var anchorOffsetY = this.sheetSettings.anchorOffsetY || 8;
+
+            var availableWidth = window.innerWidth - gapLeft - gapRight;
+            var sheetWidth = Math.min(availableWidth, maxWidth);
+
+            var rightPosition = window.innerWidth - buttonRect.right;
+            var bottomPosition = window.innerHeight - buttonRect.top + anchorOffsetY;
+
+            sheetContent.style.position = 'fixed';
+            sheetContent.style.right = rightPosition + 'px';
+            sheetContent.style.bottom = bottomPosition + 'px';
+            sheetContent.style.width = sheetWidth + 'px';
+            sheetContent.style.maxHeight = 'var(--of-max-height-vh)';
         },
 
         prefersReducedMotion: function() {

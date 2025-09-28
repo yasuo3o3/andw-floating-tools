@@ -94,6 +94,36 @@ function of_sanitize_utm_key($value) {
     return preg_replace('/[^a-zA-Z0-9_-]/', '', sanitize_text_field($value));
 }
 
+function of_sanitize_toc_display_mode($value) {
+    $allowed_modes = array('anchor-sheet', 'drawer', 'anchor-panel');
+    return in_array($value, $allowed_modes, true) ? $value : 'anchor-sheet';
+}
+
+function of_sanitize_sheet_max_width($value) {
+    $width = absint($value);
+    return min(max($width, 200), 800);
+}
+
+function of_sanitize_max_height_vh($value) {
+    $vh = absint($value);
+    return min(max($vh, 20), 100);
+}
+
+function of_sanitize_gap($value) {
+    $gap = absint($value);
+    return min(max($gap, 0), 100);
+}
+
+function of_sanitize_anchor_offset_y($value) {
+    $offset = absint($value);
+    return min(max($offset, 0), 50);
+}
+
+function of_sanitize_initial_state($value) {
+    $allowed_states = array('peek', 'closed');
+    return in_array($value, $allowed_states, true) ? $value : 'closed';
+}
+
 function of_add_utm_to_url($url, $utm_params) {
     if (empty($url) || empty($utm_params)) {
         return $url;
