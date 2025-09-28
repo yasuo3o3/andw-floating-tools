@@ -18,14 +18,15 @@
         },
 
         bindEvents: function() {
-            document.addEventListener('click', this.handleClick.bind(this));
-            document.addEventListener('keydown', this.handleKeydown.bind(this));
-            window.addEventListener('scroll', this.handleScroll.bind(this));
-            window.addEventListener('resize', this.debounce(this.handleResize.bind(this), 250));
+            var self = this;
+            document.addEventListener('click', function(event) { self.handleClick(event); });
+            document.addEventListener('keydown', function(event) { self.handleKeydown(event); });
+            window.addEventListener('scroll', function() { self.handleScroll(); });
+            window.addEventListener('resize', self.debounce(function() { self.handleResize(); }, 250));
         },
 
         handleClick: function(event) {
-            const target = event.target.closest('button');
+            var target = event.target.closest('button');
             if (!target) return;
 
             if (target.classList.contains('of-floating-button')) {
@@ -50,8 +51,8 @@
         },
 
         handleCTAClick: function(button) {
-            const url = button.getAttribute('data-url');
-            const target = button.getAttribute('data-target') || '_blank';
+            var url = button.getAttribute('data-url');
+            var target = button.getAttribute('data-target') || '_blank';
 
             if (url) {
                 if (target === '_blank') {
@@ -83,8 +84,8 @@
         trapFocus: function(event) {
             if (this.focusableElements.length === 0) return;
 
-            const firstFocusable = this.focusableElements[0];
-            const lastFocusable = this.focusableElements[this.focusableElements.length - 1];
+            var firstFocusable = this.focusableElements[0];
+            var lastFocusable = this.focusableElements[this.focusableElements.length - 1];
 
             if (event.shiftKey) {
                 if (document.activeElement === firstFocusable) {
@@ -109,16 +110,17 @@
                 'button, [href], input, select, textarea, [tabindex]:not([tabindex="-1"])'
             );
 
-            const backdrop = this.tocDrawer.querySelector('.of-toc-backdrop');
+            var self = this;
+            var backdrop = this.tocDrawer.querySelector('.of-toc-backdrop');
             if (backdrop) {
-                backdrop.addEventListener('click', this.closeTOC.bind(this));
+                backdrop.addEventListener('click', function() { self.closeTOC(); });
             }
         },
 
         toggleTOC: function() {
             if (!this.tocDrawer) return;
 
-            const isHidden = this.tocDrawer.getAttribute('aria-hidden') === 'true';
+            var isHidden = this.tocDrawer.getAttribute('aria-hidden') === 'true';
 
             if (isHidden) {
                 this.openTOC();
@@ -141,8 +143,9 @@
 
             document.body.classList.add('of-toc-drawer-open');
 
-            setTimeout(() => {
-                const firstFocusable = this.tocDrawer.querySelector('.of-toc-close');
+            var self = this;
+            setTimeout(function() {
+                var firstFocusable = self.tocDrawer.querySelector('.of-toc-close');
                 if (firstFocusable) {
                     firstFocusable.focus();
                 }
@@ -168,13 +171,13 @@
         },
 
         handleTOCLinkClick: function(link, event) {
-            const href = link.getAttribute('href');
+            var href = link.getAttribute('href');
             if (!href || !href.startsWith('#')) return;
 
             event.preventDefault();
 
-            const targetId = href.substring(1);
-            const targetElement = document.getElementById(targetId);
+            var targetId = href.substring(1);
+            var targetElement = document.getElementById(targetId);
 
             if (targetElement) {
                 this.closeTOC();
@@ -183,9 +186,9 @@
         },
 
         scrollToElement: function(element) {
-            const offset = this.getTOCOffset();
-            const elementTop = element.getBoundingClientRect().top + window.pageYOffset;
-            const scrollPosition = Math.max(0, elementTop - offset);
+            var offset = this.getTOCOffset();
+            var elementTop = element.getBoundingClientRect().top + window.pageYOffset;
+            var scrollPosition = Math.max(0, elementTop - offset);
 
             if (this.prefersReducedMotion()) {
                 window.scrollTo(0, scrollPosition);
@@ -213,31 +216,32 @@
         },
 
         setupScrollBehavior: function() {
-            let lastScrollY = window.scrollY;
-            let scrollDirection = 'down';
+            var self = this;
+            var lastScrollY = window.scrollY;
+            var scrollDirection = 'down';
 
-            this.handleScroll = this.throttle(() => {
-                const currentScrollY = window.scrollY;
-                const scrollDifference = Math.abs(currentScrollY - lastScrollY);
+            this.handleScroll = this.throttle(function() {
+                var currentScrollY = window.scrollY;
+                var scrollDifference = Math.abs(currentScrollY - lastScrollY);
 
                 if (scrollDifference > 5) {
                     scrollDirection = currentScrollY > lastScrollY ? 'down' : 'up';
                     lastScrollY = currentScrollY;
                 }
 
-                this.updateScrollTriggers(currentScrollY, scrollDirection);
+                self.updateScrollTriggers(currentScrollY, scrollDirection);
             }, 16);
 
             this.handleScroll();
         },
 
         updateScrollTriggers: function(scrollY, direction) {
-            const scrollTriggers = document.querySelectorAll('.of-scroll-trigger');
-            const viewportHeight = window.innerHeight;
-            const triggerPoint = viewportHeight * 0.5;
+            var scrollTriggers = document.querySelectorAll('.of-scroll-trigger');
+            var viewportHeight = window.innerHeight;
+            var triggerPoint = viewportHeight * 0.5;
 
-            scrollTriggers.forEach(trigger => {
-                const shouldShow = scrollY > triggerPoint || direction === 'up';
+            scrollTriggers.forEach(function(trigger) {
+                var shouldShow = scrollY > triggerPoint || direction === 'up';
 
                 if (shouldShow) {
                     trigger.classList.add('of-visible');
@@ -266,23 +270,23 @@
         },
 
         throttle: function(func, limit) {
-            let inThrottle;
+            var inThrottle;
             return function() {
-                const args = arguments;
-                const context = this;
+                var args = arguments;
+                var context = this;
                 if (!inThrottle) {
                     func.apply(context, args);
                     inThrottle = true;
-                    setTimeout(() => inThrottle = false, limit);
+                    setTimeout(function() { inThrottle = false; }, limit);
                 }
             }
         },
 
         debounce: function(func, wait) {
-            let timeout;
+            var timeout;
             return function() {
-                const context = this;
-                const args = arguments;
+                var context = this;
+                var args = arguments;
                 clearTimeout(timeout);
                 timeout = setTimeout(function() {
                     func.apply(context, args);
