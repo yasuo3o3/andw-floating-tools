@@ -1,7 +1,7 @@
 ( function() {
     const { registerBlockType } = wp.blocks;
     const { InspectorControls } = wp.blockEditor;
-    const { PanelBody, CheckboxControl, SelectControl, RangeControl, TextControl, __experimentalNumberControl: NumberControl } = wp.components;
+    const { PanelBody, CheckboxControl, SelectControl, RangeControl, TextControl } = wp.components;
     const { __ } = wp.i18n;
     const { useSelect } = wp.data;
 
