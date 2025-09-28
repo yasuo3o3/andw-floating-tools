@@ -370,10 +370,10 @@ class Andw_Floating_Tools_Settings {
 
         // リアルタイムプレビュー用のJavaScript
         $field_id = 'fontawesome_' . $button_type;
-        echo '<div id="preview_' . $field_id . '" style="margin-top: 10px;">';
+        echo '<div id="preview_' . esc_attr($field_id) . '" style="margin-top: 10px;">';
         if (!empty($current_unicode)) {
             echo '<strong>プレビュー:</strong> ';
-            echo Andw_FontAwesome_Icons::get_preview_html($current_unicode);
+            echo wp_kses_post(Andw_FontAwesome_Icons::get_preview_html($current_unicode));
         }
         echo '</div>';
 
@@ -381,7 +381,7 @@ class Andw_Floating_Tools_Settings {
         echo '<script>
         (function() {
             var input = document.querySelector(\'input[name="' . esc_js($this->option_name) . '[fontawesome_icons][' . esc_js($button_type) . ']"]\');
-            var preview = document.getElementById(\'preview_' . $field_id . '\');
+            var preview = document.getElementById(\'preview_' . esc_js($field_id) . '\');
 
             if (input && preview) {
                 input.addEventListener(\'input\', function() {
@@ -400,7 +400,7 @@ class Andw_Floating_Tools_Settings {
 
         // ヘルプテキスト
         echo '<div class="description" style="margin-top: 10px;">';
-        echo Andw_FontAwesome_Icons::get_admin_help_text();
+        echo wp_kses_post(Andw_FontAwesome_Icons::get_admin_help_text());
         echo '</div>';
     }
 
@@ -461,7 +461,7 @@ class Andw_Floating_Tools_Settings {
         );
 
         foreach ($buttons as $key => $label) {
-            $checked = in_array($key, $enabled, true) ? 'checked' : '';
+            $checked = checked(in_array($key, $enabled, true), true, false);
             echo '<label><input type="checkbox" name="' . esc_attr($this->option_name) . '[enabled_buttons][]" value="' . esc_attr($key) . '" ' . $checked . '> ' . esc_html($label) . '</label><br>';
         }
     }
@@ -496,7 +496,7 @@ class Andw_Floating_Tools_Settings {
         );
 
         foreach ($layouts as $key => $label) {
-            $checked = $layout === $key ? 'checked' : '';
+            $checked = checked($layout, $key, false);
             echo '<label><input type="radio" name="' . esc_attr($this->option_name) . '[layout_desktop]" value="' . esc_attr($key) . '" ' . $checked . '> ' . esc_html($label) . '</label><br>';
         }
     }
@@ -531,7 +531,7 @@ class Andw_Floating_Tools_Settings {
         );
 
         foreach ($depths as $key => $label) {
-            $checked = $depth == $key ? 'checked' : '';
+            $checked = checked($depth, $key, false);
             echo '<label><input type="radio" name="' . esc_attr($this->option_name) . '[toc_default_depth]" value="' . esc_attr($key) . '" ' . $checked . '> ' . esc_html($label) . '</label><br>';
         }
     }
@@ -553,7 +553,7 @@ class Andw_Floating_Tools_Settings {
         );
 
         foreach ($modes as $key => $label) {
-            $checked = $mode === $key ? 'checked' : '';
+            $checked = checked($mode, $key, false);
             echo '<label><input type="radio" name="' . esc_attr($this->option_name) . '[toc_display_mode]" value="' . esc_attr($key) . '" ' . $checked . '> ' . esc_html($label) . '</label><br>';
         }
     }
@@ -591,7 +591,7 @@ class Andw_Floating_Tools_Settings {
         $target = isset($options[$type . '_target']) ? $options[$type . '_target'] : '_blank';
 
         echo '<table class="form-table" style="margin: 0;">';
-        echo '<tr><th>URL</th><td><input type="url" name="' . esc_attr($this->option_name) . '[' . $type . '_url]" value="' . esc_attr($url) . '" style="width: 100%; max-width: 400px;"></td></tr>';
+        echo '<tr><th>URL</th><td><input type="url" name="' . esc_attr($this->option_name) . '[' . esc_attr($type) . '_url]" value="' . esc_attr($url) . '" style="width: 100%; max-width: 400px;"></td></tr>';
         echo '<tr><th>' . esc_html__('ラベル', 'andw-floating-tools') . '</th><td><input type="text" name="' . esc_attr($this->option_name) . '[' . $type . '_label]" value="' . esc_attr($button_label) . '" style="width: 200px;"></td></tr>';
         echo '<tr><th>' . esc_html__('ターゲット', 'andw-floating-tools') . '</th><td>';
         echo '<label><input type="radio" name="' . esc_attr($this->option_name) . '[' . $type . '_target]" value="_self"' . ($target === '_self' ? ' checked' : '') . '> ' . esc_html__('同じウィンドウ', 'andw-floating-tools') . '</label>&nbsp;&nbsp;';
@@ -637,7 +637,7 @@ class Andw_Floating_Tools_Settings {
 
         echo '<select name="' . esc_attr($this->option_name) . '[preset_id]">';
         foreach ($presets as $key => $label) {
-            $selected = $preset === $key ? 'selected' : '';
+            $selected = selected($preset, $key, false);
             echo '<option value="' . esc_attr($key) . '" ' . $selected . '>' . esc_html($label) . '</option>';
         }
         echo '</select>';
