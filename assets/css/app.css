@@ -237,7 +237,7 @@
     list-style: none;
 }
 
-.andw-toc-list .andw-toc-list {
+.andw-toc-list.andw-toc-nested {
     margin-left: 16px;
     margin-top: 8px;
 }

@@ -245,7 +245,7 @@ class Andw_Floating_Tools_TOC {
         }
 
         $html = '<nav class="andw-toc-nav" aria-label="' . esc_attr__('目次', 'andw-floating-tools') . '">';
-        $html .= '<h2 class="andw-toc-title">' . esc_html__('目次', 'andw-floating-tools') . '</h2>';
+        $html .= '<div class="andw-toc-title">' . esc_html__('目次', 'andw-floating-tools') . '</div>';
         $html .= $this->render_toc_list($this->toc_data);
         $html .= '</nav>';
 
@@ -257,11 +257,13 @@ class Andw_Floating_Tools_TOC {
             return '';
         }
 
-        $html = '<ol class="andw-toc-list andw-toc-level-' . esc_attr($level) . '">';
+        $nested_class = $level > 1 ? ' andw-toc-nested' : '';
+        $html = '<ol class="andw-toc-list andw-toc-level-' . esc_attr($level) . $nested_class . '">';
 
         foreach ($items as $item) {
-            $html .= '<li class="andw-toc-item">';
-            $html .= '<a href="#' . esc_attr($item['id']) . '" class="andw-toc-link">';
+            $level_class = 'andw-toc-level-' . $item['level'];
+            $html .= '<li class="andw-toc-item ' . esc_attr($level_class) . '">';
+            $html .= '<a href="#' . esc_attr($item['id']) . '" class="andw-toc-link ' . esc_attr($level_class) . '">';
             $html .= esc_html($item['text']);
             $html .= '</a>';
 
