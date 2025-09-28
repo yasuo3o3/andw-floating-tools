@@ -121,7 +121,7 @@ class Of_Floating_Tools {
             'toc_scroll_offset' => 72,
             'toc_display_mode' => 'anchor-sheet',
             'sheet_max_width' => 480,
-            'max_height_vh' => 80,
+            'max_height_vh' => 33,
             'gap_right' => 12,
             'gap_left' => 16,
             'anchor_offset_y' => 8,

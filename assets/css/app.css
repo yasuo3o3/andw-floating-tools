@@ -337,7 +337,7 @@
     transform: translateY(100%);
     transition: transform 0.3s ease;
     max-width: var(--of-sheet-max-width, 480px);
-    max-height: var(--of-max-height-vh, 80vh);
+    max-height: var(--of-max-height-vh, 33vh);
     min-height: 120px;
     width: calc(100vw - var(--of-gap-left, 16px) - var(--of-gap-right, 12px));
     overflow: hidden;

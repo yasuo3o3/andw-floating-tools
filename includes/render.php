@@ -171,7 +171,7 @@ class Of_Floating_Tools_Render {
             case 'top':
                 return array(
                     'aria_label' => __('ページトップへ', 'andw-floating-tools'),
-                    'label' => '',
+                    'label' => __('トップへ', 'andw-floating-tools'),
                     'url' => '',
                     'target' => '',
                 );
@@ -221,7 +221,7 @@ class Of_Floating_Tools_Render {
 
                 return array(
                     'aria_label' => __('目次', 'andw-floating-tools'),
-                    'label' => '',
+                    'label' => __('目次', 'andw-floating-tools'),
                     'url' => '',
                     'target' => '',
                 );
