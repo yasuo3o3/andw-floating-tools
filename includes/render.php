@@ -158,7 +158,7 @@ class Andw_Floating_Tools_Render {
         }
         echo '>';
 
-        echo $this->get_button_icon($button_type);
+        echo wp_kses_post($this->get_button_icon($button_type));
 
         if (!empty($button_config['label'])) {
             echo '<span class="andw-button-label">' . esc_html($button_config['label']) . '</span>';
@@ -298,7 +298,7 @@ class Andw_Floating_Tools_Render {
         echo '</button>';
         echo '</div>';
         echo '<div class="andw-toc-body">';
-        echo $this->toc_instance->render_toc_html();
+        echo wp_kses_post($this->toc_instance->render_toc_html());
         echo '</div>';
         echo '</div>';
         echo '</div>';
@@ -314,7 +314,7 @@ class Andw_Floating_Tools_Render {
         echo '</button>';
         echo '</div>';
         echo '<div class="andw-toc-body">';
-        echo $this->toc_instance->render_toc_html();
+        echo wp_kses_post($this->toc_instance->render_toc_html());
         echo '</div>';
         echo '</div>';
         echo '</div>';
