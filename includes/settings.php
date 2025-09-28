@@ -461,8 +461,13 @@ class Andw_Floating_Tools_Settings {
         );
 
         foreach ($buttons as $key => $label) {
-            $checked = esc_attr(checked(in_array($key, $enabled, true), true, false));
-            echo '<label><input type="checkbox" name="' . esc_attr($this->option_name) . '[enabled_buttons][]" value="' . esc_attr($key) . '" ' . $checked . '> ' . esc_html($label) . '</label><br>';
+            printf(
+                '<label><input type="checkbox" name="%1$s[enabled_buttons][]" value="%2$s"%3$s> %4$s</label><br>',
+                esc_attr($this->option_name),
+                esc_attr($key),
+                checked(in_array($key, $enabled, true), true, false),
+                esc_html($label)
+            );
         }
     }
 
@@ -496,8 +501,13 @@ class Andw_Floating_Tools_Settings {
         );
 
         foreach ($layouts as $key => $label) {
-            $checked = checked($layout, $key, false);
-            echo '<label><input type="radio" name="' . esc_attr($this->option_name) . '[layout_desktop]" value="' . esc_attr($key) . '" ' . $checked . '> ' . esc_html($label) . '</label><br>';
+            printf(
+                '<label><input type="radio" name="%1$s[layout_desktop]" value="%2$s"%3$s> %4$s</label><br>',
+                esc_attr($this->option_name),
+                esc_attr($key),
+                checked($layout, $key, false),
+                esc_html($label)
+            );
         }
     }
 
@@ -531,8 +541,13 @@ class Andw_Floating_Tools_Settings {
         );
 
         foreach ($depths as $key => $label) {
-            $checked = checked($depth, $key, false);
-            echo '<label><input type="radio" name="' . esc_attr($this->option_name) . '[toc_default_depth]" value="' . esc_attr($key) . '" ' . $checked . '> ' . esc_html($label) . '</label><br>';
+            printf(
+                '<label><input type="radio" name="%1$s[toc_default_depth]" value="%2$s"%3$s> %4$s</label><br>',
+                esc_attr($this->option_name),
+                esc_attr($key),
+                checked($depth, $key, false),
+                esc_html($label)
+            );
         }
     }
 
@@ -553,8 +568,13 @@ class Andw_Floating_Tools_Settings {
         );
 
         foreach ($modes as $key => $label) {
-            $checked = checked($mode, $key, false);
-            echo '<label><input type="radio" name="' . esc_attr($this->option_name) . '[toc_display_mode]" value="' . esc_attr($key) . '" ' . $checked . '> ' . esc_html($label) . '</label><br>';
+            printf(
+                '<label><input type="radio" name="%1$s[toc_display_mode]" value="%2$s"%3$s> %4$s</label><br>',
+                esc_attr($this->option_name),
+                esc_attr($key),
+                checked($mode, $key, false),
+                esc_html($label)
+            );
         }
     }
 
@@ -637,8 +657,12 @@ class Andw_Floating_Tools_Settings {
 
         echo '<select name="' . esc_attr($this->option_name) . '[preset_id]">';
         foreach ($presets as $key => $label) {
-            $selected = selected($preset, $key, false);
-            echo '<option value="' . esc_attr($key) . '" ' . $selected . '>' . esc_html($label) . '</option>';
+            printf(
+                '<option value="%1$s"%2$s>%3$s</option>',
+                esc_attr($key),
+                selected($preset, $key, false),
+                esc_html($label)
+            );
         }
         echo '</select>';
     }
