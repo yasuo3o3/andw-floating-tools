@@ -794,10 +794,6 @@ class Andw_Floating_Tools_Settings {
                         $sanitized['fontawesome_icons'][$button_type] = '';
                     }
 
-                    // デバッグログ
-                    if (defined('WP_DEBUG') && WP_DEBUG) {
-                        error_log("ANDW FontAwesome Unicode Save Debug - {$button_type}: '{$unicode_input}' -> '{$sanitized['fontawesome_icons'][$button_type]}'");
-                    }
                 }
             }
         }
