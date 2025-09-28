@@ -256,25 +256,15 @@ class Andw_Floating_Tools_Render {
         $current_options = get_option('andw_floating_tools_options', array());
         $display_method = isset($current_options['icon_display_method']) ? $current_options['icon_display_method'] : 'fontawesome';
 
-        // デバッグ出力
-        if (defined('WP_DEBUG') && WP_DEBUG) {
-            error_log("ANDW Icon Debug - get_button_icon({$button_type}) using method: {$display_method}");
-        }
 
         if ($display_method === 'svg') {
             // 内蔵SVGアイコンを使用
-            if (defined('WP_DEBUG') && WP_DEBUG) {
-                error_log("ANDW Icon Debug - Using built-in SVG for {$button_type}");
-            }
             return Andw_SVG_Icons::get_button_icon($button_type);
         } else {
             // FontAwesome アイコンを使用
             $fontawesome_icons = isset($current_options['fontawesome_icons']) ? $current_options['fontawesome_icons'] : array();
             $custom_icon = isset($fontawesome_icons[$button_type]) ? $fontawesome_icons[$button_type] : '';
 
-            if (defined('WP_DEBUG') && WP_DEBUG) {
-                error_log("ANDW FontAwesome Debug - Using FontAwesome for {$button_type}: " . ($custom_icon ?: 'default'));
-            }
 
             return Andw_FontAwesome_Icons::get_button_icon($button_type, $custom_icon);
         }
