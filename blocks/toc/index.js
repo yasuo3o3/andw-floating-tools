@@ -55,7 +55,6 @@
                 contactLabel,
                 contactTarget,
                 presetId,
-                tocDisplayMode,
                 sheetMaxWidth,
                 maxHeightVh,
                 gapRight,
@@ -137,16 +136,6 @@
                                 help: __('固定ヘッダーの高さに応じて調整', 'andw-floating-tools')
                             }
                         ),
-                        wp.element.createElement(
-                            SelectControl,
-                            {
-                                label: __('表示モード', 'andw-floating-tools'),
-                                value: tocDisplayMode,
-                                options: [{ label: __('サイト既定', 'andw-floating-tools'), value: '' }].concat(DISPLAY_MODE_OPTIONS),
-                                onChange: function( value ) { setAttributes({ tocDisplayMode: value }); },
-                                help: __('空の場合はサイト既定の設定を使用', 'andw-floating-tools')
-                            }
-                        )
                     ),
 
                     wp.element.createElement(

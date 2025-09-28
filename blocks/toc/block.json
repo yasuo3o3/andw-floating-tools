@@ -64,10 +64,6 @@
       "type": "string",
       "default": ""
     },
-    "tocDisplayMode": {
-      "type": "string",
-      "default": ""
-    },
     "sheetMaxWidth": {
       "type": "number",
       "default": 0
