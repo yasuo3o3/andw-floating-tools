@@ -412,18 +412,20 @@ class Andw_Floating_Tools_Settings {
 
         // FontAwesome方式
         echo '<label style="display: block; margin-bottom: 10px;">';
-        echo '<input type="radio" name="' . esc_attr($this->option_name) . '[icon_display_method]" value="fontawesome" ';
-        checked($current_method, 'fontawesome');
-        echo '> <strong>FontAwesome (推奨)</strong>';
-        echo '</label>';
+        printf(
+            '<input type="radio" name="%1$s[icon_display_method]" value="fontawesome"%2$s> <strong>FontAwesome (推奨)</strong></label>',
+            esc_attr($this->option_name),
+            checked($current_method, 'fontawesome', false)
+        );
         echo '<p style="margin-left: 20px; color: #666;">Unicode入力で自由にアイコン選択。FontAwesome CDNまたはプラグインが必要。</p>';
 
         // SVG方式
         echo '<label style="display: block; margin-bottom: 10px;">';
-        echo '<input type="radio" name="' . esc_attr($this->option_name) . '[icon_display_method]" value="svg" ';
-        checked($current_method, 'svg');
-        echo '> <strong>内蔵SVG</strong>';
-        echo '</label>';
+        printf(
+            '<input type="radio" name="%1$s[icon_display_method]" value="svg"%2$s> <strong>内蔵SVG</strong></label>',
+            esc_attr($this->option_name),
+            checked($current_method, 'svg', false)
+        );
         echo '<p style="margin-left: 20px; color: #666;">FontAwesome不要で確実に表示。アイコン選択肢は限定的。</p>';
 
         echo '</div>';
@@ -614,8 +616,20 @@ class Andw_Floating_Tools_Settings {
         echo '<tr><th>URL</th><td><input type="url" name="' . esc_attr($this->option_name) . '[' . esc_attr($type) . '_url]" value="' . esc_attr($url) . '" style="width: 100%; max-width: 400px;"></td></tr>';
         echo '<tr><th>' . esc_html__('ラベル', 'andw-floating-tools') . '</th><td><input type="text" name="' . esc_attr($this->option_name) . '[' . esc_attr($type) . '_label]" value="' . esc_attr($button_label) . '" style="width: 200px;"></td></tr>';
         echo '<tr><th>' . esc_html__('ターゲット', 'andw-floating-tools') . '</th><td>';
-        echo '<label><input type="radio" name="' . esc_attr($this->option_name) . '[' . esc_attr($type) . '_target]" value="_self"' . checked($target, '_self', false) . '> ' . esc_html__('同じウィンドウ', 'andw-floating-tools') . '</label>&nbsp;&nbsp;';
-        echo '<label><input type="radio" name="' . esc_attr($this->option_name) . '[' . esc_attr($type) . '_target]" value="_blank"' . checked($target, '_blank', false) . '> ' . esc_html__('新しいウィンドウ', 'andw-floating-tools') . '</label>';
+        printf(
+            '<label><input type="radio" name="%1$s[%2$s_target]" value="_self"%3$s> %4$s</label>&nbsp;&nbsp;',
+            esc_attr($this->option_name),
+            esc_attr($type),
+            checked($target, '_self', false),
+            esc_html__('同じウィンドウ', 'andw-floating-tools')
+        );
+        printf(
+            '<label><input type="radio" name="%1$s[%2$s_target]" value="_blank"%3$s> %4$s</label>',
+            esc_attr($this->option_name),
+            esc_attr($type),
+            checked($target, '_blank', false),
+            esc_html__('新しいウィンドウ', 'andw-floating-tools')
+        );
         echo '</td></tr>';
         echo '</table>';
     }
@@ -624,7 +638,12 @@ class Andw_Floating_Tools_Settings {
         $options = get_option($this->option_name, array());
         $enabled = isset($options['utm_enabled']) ? $options['utm_enabled'] : false;
 
-        echo '<label><input type="checkbox" name="' . esc_attr($this->option_name) . '[utm_enabled]" value="1"' . ($enabled ? ' checked' : '') . '> ' . esc_html__('CTAボタンにUTMパラメータを自動付与する', 'andw-floating-tools') . '</label>';
+        printf(
+            '<label><input type="checkbox" name="%1$s[utm_enabled]" value="1"%2$s> %3$s</label>',
+            esc_attr($this->option_name),
+            checked($enabled, true, false),
+            esc_html__('CTAボタンにUTMパラメータを自動付与する', 'andw-floating-tools')
+        );
     }
 
     public function render_utm_params_fields() {
