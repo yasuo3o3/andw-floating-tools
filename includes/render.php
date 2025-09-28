@@ -12,7 +12,7 @@ class Andw_Floating_Tools_Render {
         $this->toc_instance = Andw_Floating_Tools_TOC::get_instance();
 
         add_action('wp_footer', array($this, 'render_floating_tools'));
-        add_action('wp_localize_script', array($this, 'localize_toc_data'), 10, 3);
+        add_filter('wp_localize_script', array($this, 'localize_toc_data'), 10, 3);
     }
 
     public function render_floating_tools() {
@@ -407,7 +407,7 @@ class Andw_Floating_Tools_Render {
     }
 
     public function localize_toc_data($handle, $object_name, $l10n) {
-        if ($handle === 'andw-floating-tools-app' && $object_name === 'ofFloatingTools') {
+        if ($handle === 'andw-floating-tools-app' && $object_name === 'andwFloatingTools') {
             $l10n['tocOffset'] = $this->toc_instance->get_toc_scroll_offset();
             $l10n['hasToc'] = $this->toc_instance->has_toc();
             $l10n['tocDisplayMode'] = $this->get_toc_display_mode();
@@ -420,3 +420,4 @@ class Andw_Floating_Tools_Render {
     }
 
 }
+

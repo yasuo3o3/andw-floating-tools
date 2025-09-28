@@ -3,6 +3,10 @@ if (!defined('ABSPATH')) {
     exit;
 }
 
+if (!function_exists('is_plugin_active')) {
+    require_once ABSPATH . 'wp-admin/includes/plugin.php';
+}
+
 class Andw_FontAwesome_Handler {
     private static $instance = null;
     private $fa_detected = false;
@@ -209,3 +213,4 @@ class Andw_FontAwesome_Handler {
         return true; // 検出されない場合は自動で読み込むため常にtrue
     }
 }
+

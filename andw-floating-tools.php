@@ -124,7 +124,7 @@ class Andw_Floating_Tools {
     public function on_activation() {
         $default_options = array(
             'enabled_buttons' => array('top', 'toc', 'apply', 'contact'),
-            'button_order' => array('top', 'apply', 'c3ontact', 'toc'),
+            'button_order' => array('top', 'apply', 'contact', 'toc'),
             'layout_desktop' => 'stack-vertical-right-center',
             'offset_desktop' => array('bottom' => 16, 'right' => 16),
             'offset_mobile' => array('bottom' => 16, 'right' => 16),
@@ -189,5 +189,6 @@ Andw_Floating_Tools::get_instance();
 
 // デバッグモード時のアイコン検証ツール読み込み
 if (defined('WP_DEBUG') && WP_DEBUG && !is_admin()) {
-    require_once ANDW_FLOATING_TOOLS_PLUGIN_PATH . 'verify-icon-settings.php';
+    require_once ANDW_FLOATING_TOOLS_PLUGIN_DIR . 'verify-icon-settings.php';
 }
+
