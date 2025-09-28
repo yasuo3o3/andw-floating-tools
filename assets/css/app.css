@@ -585,6 +585,7 @@
     }
 
     .of-toc-drawer {
+        -webkit-backdrop-filter: none;
         backdrop-filter: none;
     }
 
