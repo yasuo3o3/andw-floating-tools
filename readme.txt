@@ -2,7 +2,7 @@
 Contributors: netservice
 Tags: floating, tools, toc, table-of-contents, cta
 Requires at least: 6.3
-Tested up to: 6.4
+Tested up to: 6.8
 Requires PHP: 7.4
 Stable tag: 0.01
 License: GPLv2 or later
