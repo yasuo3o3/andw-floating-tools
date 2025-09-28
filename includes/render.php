@@ -287,6 +287,11 @@ class Andw_Floating_Tools_Render {
             return;
         }
 
+        // 見出しがない場合は目次ドロワー自体を出力しない
+        if (!$this->toc_instance->has_toc()) {
+            return;
+        }
+
         $display_mode = $this->get_toc_display_mode();
 
         if ($display_mode === 'anchor-sheet') {
