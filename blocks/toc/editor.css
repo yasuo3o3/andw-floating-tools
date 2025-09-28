@@ -1,0 +1,29 @@
+.wp-block-andw-floating-tools-toc {
+    margin: 20px 0;
+}
+
+.wp-block-andw-floating-tools-toc .components-panel__body {
+    border-top: 1px solid #e0e0e0;
+}
+
+.wp-block-andw-floating-tools-toc .components-base-control__help {
+    font-size: 12px;
+    color: #757575;
+    margin-top: 4px;
+}
+
+.wp-block-andw-floating-tools-toc .components-checkbox-control {
+    margin-bottom: 8px;
+}
+
+.wp-block-andw-floating-tools-toc .components-checkbox-control:last-child {
+    margin-bottom: 0;
+}
+
+.wp-block-andw-floating-tools-toc .components-flex {
+    gap: 8px;
+}
+
+.wp-block-andw-floating-tools-toc .components-flex .components-base-control {
+    flex: 1;
+}

@@ -1,0 +1,89 @@
+{
+  "$schema": "https://schemas.wp.org/trunk/block.json",
+  "apiVersion": 3,
+  "name": "andw-floating-tools/toc",
+  "version": "0.01",
+  "title": "Floating Tools Settings",
+  "category": "widgets",
+  "icon": "admin-settings",
+  "description": "投稿単位でフローティングツールの設定を上書きできるブロック",
+  "example": {},
+  "supports": {
+    "html": false,
+    "multiple": false
+  },
+  "textdomain": "andw-floating-tools",
+  "editorScript": "file:./index.js",
+  "editorStyle": "file:./editor.css",
+  "attributes": {
+    "enabled": {
+      "type": "array",
+      "default": []
+    },
+    "order": {
+      "type": "array",
+      "default": []
+    },
+    "tocDepth": {
+      "type": "number",
+      "default": 2
+    },
+    "tocOffset": {
+      "type": "number",
+      "default": 72
+    },
+    "layoutDesktop": {
+      "type": "string",
+      "default": "stack-vertical-right-center"
+    },
+    "offsetDesktop": {
+      "type": "object",
+      "default": {
+        "bottom": 16,
+        "right": 16
+      }
+    },
+    "offsetMobile": {
+      "type": "object",
+      "default": {
+        "bottom": 16,
+        "right": 16
+      }
+    },
+    "offsetTablet": {
+      "type": "object",
+      "default": {
+        "bottom": 16,
+        "right": 16
+      }
+    },
+    "applyUrl": {
+      "type": "string",
+      "default": ""
+    },
+    "applyLabel": {
+      "type": "string",
+      "default": ""
+    },
+    "applyTarget": {
+      "type": "string",
+      "default": "_blank"
+    },
+    "contactUrl": {
+      "type": "string",
+      "default": ""
+    },
+    "contactLabel": {
+      "type": "string",
+      "default": ""
+    },
+    "contactTarget": {
+      "type": "string",
+      "default": "_blank"
+    },
+    "presetId": {
+      "type": "string",
+      "default": ""
+    }
+  }
+}

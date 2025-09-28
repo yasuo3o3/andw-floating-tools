@@ -1,0 +1,454 @@
+/* Floating Tools Base Styles */
+.of-floating-tools {
+    position: fixed;
+    z-index: 999;
+    display: flex;
+    pointer-events: none;
+}
+
+.of-floating-tools * {
+    box-sizing: border-box;
+}
+
+/* Button Base Styles */
+.of-floating-button {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 56px;
+    height: 56px;
+    border: none;
+    border-radius: 50%;
+    background: #2563eb;
+    color: white;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+    pointer-events: auto;
+    font-size: 0;
+    padding: 0;
+}
+
+.of-floating-button:hover {
+    background: #1d4ed8;
+    transform: translateY(-2px);
+    box-shadow: 0 6px 16px rgba(0, 0, 0, 0.2);
+}
+
+.of-floating-button:focus {
+    outline: 2px solid #93c5fd;
+    outline-offset: 2px;
+}
+
+.of-floating-button:active {
+    transform: translateY(0);
+}
+
+.of-floating-button svg {
+    width: 24px;
+    height: 24px;
+    fill: currentColor;
+}
+
+.of-floating-button .of-button-label {
+    display: none;
+}
+
+/* Button Visibility */
+.of-scroll-trigger {
+    opacity: 0;
+    visibility: hidden;
+    transform: translateY(20px);
+}
+
+.of-scroll-trigger.of-visible {
+    opacity: 1;
+    visibility: visible;
+    transform: translateY(0);
+}
+
+/* Layout: Desktop Stack Vertical Right Center */
+@media (min-width: 1024px) {
+    .of-layout-stack-vertical-right-center {
+        flex-direction: column;
+        top: 50%;
+        transform: translateY(-50%);
+        gap: 12px;
+    }
+}
+
+/* Layout: Bottom Right Inline */
+.of-layout-bottom-right-inline {
+    flex-direction: row;
+    gap: 12px;
+}
+
+/* Mobile and Tablet always use bottom-right-inline */
+@media (max-width: 1023px) {
+    .of-floating-tools {
+        flex-direction: row;
+        gap: 12px;
+    }
+}
+
+/* Button Type Specific Styles */
+.of-button-apply {
+    background: #059669;
+}
+
+.of-button-apply:hover {
+    background: #047857;
+}
+
+.of-button-contact {
+    background: #dc2626;
+}
+
+.of-button-contact:hover {
+    background: #b91c1c;
+}
+
+.of-button-toc {
+    background: #7c3aed;
+}
+
+.of-button-toc:hover {
+    background: #6d28d9;
+}
+
+.of-button-top {
+    background: #374151;
+}
+
+.of-button-top:hover {
+    background: #1f2937;
+}
+
+/* TOC Drawer */
+.of-toc-drawer {
+    position: fixed;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    z-index: 9999;
+    display: flex;
+    visibility: hidden;
+    opacity: 0;
+    transition: opacity 0.2s ease, visibility 0.2s ease;
+}
+
+.of-toc-drawer[aria-hidden="false"] {
+    visibility: visible;
+    opacity: 1;
+}
+
+.of-toc-backdrop {
+    position: absolute;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    background: rgba(0, 0, 0, 0.5);
+    cursor: pointer;
+}
+
+.of-toc-content {
+    position: relative;
+    margin-left: auto;
+    width: 100%;
+    max-width: 400px;
+    background: white;
+    box-shadow: -4px 0 24px rgba(0, 0, 0, 0.15);
+    display: flex;
+    flex-direction: column;
+    transform: translateX(100%);
+    transition: transform 0.2s ease;
+}
+
+.of-toc-drawer.of-toc-open .of-toc-content {
+    transform: translateX(0);
+}
+
+.of-toc-header {
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    padding: 16px 20px;
+    border-bottom: 1px solid #e5e7eb;
+    background: #f9fafb;
+}
+
+.of-toc-close {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 32px;
+    height: 32px;
+    border: none;
+    border-radius: 6px;
+    background: transparent;
+    color: #6b7280;
+    cursor: pointer;
+    transition: all 0.15s ease;
+}
+
+.of-toc-close:hover {
+    background: #e5e7eb;
+    color: #374151;
+}
+
+.of-toc-close:focus {
+    outline: 2px solid #3b82f6;
+    outline-offset: 2px;
+}
+
+.of-toc-close svg {
+    width: 20px;
+    height: 20px;
+}
+
+.of-toc-body {
+    flex: 1;
+    overflow-y: auto;
+    padding: 24px;
+}
+
+.of-toc-nav {
+    height: 100%;
+}
+
+.of-toc-title {
+    margin: 0 0 20px 0;
+    font-size: 18px;
+    font-weight: 600;
+    color: #111827;
+}
+
+.of-toc-list {
+    margin: 0;
+    padding: 0;
+    list-style: none;
+}
+
+.of-toc-list .of-toc-list {
+    margin-left: 16px;
+    margin-top: 8px;
+}
+
+.of-toc-item {
+    margin-bottom: 8px;
+}
+
+.of-toc-item:last-child {
+    margin-bottom: 0;
+}
+
+.of-toc-link {
+    display: block;
+    padding: 8px 12px;
+    color: #374151;
+    text-decoration: none;
+    border-radius: 6px;
+    font-size: 14px;
+    line-height: 1.4;
+    transition: all 0.15s ease;
+}
+
+.of-toc-link:hover {
+    background: #f3f4f6;
+    color: #1f2937;
+}
+
+.of-toc-link:focus {
+    outline: 2px solid #3b82f6;
+    outline-offset: 2px;
+    background: #eff6ff;
+}
+
+.of-toc-level-2 .of-toc-link {
+    font-weight: 500;
+}
+
+.of-toc-level-3 .of-toc-link {
+    font-size: 13px;
+    color: #6b7280;
+}
+
+.of-toc-level-4 .of-toc-link {
+    font-size: 13px;
+    color: #9ca3af;
+}
+
+/* Body scroll lock when drawer is open */
+.of-toc-drawer-open {
+    overflow: hidden;
+}
+
+/* Responsive adjustments */
+@media (max-width: 767px) {
+    .of-floating-button {
+        width: 48px;
+        height: 48px;
+    }
+
+    .of-floating-button svg {
+        width: 20px;
+        height: 20px;
+    }
+
+    .of-floating-tools {
+        gap: 8px;
+    }
+
+    .of-toc-content {
+        max-width: 320px;
+    }
+
+    .of-toc-body {
+        padding: 16px;
+    }
+}
+
+/* Preset Styles */
+
+/* Light Preset */
+.of-preset-light .of-floating-button {
+    background: white;
+    color: #374151;
+    border: 1px solid #d1d5db;
+}
+
+.of-preset-light .of-floating-button:hover {
+    background: #f9fafb;
+    border-color: #9ca3af;
+}
+
+.of-preset-light .of-button-apply {
+    background: white;
+    color: #059669;
+    border-color: #059669;
+}
+
+.of-preset-light .of-button-apply:hover {
+    background: #ecfdf5;
+}
+
+.of-preset-light .of-button-contact {
+    background: white;
+    color: #dc2626;
+    border-color: #dc2626;
+}
+
+.of-preset-light .of-button-contact:hover {
+    background: #fef2f2;
+}
+
+.of-preset-light .of-button-toc {
+    background: white;
+    color: #7c3aed;
+    border-color: #7c3aed;
+}
+
+.of-preset-light .of-button-toc:hover {
+    background: #faf5ff;
+}
+
+/* Dark Preset */
+.of-preset-dark .of-floating-button {
+    background: #111827;
+    color: white;
+    border: 1px solid #374151;
+}
+
+.of-preset-dark .of-floating-button:hover {
+    background: #1f2937;
+    border-color: #4b5563;
+}
+
+/* Square Presets */
+.of-preset-square-small .of-floating-button,
+.of-preset-square-medium .of-floating-button,
+.of-preset-square-large .of-floating-button {
+    border-radius: 8px;
+}
+
+.of-preset-square-small .of-floating-button {
+    width: 44px;
+    height: 44px;
+}
+
+.of-preset-square-medium .of-floating-button {
+    width: 56px;
+    height: 56px;
+}
+
+.of-preset-square-large .of-floating-button {
+    width: 64px;
+    height: 64px;
+}
+
+/* Round Size Presets */
+.of-preset-round-small .of-floating-button {
+    width: 44px;
+    height: 44px;
+}
+
+.of-preset-round-medium .of-floating-button {
+    width: 56px;
+    height: 56px;
+}
+
+.of-preset-round-large .of-floating-button {
+    width: 64px;
+    height: 64px;
+}
+
+/* Reduced Motion Support */
+@media (prefers-reduced-motion: reduce) {
+    .of-floating-button,
+    .of-toc-drawer,
+    .of-toc-content,
+    .of-scroll-trigger {
+        transition: none;
+    }
+
+    .of-floating-button:hover {
+        transform: none;
+    }
+
+    .of-floating-button:active {
+        transform: none;
+    }
+
+    .of-scroll-trigger {
+        transform: none;
+    }
+
+    .of-scroll-trigger.of-visible {
+        transform: none;
+    }
+}
+
+/* High Contrast Support */
+@media (prefers-contrast: high) {
+    .of-floating-button {
+        border: 2px solid;
+    }
+
+    .of-toc-drawer {
+        backdrop-filter: none;
+    }
+
+    .of-toc-backdrop {
+        background: rgba(0, 0, 0, 0.8);
+    }
+}
+
+/* Print Styles */
+@media print {
+    .of-floating-tools,
+    .of-toc-drawer {
+        display: none !important;
+    }
+}
