@@ -23,10 +23,10 @@
         },
 
         loadSettings: function() {
-            if (window.ofFloatingTools) {
-                this.displayMode = window.ofFloatingTools.tocDisplayMode || 'anchor-sheet';
-                this.sheetSettings = window.ofFloatingTools.sheetSettings || {};
-                this.initialState = window.ofFloatingTools.initialState || 'closed';
+            if (window.andwFloatingTools) {
+                this.displayMode = window.andwFloatingTools.tocDisplayMode || 'anchor-sheet';
+                this.sheetSettings = window.andwFloatingTools.sheetSettings || {};
+                this.initialState = window.andwFloatingTools.initialState || 'closed';
             }
         },
 
@@ -42,11 +42,11 @@
             var target = event.target.closest('button');
             if (!target) return;
 
-            if (target.classList.contains('of-floating-button')) {
+            if (target.classList.contains('andw-floating-button')) {
                 this.handleButtonClick(target, event);
             } else if (target.hasAttribute('data-toc-close')) {
                 this.closeTOC();
-            } else if (target.classList.contains('of-toc-link')) {
+            } else if (target.classList.contains('andw-toc-link')) {
                 this.handleTOCLinkClick(target, event);
             }
         },
@@ -56,7 +56,7 @@
 
             if (button.hasAttribute('data-toc-toggle')) {
                 this.toggleTOC();
-            } else if (button.classList.contains('of-button-top')) {
+            } else if (button.classList.contains('andw-button-top')) {
                 this.scrollToTop();
             } else if (button.hasAttribute('data-url')) {
                 this.handleCTAClick(button);
@@ -117,10 +117,10 @@
             this.tocToggleButton = document.querySelector('[data-toc-toggle]');
 
             if (this.displayMode === 'anchor-sheet') {
-                this.tocAnchorSheet = document.getElementById('of-toc-anchor-sheet');
+                this.tocAnchorSheet = document.getElementById('andw-toc-anchor-sheet');
                 this.setupAnchorSheet();
             } else {
-                this.tocDrawer = document.getElementById('of-toc-drawer');
+                this.tocDrawer = document.getElementById('andw-toc-drawer');
                 this.setupDrawer();
             }
         },
@@ -133,7 +133,7 @@
             );
 
             var self = this;
-            var backdrop = this.tocAnchorSheet.querySelector('.of-toc-backdrop');
+            var backdrop = this.tocAnchorSheet.querySelector('.andw-toc-backdrop');
             if (backdrop) {
                 backdrop.addEventListener('click', function() { self.closeTOC(); });
             }
@@ -155,7 +155,7 @@
             );
 
             var self = this;
-            var backdrop = this.tocDrawer.querySelector('.of-toc-backdrop');
+            var backdrop = this.tocDrawer.querySelector('.andw-toc-backdrop');
             if (backdrop) {
                 backdrop.addEventListener('click', function() { self.closeTOC(); });
             }
@@ -183,12 +183,12 @@
             if (this.displayMode === 'anchor-sheet') {
                 this.updateAnchorPosition();
                 container.setAttribute('aria-hidden', 'false');
-                container.classList.add('of-toc-open');
-                document.body.classList.add('of-toc-sheet-open');
+                container.classList.add('andw-toc-open');
+                document.body.classList.add('andw-toc-sheet-open');
             } else {
                 container.setAttribute('aria-hidden', 'false');
-                container.classList.add('of-toc-open');
-                document.body.classList.add('of-toc-drawer-open');
+                container.classList.add('andw-toc-open');
+                document.body.classList.add('andw-toc-drawer-open');
             }
 
             if (this.tocToggleButton) {
@@ -197,7 +197,7 @@
 
             var self = this;
             setTimeout(function() {
-                var firstFocusable = container.querySelector('.of-toc-close');
+                var firstFocusable = container.querySelector('.andw-toc-close');
                 if (firstFocusable) {
                     firstFocusable.focus();
                 }
@@ -209,19 +209,19 @@
             if (!container) return;
 
             container.setAttribute('aria-hidden', 'true');
-            container.classList.remove('of-toc-open');
+            container.classList.remove('andw-toc-open');
 
             if (this.tocToggleButton) {
                 this.tocToggleButton.setAttribute('aria-expanded', 'false');
             }
 
             if (this.displayMode === 'anchor-sheet') {
-                document.body.classList.remove('of-toc-sheet-open');
+                document.body.classList.remove('andw-toc-sheet-open');
                 if (this.initialState === 'peek') {
                     this.setPeekState();
                 }
             } else {
-                document.body.classList.remove('of-toc-drawer-open');
+                document.body.classList.remove('andw-toc-drawer-open');
             }
 
             if (this.lastFocusedElement && typeof this.lastFocusedElement.focus === 'function') {
@@ -261,7 +261,7 @@
         },
 
         getTOCOffset: function() {
-            return (window.ofFloatingTools && window.ofFloatingTools.tocOffset) || 72;
+            return (window.andwFloatingTools && window.andwFloatingTools.tocOffset) || 72;
         },
 
         scrollToTop: function() {
@@ -296,7 +296,7 @@
         },
 
         updateScrollTriggers: function(scrollY, direction) {
-            var scrollTriggers = document.querySelectorAll('.of-scroll-trigger');
+            var scrollTriggers = document.querySelectorAll('.andw-scroll-trigger');
             var viewportHeight = window.innerHeight;
             var triggerPoint = viewportHeight * 0.5;
 
@@ -304,9 +304,9 @@
                 var shouldShow = scrollY > triggerPoint || direction === 'up';
 
                 if (shouldShow) {
-                    trigger.classList.add('of-visible');
+                    trigger.classList.add('andw-visible');
                 } else {
-                    trigger.classList.remove('of-visible');
+                    trigger.classList.remove('andw-visible');
                 }
             });
         },
@@ -330,7 +330,7 @@
             if (!this.tocAnchorSheet) return;
 
             this.tocAnchorSheet.setAttribute('aria-hidden', 'false');
-            this.tocAnchorSheet.classList.add('of-toc-peek');
+            this.tocAnchorSheet.classList.add('andw-toc-peek');
             this.updateAnchorPosition();
         },
 
@@ -338,7 +338,7 @@
             if (!this.tocAnchorSheet || !this.tocToggleButton) return;
 
             var buttonRect = this.tocToggleButton.getBoundingClientRect();
-            var sheetContent = this.tocAnchorSheet.querySelector('.of-toc-sheet-content');
+            var sheetContent = this.tocAnchorSheet.querySelector('.andw-toc-sheet-content');
 
             if (!sheetContent) return;
 
@@ -357,7 +357,7 @@
             sheetContent.style.right = rightPosition + 'px';
             sheetContent.style.bottom = bottomPosition + 'px';
             sheetContent.style.width = sheetWidth + 'px';
-            sheetContent.style.maxHeight = 'var(--of-max-height-vh)';
+            sheetContent.style.maxHeight = 'var(--andw-max-height-vh)';
         },
 
         prefersReducedMotion: function() {

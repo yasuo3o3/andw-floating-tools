@@ -15,12 +15,12 @@ if (!defined('ABSPATH')) {
     exit;
 }
 
-define('OF_FLOATING_TOOLS_VERSION', '0.01');
-define('OF_FLOATING_TOOLS_PLUGIN_FILE', __FILE__);
-define('OF_FLOATING_TOOLS_PLUGIN_DIR', plugin_dir_path(__FILE__));
-define('OF_FLOATING_TOOLS_PLUGIN_URL', plugin_dir_url(__FILE__));
+define('ANDW_FLOATING_TOOLS_VERSION', '0.01');
+define('ANDW_FLOATING_TOOLS_PLUGIN_FILE', __FILE__);
+define('ANDW_FLOATING_TOOLS_PLUGIN_DIR', plugin_dir_path(__FILE__));
+define('ANDW_FLOATING_TOOLS_PLUGIN_URL', plugin_dir_url(__FILE__));
 
-class Of_Floating_Tools {
+class Andw_Floating_Tools {
     private static $instance = null;
 
     public static function get_instance() {
@@ -46,27 +46,27 @@ class Of_Floating_Tools {
     public function init() {
         $this->load_includes();
 
-        if (class_exists('Of_Floating_Tools_Settings')) {
-            new Of_Floating_Tools_Settings();
+        if (class_exists('Andw_Floating_Tools_Settings')) {
+            new Andw_Floating_Tools_Settings();
         }
 
-        if (class_exists('Of_Floating_Tools_Render')) {
-            new Of_Floating_Tools_Render();
+        if (class_exists('Andw_Floating_Tools_Render')) {
+            new Andw_Floating_Tools_Render();
         }
 
         $this->register_blocks();
     }
 
     private function load_includes() {
-        require_once OF_FLOATING_TOOLS_PLUGIN_DIR . 'includes/sanitization.php';
-        require_once OF_FLOATING_TOOLS_PLUGIN_DIR . 'includes/settings.php';
-        require_once OF_FLOATING_TOOLS_PLUGIN_DIR . 'includes/toc.php';
-        require_once OF_FLOATING_TOOLS_PLUGIN_DIR . 'includes/render.php';
+        require_once ANDW_FLOATING_TOOLS_PLUGIN_DIR . 'includes/sanitization.php';
+        require_once ANDW_FLOATING_TOOLS_PLUGIN_DIR . 'includes/settings.php';
+        require_once ANDW_FLOATING_TOOLS_PLUGIN_DIR . 'includes/toc.php';
+        require_once ANDW_FLOATING_TOOLS_PLUGIN_DIR . 'includes/render.php';
     }
 
     private function register_blocks() {
         if (function_exists('register_block_type')) {
-            register_block_type(OF_FLOATING_TOOLS_PLUGIN_DIR . 'blocks/toc');
+            register_block_type(ANDW_FLOATING_TOOLS_PLUGIN_DIR . 'blocks/toc');
         }
     }
 
@@ -76,23 +76,23 @@ class Of_Floating_Tools {
         }
 
         wp_enqueue_script(
-            'of-floating-tools-app',
-            OF_FLOATING_TOOLS_PLUGIN_URL . 'assets/js/app.js',
+            'andw-floating-tools-app',
+            ANDW_FLOATING_TOOLS_PLUGIN_URL . 'assets/js/app.js',
             array(),
-            OF_FLOATING_TOOLS_VERSION,
+            ANDW_FLOATING_TOOLS_VERSION,
             array('strategy' => 'defer')
         );
 
         wp_enqueue_style(
-            'of-floating-tools-app',
-            OF_FLOATING_TOOLS_PLUGIN_URL . 'assets/css/app.css',
+            'andw-floating-tools-app',
+            ANDW_FLOATING_TOOLS_PLUGIN_URL . 'assets/css/app.css',
             array(),
-            OF_FLOATING_TOOLS_VERSION
+            ANDW_FLOATING_TOOLS_VERSION
         );
 
-        wp_localize_script('of-floating-tools-app', 'ofFloatingTools', array(
+        wp_localize_script('andw-floating-tools-app', 'andwFloatingTools', array(
             'ajaxUrl' => admin_url('admin-ajax.php'),
-            'nonce' => wp_create_nonce('of_floating_tools_nonce'),
+            'nonce' => wp_create_nonce('andw_floating_tools_nonce'),
             'i18n' => array(
                 'topLabel' => __('ページトップへ', 'andw-floating-tools'),
                 'tocLabel' => __('目次', 'andw-floating-tools'),
@@ -140,7 +140,7 @@ class Of_Floating_Tools {
             'z_index' => 999,
         );
 
-        add_option('of_floating_tools_options', $default_options);
+        add_option('andw_floating_tools_options', $default_options);
     }
 
     public function on_deactivation() {
@@ -148,4 +148,4 @@ class Of_Floating_Tools {
     }
 }
 
-Of_Floating_Tools::get_instance();
+Andw_Floating_Tools::get_instance();

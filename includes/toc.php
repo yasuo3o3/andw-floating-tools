@@ -3,7 +3,7 @@ if (!defined('ABSPATH')) {
     exit;
 }
 
-class Of_Floating_Tools_TOC {
+class Andw_Floating_Tools_TOC {
     private static $instance = null;
     private $toc_data = array();
 
@@ -52,7 +52,7 @@ class Of_Floating_Tools_TOC {
             return false;
         }
 
-        $options = get_option('of_floating_tools_options', array());
+        $options = get_option('andw_floating_tools_options', array());
         $enabled_buttons = isset($options['enabled_buttons']) ? $options['enabled_buttons'] : array();
 
         if (!in_array('toc', $enabled_buttons, true)) {
@@ -71,22 +71,22 @@ class Of_Floating_Tools_TOC {
         $block_attributes = $this->get_block_attributes();
 
         if (isset($block_attributes['tocDepth'])) {
-            return of_sanitize_toc_depth($block_attributes['tocDepth']);
+            return andw_sanitize_toc_depth($block_attributes['tocDepth']);
         }
 
-        $options = get_option('of_floating_tools_options', array());
-        return isset($options['toc_default_depth']) ? of_sanitize_toc_depth($options['toc_default_depth']) : 2;
+        $options = get_option('andw_floating_tools_options', array());
+        return isset($options['toc_default_depth']) ? andw_sanitize_toc_depth($options['toc_default_depth']) : 2;
     }
 
     public function get_toc_scroll_offset() {
         $block_attributes = $this->get_block_attributes();
 
         if (isset($block_attributes['tocOffset'])) {
-            return of_sanitize_toc_offset($block_attributes['tocOffset']);
+            return andw_sanitize_toc_offset($block_attributes['tocOffset']);
         }
 
-        $options = get_option('of_floating_tools_options', array());
-        return isset($options['toc_scroll_offset']) ? of_sanitize_toc_offset($options['toc_scroll_offset']) : 72;
+        $options = get_option('andw_floating_tools_options', array());
+        return isset($options['toc_scroll_offset']) ? andw_sanitize_toc_offset($options['toc_scroll_offset']) : 72;
     }
 
     private function get_block_attributes() {
@@ -244,8 +244,8 @@ class Of_Floating_Tools_TOC {
             return '';
         }
 
-        $html = '<nav class="of-toc-nav" aria-label="' . esc_attr__('目次', 'andw-floating-tools') . '">';
-        $html .= '<h2 class="of-toc-title">' . esc_html__('目次', 'andw-floating-tools') . '</h2>';
+        $html = '<nav class="andw-toc-nav" aria-label="' . esc_attr__('目次', 'andw-floating-tools') . '">';
+        $html .= '<h2 class="andw-toc-title">' . esc_html__('目次', 'andw-floating-tools') . '</h2>';
         $html .= $this->render_toc_list($this->toc_data);
         $html .= '</nav>';
 
@@ -257,11 +257,11 @@ class Of_Floating_Tools_TOC {
             return '';
         }
 
-        $html = '<ol class="of-toc-list of-toc-level-' . esc_attr($level) . '">';
+        $html = '<ol class="andw-toc-list andw-toc-level-' . esc_attr($level) . '">';
 
         foreach ($items as $item) {
-            $html .= '<li class="of-toc-item">';
-            $html .= '<a href="#' . esc_attr($item['id']) . '" class="of-toc-link">';
+            $html .= '<li class="andw-toc-item">';
+            $html .= '<a href="#' . esc_attr($item['id']) . '" class="andw-toc-link">';
             $html .= esc_html($item['text']);
             $html .= '</a>';
 

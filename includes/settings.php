@@ -3,10 +3,10 @@ if (!defined('ABSPATH')) {
     exit;
 }
 
-class Of_Floating_Tools_Settings {
-    private $option_group = 'of_floating_tools_settings';
-    private $option_name = 'of_floating_tools_options';
-    private $page_slug = 'of-floating-tools-settings';
+class Andw_Floating_Tools_Settings {
+    private $option_group = 'andw_floating_tools_settings';
+    private $option_name = 'andw_floating_tools_options';
+    private $page_slug = 'andw-floating-tools-settings';
 
     public function __construct() {
         add_action('admin_menu', array($this, 'add_admin_menu'));
@@ -32,7 +32,7 @@ class Of_Floating_Tools_Settings {
         );
 
         add_settings_section(
-            'of_floating_tools_general',
+            'andw_floating_tools_general',
             __('基本設定', 'andw-floating-tools'),
             array($this, 'render_general_section'),
             $this->page_slug
@@ -43,7 +43,7 @@ class Of_Floating_Tools_Settings {
             __('有効なボタン', 'andw-floating-tools'),
             array($this, 'render_enabled_buttons_field'),
             $this->page_slug,
-            'of_floating_tools_general'
+            'andw_floating_tools_general'
         );
 
         add_settings_field(
@@ -51,7 +51,7 @@ class Of_Floating_Tools_Settings {
             __('ボタンの並び順', 'andw-floating-tools'),
             array($this, 'render_button_order_field'),
             $this->page_slug,
-            'of_floating_tools_general'
+            'andw_floating_tools_general'
         );
 
         add_settings_field(
@@ -59,11 +59,11 @@ class Of_Floating_Tools_Settings {
             __('デスクトップレイアウト', 'andw-floating-tools'),
             array($this, 'render_layout_desktop_field'),
             $this->page_slug,
-            'of_floating_tools_general'
+            'andw_floating_tools_general'
         );
 
         add_settings_section(
-            'of_floating_tools_position',
+            'andw_floating_tools_position',
             __('位置設定', 'andw-floating-tools'),
             array($this, 'render_position_section'),
             $this->page_slug
@@ -74,7 +74,7 @@ class Of_Floating_Tools_Settings {
             __('デスクトップオフセット', 'andw-floating-tools'),
             array($this, 'render_offset_desktop_field'),
             $this->page_slug,
-            'of_floating_tools_position'
+            'andw_floating_tools_position'
         );
 
         add_settings_field(
@@ -82,7 +82,7 @@ class Of_Floating_Tools_Settings {
             __('モバイルオフセット', 'andw-floating-tools'),
             array($this, 'render_offset_mobile_field'),
             $this->page_slug,
-            'of_floating_tools_position'
+            'andw_floating_tools_position'
         );
 
         add_settings_field(
@@ -90,11 +90,11 @@ class Of_Floating_Tools_Settings {
             __('タブレットオフセット', 'andw-floating-tools'),
             array($this, 'render_offset_tablet_field'),
             $this->page_slug,
-            'of_floating_tools_position'
+            'andw_floating_tools_position'
         );
 
         add_settings_section(
-            'of_floating_tools_toc',
+            'andw_floating_tools_toc',
             __('目次設定', 'andw-floating-tools'),
             array($this, 'render_toc_section'),
             $this->page_slug
@@ -105,7 +105,7 @@ class Of_Floating_Tools_Settings {
             __('既定の深さ', 'andw-floating-tools'),
             array($this, 'render_toc_depth_field'),
             $this->page_slug,
-            'of_floating_tools_toc'
+            'andw_floating_tools_toc'
         );
 
         add_settings_field(
@@ -113,7 +113,7 @@ class Of_Floating_Tools_Settings {
             __('スクロールオフセット', 'andw-floating-tools'),
             array($this, 'render_toc_offset_field'),
             $this->page_slug,
-            'of_floating_tools_toc'
+            'andw_floating_tools_toc'
         );
 
         add_settings_field(
@@ -121,7 +121,7 @@ class Of_Floating_Tools_Settings {
             __('表示モード', 'andw-floating-tools'),
             array($this, 'render_toc_display_mode_field'),
             $this->page_slug,
-            'of_floating_tools_toc'
+            'andw_floating_tools_toc'
         );
 
         add_settings_field(
@@ -129,11 +129,11 @@ class Of_Floating_Tools_Settings {
             __('アンカーシート設定', 'andw-floating-tools'),
             array($this, 'render_sheet_settings_fields'),
             $this->page_slug,
-            'of_floating_tools_toc'
+            'andw_floating_tools_toc'
         );
 
         add_settings_section(
-            'of_floating_tools_cta',
+            'andw_floating_tools_cta',
             __('CTAボタン設定', 'andw-floating-tools'),
             array($this, 'render_cta_section'),
             $this->page_slug
@@ -144,7 +144,7 @@ class Of_Floating_Tools_Settings {
             __('お申し込みボタン', 'andw-floating-tools'),
             array($this, 'render_apply_fields'),
             $this->page_slug,
-            'of_floating_tools_cta'
+            'andw_floating_tools_cta'
         );
 
         add_settings_field(
@@ -152,11 +152,11 @@ class Of_Floating_Tools_Settings {
             __('お問い合わせボタン', 'andw-floating-tools'),
             array($this, 'render_contact_fields'),
             $this->page_slug,
-            'of_floating_tools_cta'
+            'andw_floating_tools_cta'
         );
 
         add_settings_section(
-            'of_floating_tools_utm',
+            'andw_floating_tools_utm',
             __('UTM設定', 'andw-floating-tools'),
             array($this, 'render_utm_section'),
             $this->page_slug
@@ -167,7 +167,7 @@ class Of_Floating_Tools_Settings {
             __('UTM自動付与', 'andw-floating-tools'),
             array($this, 'render_utm_enabled_field'),
             $this->page_slug,
-            'of_floating_tools_utm'
+            'andw_floating_tools_utm'
         );
 
         add_settings_field(
@@ -175,11 +175,11 @@ class Of_Floating_Tools_Settings {
             __('UTMパラメータ', 'andw-floating-tools'),
             array($this, 'render_utm_params_fields'),
             $this->page_slug,
-            'of_floating_tools_utm'
+            'andw_floating_tools_utm'
         );
 
         add_settings_section(
-            'of_floating_tools_design',
+            'andw_floating_tools_design',
             __('デザイン設定', 'andw-floating-tools'),
             array($this, 'render_design_section'),
             $this->page_slug
@@ -190,7 +190,7 @@ class Of_Floating_Tools_Settings {
             __('プリセット', 'andw-floating-tools'),
             array($this, 'render_preset_field'),
             $this->page_slug,
-            'of_floating_tools_design'
+            'andw_floating_tools_design'
         );
 
         add_settings_field(
@@ -198,7 +198,7 @@ class Of_Floating_Tools_Settings {
             __('z-index', 'andw-floating-tools'),
             array($this, 'render_z_index_field'),
             $this->page_slug,
-            'of_floating_tools_design'
+            'andw_floating_tools_design'
         );
     }
 
@@ -210,7 +210,7 @@ class Of_Floating_Tools_Settings {
         wp_enqueue_script('jquery-ui-sortable');
         wp_add_inline_script('jquery-ui-sortable', '
             jQuery(document).ready(function($) {
-                $("#of-button-order-list").sortable({
+                $("#andw-button-order-list").sortable({
                     update: function() {
                         var order = $(this).sortable("toArray", {attribute: "data-button"});
                         $("#button_order_input").val(order.join(","));
@@ -227,14 +227,14 @@ class Of_Floating_Tools_Settings {
 
         if (isset($_GET['settings-updated'])) {
             add_settings_error(
-                'of_floating_tools_messages',
-                'of_floating_tools_message',
+                'andw_floating_tools_messages',
+                'andw_floating_tools_message',
                 __('設定を保存しました。', 'andw-floating-tools'),
                 'updated'
             );
         }
 
-        settings_errors('of_floating_tools_messages');
+        settings_errors('andw_floating_tools_messages');
         ?>
         <div class="wrap">
             <h1><?php echo esc_html(get_admin_page_title()); ?></h1>
@@ -300,7 +300,7 @@ class Of_Floating_Tools_Settings {
         );
 
         echo '<input type="hidden" id="button_order_input" name="' . esc_attr($this->option_name) . '[button_order]" value="' . esc_attr(implode(',', $order)) . '">';
-        echo '<ul id="of-button-order-list" style="list-style: none; padding: 0;">';
+        echo '<ul id="andw-button-order-list" style="list-style: none; padding: 0;">';
         foreach ($order as $button_key) {
             if (isset($buttons[$button_key])) {
                 echo '<li data-button="' . esc_attr($button_key) . '" style="background: #f0f0f0; padding: 8px; margin: 4px 0; cursor: move; border-radius: 4px;">' . esc_html($buttons[$button_key]) . '</li>';
@@ -484,113 +484,113 @@ class Of_Floating_Tools_Settings {
         $sanitized = array();
 
         if (isset($input['enabled_buttons'])) {
-            $sanitized['enabled_buttons'] = of_sanitize_enabled_buttons($input['enabled_buttons']);
+            $sanitized['enabled_buttons'] = andw_sanitize_enabled_buttons($input['enabled_buttons']);
         }
 
         if (isset($input['button_order'])) {
             if (is_string($input['button_order'])) {
-                $sanitized['button_order'] = of_sanitize_button_order(explode(',', $input['button_order']));
+                $sanitized['button_order'] = andw_sanitize_button_order(explode(',', $input['button_order']));
             } else {
-                $sanitized['button_order'] = of_sanitize_button_order($input['button_order']);
+                $sanitized['button_order'] = andw_sanitize_button_order($input['button_order']);
             }
         }
 
         if (isset($input['layout_desktop'])) {
-            $sanitized['layout_desktop'] = of_sanitize_layout_desktop($input['layout_desktop']);
+            $sanitized['layout_desktop'] = andw_sanitize_layout_desktop($input['layout_desktop']);
         }
 
         if (isset($input['offset_desktop'])) {
-            $sanitized['offset_desktop'] = of_sanitize_offset($input['offset_desktop']);
+            $sanitized['offset_desktop'] = andw_sanitize_offset($input['offset_desktop']);
         }
 
         if (isset($input['offset_mobile'])) {
-            $sanitized['offset_mobile'] = of_sanitize_offset($input['offset_mobile']);
+            $sanitized['offset_mobile'] = andw_sanitize_offset($input['offset_mobile']);
         }
 
         if (isset($input['offset_tablet'])) {
-            $sanitized['offset_tablet'] = of_sanitize_offset($input['offset_tablet']);
+            $sanitized['offset_tablet'] = andw_sanitize_offset($input['offset_tablet']);
         }
 
         if (isset($input['toc_default_depth'])) {
-            $sanitized['toc_default_depth'] = of_sanitize_toc_depth($input['toc_default_depth']);
+            $sanitized['toc_default_depth'] = andw_sanitize_toc_depth($input['toc_default_depth']);
         }
 
         if (isset($input['toc_scroll_offset'])) {
-            $sanitized['toc_scroll_offset'] = of_sanitize_toc_offset($input['toc_scroll_offset']);
+            $sanitized['toc_scroll_offset'] = andw_sanitize_toc_offset($input['toc_scroll_offset']);
         }
 
         if (isset($input['apply_url'])) {
-            $sanitized['apply_url'] = of_sanitize_url($input['apply_url']);
+            $sanitized['apply_url'] = andw_sanitize_url($input['apply_url']);
         }
 
         if (isset($input['apply_label'])) {
-            $sanitized['apply_label'] = of_sanitize_text($input['apply_label']);
+            $sanitized['apply_label'] = andw_sanitize_text($input['apply_label']);
         }
 
         if (isset($input['apply_target'])) {
-            $sanitized['apply_target'] = of_sanitize_target($input['apply_target']);
+            $sanitized['apply_target'] = andw_sanitize_target($input['apply_target']);
         }
 
         if (isset($input['contact_url'])) {
-            $sanitized['contact_url'] = of_sanitize_url($input['contact_url']);
+            $sanitized['contact_url'] = andw_sanitize_url($input['contact_url']);
         }
 
         if (isset($input['contact_label'])) {
-            $sanitized['contact_label'] = of_sanitize_text($input['contact_label']);
+            $sanitized['contact_label'] = andw_sanitize_text($input['contact_label']);
         }
 
         if (isset($input['contact_target'])) {
-            $sanitized['contact_target'] = of_sanitize_target($input['contact_target']);
+            $sanitized['contact_target'] = andw_sanitize_target($input['contact_target']);
         }
 
         $sanitized['utm_enabled'] = isset($input['utm_enabled']);
 
         if (isset($input['utm_source'])) {
-            $sanitized['utm_source'] = of_sanitize_utm_key($input['utm_source']);
+            $sanitized['utm_source'] = andw_sanitize_utm_key($input['utm_source']);
         }
 
         if (isset($input['utm_medium'])) {
-            $sanitized['utm_medium'] = of_sanitize_utm_key($input['utm_medium']);
+            $sanitized['utm_medium'] = andw_sanitize_utm_key($input['utm_medium']);
         }
 
         if (isset($input['utm_campaign'])) {
-            $sanitized['utm_campaign'] = of_sanitize_utm_key($input['utm_campaign']);
+            $sanitized['utm_campaign'] = andw_sanitize_utm_key($input['utm_campaign']);
         }
 
         if (isset($input['preset_id'])) {
-            $sanitized['preset_id'] = of_sanitize_preset_id($input['preset_id']);
+            $sanitized['preset_id'] = andw_sanitize_preset_id($input['preset_id']);
         }
 
         if (isset($input['z_index'])) {
-            $sanitized['z_index'] = of_sanitize_z_index($input['z_index']);
+            $sanitized['z_index'] = andw_sanitize_z_index($input['z_index']);
         }
 
         if (isset($input['toc_display_mode'])) {
-            $sanitized['toc_display_mode'] = of_sanitize_toc_display_mode($input['toc_display_mode']);
+            $sanitized['toc_display_mode'] = andw_sanitize_toc_display_mode($input['toc_display_mode']);
         }
 
         if (isset($input['sheet_max_width'])) {
-            $sanitized['sheet_max_width'] = of_sanitize_sheet_max_width($input['sheet_max_width']);
+            $sanitized['sheet_max_width'] = andw_sanitize_sheet_max_width($input['sheet_max_width']);
         }
 
         if (isset($input['max_height_vh'])) {
-            $sanitized['max_height_vh'] = of_sanitize_max_height_vh($input['max_height_vh']);
+            $sanitized['max_height_vh'] = andw_sanitize_max_height_vh($input['max_height_vh']);
         }
 
         if (isset($input['gap_right'])) {
-            $sanitized['gap_right'] = of_sanitize_gap($input['gap_right']);
+            $sanitized['gap_right'] = andw_sanitize_gap($input['gap_right']);
         }
 
         if (isset($input['gap_left'])) {
-            $sanitized['gap_left'] = of_sanitize_gap($input['gap_left']);
+            $sanitized['gap_left'] = andw_sanitize_gap($input['gap_left']);
         }
 
         if (isset($input['anchor_offset_y'])) {
-            $sanitized['anchor_offset_y'] = of_sanitize_anchor_offset_y($input['anchor_offset_y']);
+            $sanitized['anchor_offset_y'] = andw_sanitize_anchor_offset_y($input['anchor_offset_y']);
         }
 
         if (isset($input['initial_state'])) {
-            $sanitized['initial_state'] = of_sanitize_initial_state($input['initial_state']);
+            $sanitized['initial_state'] = andw_sanitize_initial_state($input['initial_state']);
         }
 
         return $sanitized;

@@ -98,34 +98,34 @@ private function get_svg_icons() {
 /* assets/css/app.css 101-131行目付近 */
 
 /* お申し込みボタン（現在: 緑） */
-.of-button-apply {
+.andw-button-apply {
     background: #059669;
 }
-.of-button-apply:hover {
+.andw-button-apply:hover {
     background: #047857;
 }
 
 /* お問い合わせボタン（現在: 赤） */
-.of-button-contact {
+.andw-button-contact {
     background: #dc2626;
 }
-.of-button-contact:hover {
+.andw-button-contact:hover {
     background: #b91c1c;
 }
 
 /* 目次ボタン（現在: 紫） */
-.of-button-toc {
+.andw-button-toc {
     background: #7c3aed;
 }
-.of-button-toc:hover {
+.andw-button-toc:hover {
     background: #6d28d9;
 }
 
 /* ページトップボタン（現在: グレー） */
-.of-button-top {
+.andw-button-top {
     background: #374151;
 }
-.of-button-top:hover {
+.andw-button-top:hover {
     background: #1f2937;
 }
 ```
@@ -134,18 +134,18 @@ private function get_svg_icons() {
 
 ```css
 /* オレンジに変更 */
-.of-button-apply {
+.andw-button-apply {
     background: #ff6b35;
 }
-.of-button-apply:hover {
+.andw-button-apply:hover {
     background: #e55a2b;
 }
 
 /* ブルーに変更 */
-.of-button-contact {
+.andw-button-contact {
     background: #3b82f6;
 }
-.of-button-contact:hover {
+.andw-button-contact:hover {
     background: #2563eb;
 }
 ```
@@ -156,21 +156,21 @@ private function get_svg_icons() {
 
 ```css
 /* ライトプリセット（473行目付近） */
-.of-preset-light .of-button-apply {
+.andw-preset-light .andw-button-apply {
     background: white;
     color: #059669;
     border-color: #059669;
 }
 
 /* ダークプリセット（504行目付近） */
-.of-preset-dark .of-floating-button {
+.andw-preset-dark .andw-floating-button {
     background: #111827;
     color: white;
     border: 1px solid #374151;
 }
 
 /* サイズバリエーション（516行目付近） */
-.of-preset-square-small .of-floating-button {
+.andw-preset-square-small .andw-floating-button {
     width: 44px;
     height: 44px;
 }
@@ -215,13 +215,13 @@ WordPressの `WP_DEBUG` を有効にすると、詳細なログが出力され�
 
 ```php
 // フロントエンド出力前にカスタマイズ
-add_filter('of_floating_tools_options', function($options) {
+add_filter('andw_floating_tools_options', function($options) {
     // $optionsを変更
     return $options;
 });
 
 // TOC生成をカスタマイズ
-add_filter('of_floating_tools_toc_headings', function($headings) {
+add_filter('andw_floating_tools_toc_headings', function($headings) {
     // $headingsを変更
     return $headings;
 });

@@ -3,13 +3,13 @@ if (!defined('ABSPATH')) {
     exit;
 }
 
-class Of_Floating_Tools_Render {
+class Andw_Floating_Tools_Render {
     private $options;
     private $toc_instance;
 
     public function __construct() {
-        $this->options = get_option('of_floating_tools_options', array());
-        $this->toc_instance = Of_Floating_Tools_TOC::get_instance();
+        $this->options = get_option('andw_floating_tools_options', array());
+        $this->toc_instance = Andw_Floating_Tools_TOC::get_instance();
 
         add_action('wp_footer', array($this, 'render_floating_tools'));
         add_action('wp_localize_script', array($this, 'localize_toc_data'), 10, 3);
@@ -48,7 +48,7 @@ class Of_Floating_Tools_Render {
         $block_attributes = $this->get_block_attributes();
 
         if (isset($block_attributes['enabled'])) {
-            return of_sanitize_enabled_buttons($block_attributes['enabled']);
+            return andw_sanitize_enabled_buttons($block_attributes['enabled']);
         }
 
         return isset($this->options['enabled_buttons']) ? $this->options['enabled_buttons'] : array();
@@ -58,7 +58,7 @@ class Of_Floating_Tools_Render {
         $block_attributes = $this->get_block_attributes();
 
         if (isset($block_attributes['order'])) {
-            return of_sanitize_button_order($block_attributes['order']);
+            return andw_sanitize_button_order($block_attributes['order']);
         }
 
         return isset($this->options['button_order']) ? $this->options['button_order'] : array('top', 'apply', 'contact', 'toc');
@@ -87,9 +87,9 @@ class Of_Floating_Tools_Render {
         $preset_id = isset($this->options['preset_id']) ? $this->options['preset_id'] : 'default';
 
         $container_classes = array(
-            'of-floating-tools',
-            'of-preset-' . esc_attr($preset_id),
-            'of-layout-' . esc_attr($layout_desktop),
+            'andw-floating-tools',
+            'andw-preset-' . esc_attr($preset_id),
+            'andw-layout-' . esc_attr($layout_desktop),
         );
 
         echo '<div class="' . esc_attr(implode(' ', $container_classes)) . '" role="complementary" aria-label="' . esc_attr__('フローティングツール', 'andw-floating-tools') . '">';
@@ -112,7 +112,7 @@ class Of_Floating_Tools_Render {
         $block_attributes = $this->get_block_attributes();
 
         if (isset($block_attributes['layoutDesktop'])) {
-            return of_sanitize_layout_desktop($block_attributes['layoutDesktop']);
+            return andw_sanitize_layout_desktop($block_attributes['layoutDesktop']);
         }
 
         return isset($this->options['layout_desktop']) ? $this->options['layout_desktop'] : 'stack-vertical-right-center';
@@ -126,12 +126,12 @@ class Of_Floating_Tools_Render {
         }
 
         $classes = array(
-            'of-floating-button',
-            'of-button-' . esc_attr($button_type),
+            'andw-floating-button',
+            'andw-button-' . esc_attr($button_type),
         );
 
         if ($button_type === 'top') {
-            $classes[] = 'of-scroll-trigger';
+            $classes[] = 'andw-scroll-trigger';
         }
 
         $attributes = array(
@@ -143,7 +143,7 @@ class Of_Floating_Tools_Render {
         if ($button_type === 'toc') {
             $attributes['data-toc-toggle'] = 'true';
             $attributes['aria-expanded'] = 'false';
-            $attributes['aria-controls'] = 'of-toc-drawer';
+            $attributes['aria-controls'] = 'andw-toc-drawer';
         } elseif (!empty($button_config['url'])) {
             $attributes['data-url'] = $button_config['url'];
             $attributes['data-target'] = $button_config['target'];
@@ -158,7 +158,7 @@ class Of_Floating_Tools_Render {
         echo $this->get_button_icon($button_type);
 
         if (!empty($button_config['label'])) {
-            echo '<span class="of-button-label">' . esc_html($button_config['label']) . '</span>';
+            echo '<span class="andw-button-label">' . esc_html($button_config['label']) . '</span>';
         }
 
         echo '</button>';
@@ -248,7 +248,7 @@ class Of_Floating_Tools_Render {
             'campaign' => isset($this->options['utm_campaign']) ? $this->options['utm_campaign'] : '',
         );
 
-        $url_with_utm = of_add_utm_to_url($url, $utm_params);
+        $url_with_utm = andw_add_utm_to_url($url, $utm_params);
 
         return esc_url($url_with_utm);
     }
@@ -281,17 +281,17 @@ class Of_Floating_Tools_Render {
     }
 
     private function render_toc_anchor_sheet() {
-        echo '<div id="of-toc-anchor-sheet" class="of-toc-anchor-sheet" role="dialog" aria-modal="true" aria-labelledby="of-toc-title" aria-hidden="true">';
-        echo '<div class="of-toc-backdrop" data-toc-close="true"></div>';
-        echo '<div class="of-toc-sheet-content">';
-        echo '<div class="of-toc-header">';
-        echo '<div class="of-toc-handle"></div>';
-        echo '<h2 id="of-toc-title" class="of-toc-title">' . esc_html__('目次', 'andw-floating-tools') . '</h2>';
-        echo '<button type="button" class="of-toc-close" data-toc-close="true" aria-label="' . esc_attr__('目次を閉じる', 'andw-floating-tools') . '">';
+        echo '<div id="andw-toc-anchor-sheet" class="andw-toc-anchor-sheet" role="dialog" aria-modal="true" aria-labelledby="andw-toc-title" aria-hidden="true">';
+        echo '<div class="andw-toc-backdrop" data-toc-close="true"></div>';
+        echo '<div class="andw-toc-sheet-content">';
+        echo '<div class="andw-toc-header">';
+        echo '<div class="andw-toc-handle"></div>';
+        echo '<h2 id="andw-toc-title" class="andw-toc-title">' . esc_html__('目次', 'andw-floating-tools') . '</h2>';
+        echo '<button type="button" class="andw-toc-close" data-toc-close="true" aria-label="' . esc_attr__('目次を閉じる', 'andw-floating-tools') . '">';
         echo '<svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>';
         echo '</button>';
         echo '</div>';
-        echo '<div class="of-toc-body">';
+        echo '<div class="andw-toc-body">';
         echo $this->toc_instance->render_toc_html();
         echo '</div>';
         echo '</div>';
@@ -299,15 +299,15 @@ class Of_Floating_Tools_Render {
     }
 
     private function render_toc_drawer_legacy() {
-        echo '<div id="of-toc-drawer" class="of-toc-drawer" role="dialog" aria-modal="true" aria-labelledby="of-toc-title" aria-hidden="true">';
-        echo '<div class="of-toc-backdrop" data-toc-close="true"></div>';
-        echo '<div class="of-toc-content">';
-        echo '<div class="of-toc-header">';
-        echo '<button type="button" class="of-toc-close" data-toc-close="true" aria-label="' . esc_attr__('目次を閉じる', 'andw-floating-tools') . '">';
+        echo '<div id="andw-toc-drawer" class="andw-toc-drawer" role="dialog" aria-modal="true" aria-labelledby="andw-toc-title" aria-hidden="true">';
+        echo '<div class="andw-toc-backdrop" data-toc-close="true"></div>';
+        echo '<div class="andw-toc-content">';
+        echo '<div class="andw-toc-header">';
+        echo '<button type="button" class="andw-toc-close" data-toc-close="true" aria-label="' . esc_attr__('目次を閉じる', 'andw-floating-tools') . '">';
         echo '<svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>';
         echo '</button>';
         echo '</div>';
-        echo '<div class="of-toc-body">';
+        echo '<div class="andw-toc-body">';
         echo $this->toc_instance->render_toc_html();
         echo '</div>';
         echo '</div>';
@@ -318,7 +318,7 @@ class Of_Floating_Tools_Render {
         $block_attributes = $this->get_block_attributes();
 
         if (isset($block_attributes['tocDisplayMode']) && !empty($block_attributes['tocDisplayMode'])) {
-            return of_sanitize_toc_display_mode($block_attributes['tocDisplayMode']);
+            return andw_sanitize_toc_display_mode($block_attributes['tocDisplayMode']);
         }
 
         return isset($this->options['toc_display_mode']) ? $this->options['toc_display_mode'] : 'anchor-sheet';
@@ -332,28 +332,28 @@ class Of_Floating_Tools_Render {
 
         $sheet_settings = $this->get_sheet_settings();
 
-        echo '<style id="of-floating-tools-inline-css">';
-        echo '.of-floating-tools { z-index: ' . esc_attr($z_index) . '; }';
+        echo '<style id="andw-floating-tools-inline-css">';
+        echo '.andw-floating-tools { z-index: ' . esc_attr($z_index) . '; }';
 
         echo '@media (min-width: 1024px) {';
-        echo '.of-floating-tools { bottom: ' . esc_attr($offset_desktop['bottom']) . 'px; right: ' . esc_attr($offset_desktop['right']) . 'px; }';
+        echo '.andw-floating-tools { bottom: ' . esc_attr($offset_desktop['bottom']) . 'px; right: ' . esc_attr($offset_desktop['right']) . 'px; }';
         echo '}';
 
         echo '@media (min-width: 768px) and (max-width: 1023px) {';
-        echo '.of-floating-tools { bottom: ' . esc_attr($offset_tablet['bottom']) . 'px; right: ' . esc_attr($offset_tablet['right']) . 'px; }';
+        echo '.andw-floating-tools { bottom: ' . esc_attr($offset_tablet['bottom']) . 'px; right: ' . esc_attr($offset_tablet['right']) . 'px; }';
         echo '}';
 
         echo '@media (max-width: 767px) {';
-        echo '.of-floating-tools { bottom: ' . esc_attr($offset_mobile['bottom']) . 'px; right: ' . esc_attr($offset_mobile['right']) . 'px; }';
+        echo '.andw-floating-tools { bottom: ' . esc_attr($offset_mobile['bottom']) . 'px; right: ' . esc_attr($offset_mobile['right']) . 'px; }';
         echo '}';
 
         // Anchor sheet settings
         echo ':root {';
-        echo '--of-sheet-max-width: ' . esc_attr($sheet_settings['sheetMaxWidth']) . 'px;';
-        echo '--of-max-height-vh: ' . esc_attr($sheet_settings['maxHeightVh']) . 'vh;';
-        echo '--of-gap-right: ' . esc_attr($sheet_settings['gapRight']) . 'px;';
-        echo '--of-gap-left: ' . esc_attr($sheet_settings['gapLeft']) . 'px;';
-        echo '--of-anchor-offset-y: ' . esc_attr($sheet_settings['anchorOffsetY']) . 'px;';
+        echo '--andw-sheet-max-width: ' . esc_attr($sheet_settings['sheetMaxWidth']) . 'px;';
+        echo '--andw-max-height-vh: ' . esc_attr($sheet_settings['maxHeightVh']) . 'vh;';
+        echo '--andw-gap-right: ' . esc_attr($sheet_settings['gapRight']) . 'px;';
+        echo '--andw-gap-left: ' . esc_attr($sheet_settings['gapLeft']) . 'px;';
+        echo '--andw-anchor-offset-y: ' . esc_attr($sheet_settings['anchorOffsetY']) . 'px;';
         echo '}';
 
         echo '</style>';
@@ -395,7 +395,7 @@ class Of_Floating_Tools_Render {
         $block_attributes = $this->get_block_attributes();
 
         if (isset($block_attributes['offset' . ucfirst($device)])) {
-            return of_sanitize_offset($block_attributes['offset' . ucfirst($device)]);
+            return andw_sanitize_offset($block_attributes['offset' . ucfirst($device)]);
         }
 
         $key = 'offset_' . $device;
@@ -403,7 +403,7 @@ class Of_Floating_Tools_Render {
     }
 
     public function localize_toc_data($handle, $object_name, $l10n) {
-        if ($handle === 'of-floating-tools-app' && $object_name === 'ofFloatingTools') {
+        if ($handle === 'andw-floating-tools-app' && $object_name === 'ofFloatingTools') {
             $l10n['tocOffset'] = $this->toc_instance->get_toc_scroll_offset();
             $l10n['hasToc'] = $this->toc_instance->has_toc();
             $l10n['tocDisplayMode'] = $this->get_toc_display_mode();
@@ -420,7 +420,7 @@ class Of_Floating_Tools_Render {
         $block_attributes = $this->get_block_attributes();
 
         if (isset($block_attributes['initialState']) && !empty($block_attributes['initialState'])) {
-            return of_sanitize_initial_state($block_attributes['initialState']);
+            return andw_sanitize_initial_state($block_attributes['initialState']);
         }
 
         return isset($this->options['initial_state']) ? $this->options['initial_state'] : 'closed';

@@ -3,7 +3,7 @@ if (!defined('ABSPATH')) {
     exit;
 }
 
-function of_sanitize_button_order($value) {
+function andw_sanitize_button_order($value) {
     if (!is_array($value)) {
         return array('top', 'apply', 'contact', 'toc');
     }
@@ -20,7 +20,7 @@ function of_sanitize_button_order($value) {
     return empty($sanitized) ? $allowed_buttons : $sanitized;
 }
 
-function of_sanitize_enabled_buttons($value) {
+function andw_sanitize_enabled_buttons($value) {
     if (!is_array($value)) {
         return array('top', 'toc', 'apply', 'contact');
     }
@@ -37,12 +37,12 @@ function of_sanitize_enabled_buttons($value) {
     return $sanitized;
 }
 
-function of_sanitize_layout_desktop($value) {
+function andw_sanitize_layout_desktop($value) {
     $allowed_layouts = array('stack-vertical-right-center', 'bottom-right-inline');
     return in_array($value, $allowed_layouts, true) ? $value : 'stack-vertical-right-center';
 }
 
-function of_sanitize_offset($value) {
+function andw_sanitize_offset($value) {
     if (!is_array($value)) {
         return array('bottom' => 16, 'right' => 16);
     }
@@ -57,74 +57,74 @@ function of_sanitize_offset($value) {
     return $sanitized;
 }
 
-function of_sanitize_toc_depth($value) {
+function andw_sanitize_toc_depth($value) {
     $depth = absint($value);
     return in_array($depth, array(2, 3, 4), true) ? $depth : 2;
 }
 
-function of_sanitize_toc_offset($value) {
+function andw_sanitize_toc_offset($value) {
     $offset = absint($value);
     return min(max($offset, 0), 999);
 }
 
-function of_sanitize_url($value) {
+function andw_sanitize_url($value) {
     return esc_url_raw(trim($value));
 }
 
-function of_sanitize_text($value) {
+function andw_sanitize_text($value) {
     return sanitize_text_field($value);
 }
 
-function of_sanitize_target($value) {
+function andw_sanitize_target($value) {
     $allowed_targets = array('_self', '_blank');
     return in_array($value, $allowed_targets, true) ? $value : '_blank';
 }
 
-function of_sanitize_preset_id($value) {
+function andw_sanitize_preset_id($value) {
     $allowed_presets = array('default', 'light', 'dark', 'round-small', 'round-medium', 'round-large', 'square-small', 'square-medium', 'square-large');
     return in_array($value, $allowed_presets, true) ? $value : 'default';
 }
 
-function of_sanitize_z_index($value) {
+function andw_sanitize_z_index($value) {
     $z_index = absint($value);
     return min(max($z_index, 1), 9999);
 }
 
-function of_sanitize_utm_key($value) {
+function andw_sanitize_utm_key($value) {
     return preg_replace('/[^a-zA-Z0-9_-]/', '', sanitize_text_field($value));
 }
 
-function of_sanitize_toc_display_mode($value) {
+function andw_sanitize_toc_display_mode($value) {
     $allowed_modes = array('anchor-sheet', 'drawer', 'anchor-panel');
     return in_array($value, $allowed_modes, true) ? $value : 'anchor-sheet';
 }
 
-function of_sanitize_sheet_max_width($value) {
+function andw_sanitize_sheet_max_width($value) {
     $width = absint($value);
     return min(max($width, 200), 800);
 }
 
-function of_sanitize_max_height_vh($value) {
+function andw_sanitize_max_height_vh($value) {
     $vh = absint($value);
     return min(max($vh, 20), 100);
 }
 
-function of_sanitize_gap($value) {
+function andw_sanitize_gap($value) {
     $gap = absint($value);
     return min(max($gap, 0), 100);
 }
 
-function of_sanitize_anchor_offset_y($value) {
+function andw_sanitize_anchor_offset_y($value) {
     $offset = absint($value);
     return min(max($offset, 0), 50);
 }
 
-function of_sanitize_initial_state($value) {
+function andw_sanitize_initial_state($value) {
     $allowed_states = array('peek', 'closed');
     return in_array($value, $allowed_states, true) ? $value : 'closed';
 }
 
-function of_add_utm_to_url($url, $utm_params) {
+function andw_add_utm_to_url($url, $utm_params) {
     if (empty($url) || empty($utm_params)) {
         return $url;
     }
