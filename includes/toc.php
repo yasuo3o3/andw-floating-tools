@@ -52,6 +52,8 @@ class Andw_Floating_Tools_TOC {
             return false;
         }
 
+        // 目次ボタンが有効設定されている場合のみコンテンツを処理
+        // ただし、見出しがない場合でも目次ボタン自体は表示される
         $options = get_option('andw_floating_tools_options', array());
         $enabled_buttons = isset($options['enabled_buttons']) ? $options['enabled_buttons'] : array();
 
@@ -241,7 +243,13 @@ class Andw_Floating_Tools_TOC {
 
     public function render_toc_html() {
         if (empty($this->toc_data)) {
-            return '';
+            // 見出しがない場合でも適切なメッセージを表示
+            $html = '<nav class="andw-toc-nav andw-toc-empty" aria-label="' . esc_attr__('目次', 'andw-floating-tools') . '">';
+            $html .= '<div class="andw-toc-empty-message">';
+            $html .= esc_html__('このページには見出しがありません', 'andw-floating-tools');
+            $html .= '</div>';
+            $html .= '</nav>';
+            return $html;
         }
 
         $html = '<nav class="andw-toc-nav" aria-label="' . esc_attr__('目次', 'andw-floating-tools') . '">';

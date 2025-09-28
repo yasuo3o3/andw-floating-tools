@@ -218,10 +218,6 @@ class Andw_Floating_Tools_Render {
                 );
 
             case 'toc':
-                if (!$this->toc_instance->has_toc()) {
-                    return false;
-                }
-
                 return array(
                     'aria_label' => __('目次', 'andw-floating-tools'),
                     'label' => __('目次', 'andw-floating-tools'),
@@ -287,7 +283,7 @@ class Andw_Floating_Tools_Render {
     private function render_toc_drawer() {
         $enabled_buttons = $this->get_enabled_buttons();
 
-        if (!in_array('toc', $enabled_buttons, true) || !$this->toc_instance->has_toc()) {
+        if (!in_array('toc', $enabled_buttons, true)) {
             return;
         }
 
