@@ -77,8 +77,8 @@
 @media (min-width: 1024px) {
     .andw-layout-stack-vertical-right-center {
         flex-direction: column;
-        top: 50%;
-        transform: translateY(-50%);
+        bottom: 0;
+        transform: none;
         gap: 12px;
     }
 }
