@@ -116,7 +116,7 @@ class Andw_Floating_Tools_TOC {
             foreach ($matches as $match) {
                 $level = intval($match[1]);
                 $existing_id = !empty($match[2]) ? $match[3] : '';
-                $text = strip_tags($match[4]);
+                $text = wp_strip_all_tags($match[4]);
                 $text = trim($text);
 
                 if (!empty($text)) {
