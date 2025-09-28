@@ -124,6 +124,18 @@ function andw_sanitize_initial_state($value) {
     return in_array($value, $allowed_states, true) ? $value : 'closed';
 }
 
+function andw_sanitize_svg_path($value) {
+    // SVGパスの基本的なサニタイゼーション
+    // 危険なスクリプトタグなどを除去
+    $value = wp_strip_all_tags($value);
+
+    // SVGパスで使用される文字のみ許可
+    $allowed_chars = 'MLHVCSQTAZmlhvcsqtaz0-9.,\- ';
+    $value = preg_replace('/[^' . preg_quote($allowed_chars, '/') . ']/', '', $value);
+
+    return $value;
+}
+
 function andw_add_utm_to_url($url, $utm_params) {
     if (empty($url) || empty($utm_params)) {
         return $url;

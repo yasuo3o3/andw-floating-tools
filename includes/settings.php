@@ -156,6 +156,49 @@ class Andw_Floating_Tools_Settings {
         );
 
         add_settings_section(
+            'andw_floating_tools_icons',
+            __('アイコン設定', 'andw-floating-tools'),
+            array($this, 'render_icons_section'),
+            $this->page_slug
+        );
+
+        add_settings_field(
+            'custom_svg_apply',
+            __('お申し込みアイコン SVGパス', 'andw-floating-tools'),
+            array($this, 'render_custom_svg_field'),
+            $this->page_slug,
+            'andw_floating_tools_icons',
+            array('button_type' => 'apply')
+        );
+
+        add_settings_field(
+            'custom_svg_contact',
+            __('お問い合わせアイコン SVGパス', 'andw-floating-tools'),
+            array($this, 'render_custom_svg_field'),
+            $this->page_slug,
+            'andw_floating_tools_icons',
+            array('button_type' => 'contact')
+        );
+
+        add_settings_field(
+            'custom_svg_toc',
+            __('目次アイコン SVGパス', 'andw-floating-tools'),
+            array($this, 'render_custom_svg_field'),
+            $this->page_slug,
+            'andw_floating_tools_icons',
+            array('button_type' => 'toc')
+        );
+
+        add_settings_field(
+            'custom_svg_top',
+            __('ページトップアイコン SVGパス', 'andw-floating-tools'),
+            array($this, 'render_custom_svg_field'),
+            $this->page_slug,
+            'andw_floating_tools_icons',
+            array('button_type' => 'top')
+        );
+
+        add_settings_section(
             'andw_floating_tools_utm',
             __('UTM設定', 'andw-floating-tools'),
             array($this, 'render_utm_section'),
@@ -263,6 +306,28 @@ class Andw_Floating_Tools_Settings {
 
     public function render_cta_section() {
         echo '<p>' . esc_html__('お申し込み・お問い合わせボタンの設定を行います。', 'andw-floating-tools') . '</p>';
+    }
+
+    public function render_icons_section() {
+        echo '<p>' . esc_html__('各ボタンのアイコンをカスタマイズできます。参考サイト: ', 'andw-floating-tools');
+        echo '<a href="https://heroicons.com/" target="_blank">Heroicons</a>, ';
+        echo '<a href="https://feathericons.com/" target="_blank">Feather Icons</a>, ';
+        echo '<a href="https://tabler-icons.io/" target="_blank">Tabler Icons</a>';
+        echo '<br>' . esc_html__('SVGの&lt;path&gt;タグ内の d="..." 部分のみを入力してください。', 'andw-floating-tools') . '</p>';
+    }
+
+    public function render_custom_svg_field($args) {
+        $button_type = $args['button_type'];
+        $options = get_option($this->option_name, array());
+        $custom_svg_paths = isset($options['custom_svg_paths']) ? $options['custom_svg_paths'] : array();
+        $value = isset($custom_svg_paths[$button_type]) ? $custom_svg_paths[$button_type] : '';
+
+        echo '<textarea name="' . esc_attr($this->option_name) . '[custom_svg_paths][' . esc_attr($button_type) . ']" ';
+        echo 'rows="3" cols="80" class="regular-text" ';
+        echo 'placeholder="例: M12 3l-8 8h5v10h6V11h5l-8-8z">';
+        echo esc_textarea($value);
+        echo '</textarea>';
+        echo '<p class="description">' . esc_html__('空の場合はデフォルトアイコンを使用します。', 'andw-floating-tools') . '</p>';
     }
 
     public function render_utm_section() {
@@ -591,6 +656,17 @@ class Andw_Floating_Tools_Settings {
 
         if (isset($input['initial_state'])) {
             $sanitized['initial_state'] = andw_sanitize_initial_state($input['initial_state']);
+        }
+
+        // カスタムSVGパスのサニタイゼーション
+        if (isset($input['custom_svg_paths']) && is_array($input['custom_svg_paths'])) {
+            $sanitized['custom_svg_paths'] = array();
+            $allowed_buttons = array('apply', 'contact', 'toc', 'top');
+            foreach ($allowed_buttons as $button_type) {
+                if (isset($input['custom_svg_paths'][$button_type])) {
+                    $sanitized['custom_svg_paths'][$button_type] = andw_sanitize_svg_path($input['custom_svg_paths'][$button_type]);
+                }
+            }
         }
 
         return $sanitized;

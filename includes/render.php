@@ -254,14 +254,32 @@ class Andw_Floating_Tools_Render {
     }
 
     private function get_button_icon($button_type) {
-        $icons = array(
-            'top' => '<svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 3l-8 8h5v10h6V11h5l-8-8z"/></svg>',
-            'apply' => '<svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M9 11H7v9a2 2 0 002 2h8a2 2 0 002-2V9a2 2 0 00-2-2h-2v2H9v2zm0-4V5a2 2 0 012-2h2a2 2 0 012 2v2h3a1 1 0 011 1v1H6V8a1 1 0 011-1h2z"/></svg>',
-            'contact' => '<svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M20 4H4a2 2 0 00-2 2v12a2 2 0 002 2h16a2 2 0 002-2V6a2 2 0 00-2-2zm0 4.7l-8 5.334L4 8.7V6.297l8 5.333 8-5.333V8.7z"/></svg>',
-            'toc' => '<svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M3 9h14V7H3v2zm0 4h14v-2H3v2zm0 4h14v-2H3v2zm16 0h2v-2h-2v2zm0-10v2h2V7h-2zm0 6h2v-2h-2v2z"/></svg>',
-        );
+        // カスタムSVGパスが設定されている場合は優先使用
+        $custom_svg_paths = isset($this->options['custom_svg_paths']) ? $this->options['custom_svg_paths'] : array();
+        if (!empty($custom_svg_paths[$button_type])) {
+            return sprintf(
+                '<svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">%s</svg>',
+                $custom_svg_paths[$button_type]
+            );
+        }
 
-        return isset($icons[$button_type]) ? $icons[$button_type] : '';
+        // 設定からアイコン名を取得
+        $button_icons = isset($this->options['button_icons']) ? $this->options['button_icons'] : array();
+        $icon_name = isset($button_icons[$button_type]) ? $button_icons[$button_type] : '';
+
+        // デフォルトアイコン名の設定
+        if (empty($icon_name)) {
+            $defaults = array(
+                'top' => 'arrow-up',
+                'apply' => 'clipboard',
+                'contact' => 'contact',
+                'toc' => 'list',
+            );
+            $icon_name = isset($defaults[$button_type]) ? $defaults[$button_type] : 'clipboard';
+        }
+
+        // アイコンヘルパーを使用してSVGを取得
+        return Andw_Floating_Tools_Icons::get_icon($icon_name);
     }
 
     private function render_toc_drawer() {

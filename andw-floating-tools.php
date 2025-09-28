@@ -59,6 +59,7 @@ class Andw_Floating_Tools {
 
     private function load_includes() {
         require_once ANDW_FLOATING_TOOLS_PLUGIN_DIR . 'includes/sanitization.php';
+        require_once ANDW_FLOATING_TOOLS_PLUGIN_DIR . 'includes/icon-helper.php';
         require_once ANDW_FLOATING_TOOLS_PLUGIN_DIR . 'includes/settings.php';
         require_once ANDW_FLOATING_TOOLS_PLUGIN_DIR . 'includes/toc.php';
         require_once ANDW_FLOATING_TOOLS_PLUGIN_DIR . 'includes/render.php';
@@ -138,6 +139,18 @@ class Andw_Floating_Tools {
             'utm_campaign' => '',
             'preset_id' => 'default',
             'z_index' => 999,
+            'button_icons' => array(
+                'apply' => 'clipboard',
+                'contact' => 'contact',
+                'toc' => 'list',
+                'top' => 'arrow-up',
+            ),
+            'custom_svg_paths' => array(
+                'apply' => '',
+                'contact' => '',
+                'toc' => '',
+                'top' => '',
+            ),
         );
 
         add_option('andw_floating_tools_options', $default_options);
