@@ -277,7 +277,7 @@ class Andw_Floating_Tools_Settings {
             return;
         }
 
-        if (isset($_GET['settings-updated'])) {
+        if (filter_input(INPUT_GET, 'settings-updated', FILTER_VALIDATE_BOOLEAN)) {
             add_settings_error(
                 'andw_floating_tools_messages',
                 'andw_floating_tools_message',
