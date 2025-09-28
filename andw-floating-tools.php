@@ -45,6 +45,7 @@ class Andw_Floating_Tools {
 
     public function init() {
         $this->load_includes();
+        $this->migrate_settings();
 
         if (class_exists('Andw_Floating_Tools_Settings')) {
             new Andw_Floating_Tools_Settings();
@@ -137,7 +138,6 @@ class Andw_Floating_Tools {
             'gap_left' => 16,
             'anchor_offset_y' => 8,
             'initial_state' => 'closed',
-            'display_mode' => 'global',
             'apply_url' => '',
             'apply_label' => __('お申し込み', 'andw-floating-tools'),
             'apply_target' => '_blank',
@@ -165,6 +165,19 @@ class Andw_Floating_Tools {
         );
 
         add_option('andw_floating_tools_options', $default_options);
+    }
+
+    /**
+     * 設定の互換性維持のための移行処理
+     */
+    private function migrate_settings() {
+        $options = get_option('andw_floating_tools_options', array());
+
+        // display_mode設定が残っている場合は削除
+        if (isset($options['display_mode'])) {
+            unset($options['display_mode']);
+            update_option('andw_floating_tools_options', $options);
+        }
     }
 
     public function on_deactivation() {

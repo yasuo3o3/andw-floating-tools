@@ -54,13 +54,6 @@ class Andw_Floating_Tools_Settings {
             'andw_floating_tools_general'
         );
 
-        add_settings_field(
-            'display_mode',
-            __('表示制御', 'andw-floating-tools'),
-            array($this, 'render_display_mode_field'),
-            $this->page_slug,
-            'andw_floating_tools_general'
-        );
 
         add_settings_field(
             'layout_desktop',
@@ -309,7 +302,7 @@ class Andw_Floating_Tools_Settings {
     }
 
     public function render_general_section() {
-        echo '<p>' . esc_html__('基本的な表示設定を行います。', 'andw-floating-tools') . '</p>';
+        echo '<p>' . esc_html__('基本的な表示設定を行います。フローティングツールはサイト全体で表示され、ブロックが配置されたページではブロックの設定が優先されます。', 'andw-floating-tools') . '</p>';
     }
 
     public function render_position_section() {
@@ -448,49 +441,6 @@ class Andw_Floating_Tools_Settings {
         echo '</div>';
     }
 
-    public function render_display_mode_field() {
-        $options = get_option($this->option_name, array());
-        $current_mode = isset($options['display_mode']) ? $options['display_mode'] : 'global';
-
-        echo '<div style="margin: 15px 0; padding: 15px; border: 1px solid #ddd; border-radius: 4px; background: #f9f9f9;">';
-
-        // グローバル表示（従来の動作）
-        echo '<label style="display: block; margin-bottom: 15px;">';
-        echo '<input type="radio" name="' . esc_attr($this->option_name) . '[display_mode]" value="global" ';
-        checked($current_mode, 'global');
-        echo '> <strong>すべてのページに表示（デフォルト）</strong>';
-        echo '</label>';
-        echo '<p style="margin-left: 20px; margin-bottom: 15px; color: #666;">サイト全体でフローティングツールを表示します。投稿・固定ページ・アーカイブページすべてで表示されます。</p>';
-
-        // ブロック設置ページのみ
-        echo '<label style="display: block; margin-bottom: 15px;">';
-        echo '<input type="radio" name="' . esc_attr($this->option_name) . '[display_mode]" value="block_only" ';
-        checked($current_mode, 'block_only');
-        echo '> <strong>ブロック設置ページのみ表示</strong>';
-        echo '</label>';
-        echo '<p style="margin-left: 20px; color: #666;">「Floating Tools Settings」ブロックが配置されているページでのみフローティングツールを表示します。</p>';
-
-        echo '</div>';
-
-        // 詳細説明
-        echo '<div class="description">';
-        echo '<h4>🔧 使い分けのポイント</h4>';
-        echo '<table style="width: 100%; border-collapse: collapse; margin: 10px 0;">';
-        echo '<tr style="background: #f0f0f0;"><th style="border: 1px solid #ddd; padding: 8px;">表示モード</th><th style="border: 1px solid #ddd; padding: 8px;">適用範囲</th><th style="border: 1px solid #ddd; padding: 8px;">こんな場合におすすめ</th></tr>';
-        echo '<tr><td style="border: 1px solid #ddd; padding: 8px;"><strong>すべてのページ</strong></td><td style="border: 1px solid #ddd; padding: 8px;">サイト全体</td><td style="border: 1px solid #ddd; padding: 8px;">・サイト全体で統一したUI<br>・常にアクセスできるCTAボタンが欲しい</td></tr>';
-        echo '<tr><td style="border: 1px solid #ddd; padding: 8px;"><strong>ブロック設置ページのみ</strong></td><td style="border: 1px solid #ddd; padding: 8px;">ブロック配置ページ</td><td style="border: 1px solid #ddd; padding: 8px;">・特定のページでのみ使用したい<br>・ページごとに細かく制御したい</td></tr>';
-        echo '</table>';
-
-        if ($current_mode === 'block_only') {
-            echo '<div style="background: #fff3cd; padding: 10px; border-radius: 4px; margin-top: 10px;">';
-            echo '<strong>⚠️ ブロック設置ページのみモード選択中</strong><br>';
-            echo 'フローティングツールを表示したいページで「Floating Tools Settings」ブロックを追加してください。<br>';
-            echo '投稿・固定ページの編集画面で「+」ボタン→「andW Floating Tools」で追加できます。';
-            echo '</div>';
-        }
-
-        echo '</div>';
-    }
 
     public function render_utm_section() {
         echo '<p>' . esc_html__('UTMパラメータの自動付与設定を行います。', 'andw-floating-tools') . '</p>';
@@ -820,12 +770,6 @@ class Andw_Floating_Tools_Settings {
             $sanitized['initial_state'] = andw_sanitize_initial_state($input['initial_state']);
         }
 
-        // 表示モードのサニタイゼーション
-        if (isset($input['display_mode'])) {
-            $allowed_modes = array('global', 'block_only');
-            $sanitized['display_mode'] = in_array($input['display_mode'], $allowed_modes, true) ?
-                $input['display_mode'] : 'global';
-        }
 
         // アイコン表示方式のサニタイゼーション
         if (isset($input['icon_display_method'])) {
