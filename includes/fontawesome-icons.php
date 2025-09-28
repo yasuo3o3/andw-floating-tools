@@ -118,18 +118,23 @@ class Andw_FontAwesome_Icons {
     public static function get_admin_help_text() {
         $popular = self::get_popular_icons();
         $help_text = '<p><strong>FontAwesome Unicode 入力:</strong></p>';
-        $help_text .= '<p>4-6桁の英数字コードを入力してください（例: f46c, f0e0）</p>';
-        $help_text .= '<p><strong>よく使われるアイコン:</strong></p>';
+        $help_text .= '<p>4-6桁の英数字コードを入力してください（例: f46c, f0e0）<br>';
+        $help_text .= '空欄の場合はデフォルトアイコンが使用されます。</p>';
+
+        $help_text .= '<p><strong>よく使われるアイコン（クリックでコピー）:</strong></p>';
         $help_text .= '<div style="max-height: 200px; overflow-y: auto; border: 1px solid #ddd; padding: 10px; background: #f9f9f9;">';
 
         foreach ($popular as $code => $name) {
-            $help_text .= '<span style="display: inline-block; margin: 2px 8px 2px 0; white-space: nowrap;">';
+            $help_text .= '<span style="display: inline-block; margin: 2px 4px 2px 0; white-space: nowrap; cursor: pointer; padding: 2px 4px; border: 1px solid #ccc; border-radius: 3px; background: white;" ';
+            $help_text .= 'onclick="navigator.clipboard.writeText(\'' . $code . '\'); this.style.background=\'#90EE90\'; setTimeout(() => this.style.background=\'white\', 1000);" ';
+            $help_text .= 'title="クリックでコピー: ' . $code . '">';
             $help_text .= '<code>' . $code . '</code> ' . $name;
             $help_text .= '</span>';
         }
 
         $help_text .= '</div>';
-        $help_text .= '<p><a href="https://fontawesome.com/search?o=r&m=free" target="_blank">FontAwesome公式サイトでアイコンを検索</a></p>';
+        $help_text .= '<p><small>💡 上記のコードをクリックすると自動でコピーされます</small></p>';
+        $help_text .= '<p><a href="https://fontawesome.com/search?o=r&m=free" target="_blank" class="button">🔍 FontAwesome公式サイトでもっと探す</a></p>';
 
         return $help_text;
     }

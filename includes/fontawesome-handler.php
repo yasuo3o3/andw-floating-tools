@@ -25,29 +25,56 @@ class Andw_FontAwesome_Handler {
      * 既存のFontAwesome使用を検出
      */
     public function detect_fontawesome() {
+        // 1. FontAwesome プラグインの検出
+        $this->detect_fontawesome_plugins();
+
+        // 2. 登録済みスタイルからFontAwesome検出
         global $wp_styles;
+        if ($wp_styles && !$this->fa_detected) {
+            foreach ($wp_styles->registered as $handle => $style) {
+                if ($this->is_fontawesome_style($style->src, $handle)) {
+                    $this->fa_detected = true;
+                    $this->fa_source = $handle;
+                    $this->fa_version = $this->extract_version($style->src);
 
-        if (!$wp_styles) {
-            return;
-        }
-
-        // 登録済みスタイルからFontAwesome検出
-        foreach ($wp_styles->registered as $handle => $style) {
-            if ($this->is_fontawesome_style($style->src, $handle)) {
-                $this->fa_detected = true;
-                $this->fa_source = $handle;
-                $this->fa_version = $this->extract_version($style->src);
-
-                if (defined('WP_DEBUG') && WP_DEBUG) {
-                    error_log("ANDW FontAwesome Debug - Detected existing FontAwesome: {$handle} (version: {$this->fa_version})");
+                    if (defined('WP_DEBUG') && WP_DEBUG) {
+                        error_log("ANDW FontAwesome Debug - Detected existing FontAwesome: {$handle} (version: {$this->fa_version})");
+                    }
+                    break;
                 }
-                break;
             }
         }
 
-        // HTMLソース内でCDN使用検出
+        // 3. HTMLソース内でCDN使用検出
         if (!$this->fa_detected) {
             add_action('wp_head', array($this, 'detect_fontawesome_in_dom'), 999);
+        }
+    }
+
+    /**
+     * FontAwesome プラグインの検出
+     */
+    private function detect_fontawesome_plugins() {
+        // よく使われるFontAwesome プラグインを検出
+        $fa_plugins = array(
+            'font-awesome/index.php' => 'Font Awesome Official',
+            'better-font-awesome/better-font-awesome.php' => 'Better Font Awesome',
+            'easy-fontawesome/easy-fontawesome.php' => 'Easy FontAwesome',
+            'font-awesome-4-menus/font-awesome-4-menus.php' => 'Font Awesome 4 Menus',
+            'fontawesome/fontawesome.php' => 'FontAwesome Plugin'
+        );
+
+        foreach ($fa_plugins as $plugin_file => $plugin_name) {
+            if (is_plugin_active($plugin_file)) {
+                $this->fa_detected = true;
+                $this->fa_source = 'plugin-' . dirname($plugin_file);
+                $this->fa_version = 'plugin';
+
+                if (defined('WP_DEBUG') && WP_DEBUG) {
+                    error_log("ANDW FontAwesome Debug - Detected FontAwesome plugin: {$plugin_name}");
+                }
+                break;
+            }
         }
     }
 

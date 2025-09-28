@@ -69,6 +69,7 @@ class Andw_Floating_Tools {
         require_once ANDW_FLOATING_TOOLS_PLUGIN_DIR . 'includes/icon-helper.php';
         require_once ANDW_FLOATING_TOOLS_PLUGIN_DIR . 'includes/fontawesome-handler.php';
         require_once ANDW_FLOATING_TOOLS_PLUGIN_DIR . 'includes/fontawesome-icons.php';
+        require_once ANDW_FLOATING_TOOLS_PLUGIN_DIR . 'includes/svg-icons.php';
         require_once ANDW_FLOATING_TOOLS_PLUGIN_DIR . 'includes/settings.php';
         require_once ANDW_FLOATING_TOOLS_PLUGIN_DIR . 'includes/toc.php';
         require_once ANDW_FLOATING_TOOLS_PLUGIN_DIR . 'includes/render.php';

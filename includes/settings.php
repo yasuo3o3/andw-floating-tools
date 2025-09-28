@@ -198,6 +198,14 @@ class Andw_Floating_Tools_Settings {
             array('button_type' => 'top')
         );
 
+        add_settings_field(
+            'icon_display_method',
+            __('アイコン表示方式', 'andw-floating-tools'),
+            array($this, 'render_icon_display_method_field'),
+            $this->page_slug,
+            'andw_floating_tools_icons'
+        );
+
         add_settings_section(
             'andw_floating_tools_utm',
             __('UTM設定', 'andw-floating-tools'),
@@ -309,9 +317,9 @@ class Andw_Floating_Tools_Settings {
     }
 
     public function render_icons_section() {
-        echo '<p>' . esc_html__('各ボタンのアイコンをFontAwesome から選択できます。', 'andw-floating-tools');
-        echo '<br>' . esc_html__('FontAwesome の豊富なアイコンライブラリからお好みのアイコンを選択してください。', 'andw-floating-tools');
-        echo '<br><a href="https://fontawesome.com/icons" target="_blank">FontAwesome アイコン一覧を見る</a></p>';
+        echo '<p>' . esc_html__('各ボタンのアイコンをFontAwesome のUnicodeコードで自由に設定できます。', 'andw-floating-tools');
+        echo '<br>' . esc_html__('4-6桁の英数字コード（例: f46c、f0e0）を入力してください。', 'andw-floating-tools');
+        echo '<br><a href="https://fontawesome.com/search?o=r&m=free" target="_blank">FontAwesome アイコンを検索する</a></p>';
 
         // FontAwesome検出状況を表示
         if (class_exists('Andw_FontAwesome_Handler')) {
@@ -325,12 +333,23 @@ class Andw_Floating_Tools_Settings {
                 echo '（ソース: ' . esc_html($detection_info['source']) . '）';
                 echo '</div>';
             } else {
-                echo '<div style="background: #f8d7da; padding: 10px; border-radius: 4px; margin-bottom: 15px;">';
+                echo '<div style="background: #fff3cd; padding: 10px; border-radius: 4px; margin-bottom: 15px;">';
                 echo '<strong>ℹ️ FontAwesome自動読み込み:</strong> ';
-                echo 'FontAwesome CDNを自動で読み込みます。';
+                echo 'FontAwesome 6.5.1 CDNを自動で読み込みます。';
                 echo '</div>';
             }
         }
+
+        // 使い方ガイド
+        echo '<div style="background: #f0f6ff; padding: 15px; border-radius: 4px; margin-bottom: 15px; border-left: 4px solid #0073aa;">';
+        echo '<h4 style="margin-top: 0;">📖 使い方ガイド</h4>';
+        echo '<ol style="margin-bottom: 0;">';
+        echo '<li><a href="https://fontawesome.com/search?o=r&m=free" target="_blank">FontAwesome公式サイト</a>でお好みのアイコンを検索</li>';
+        echo '<li>アイコンをクリックして詳細ページを開く</li>';
+        echo '<li><strong>Unicode</strong> 欄に表示されるコード（例: f46c）をコピー</li>';
+        echo '<li>下記のテキストフィールドに貼り付けて保存</li>';
+        echo '</ol>';
+        echo '</div>';
     }
 
     public function render_fontawesome_field($args) {
@@ -381,6 +400,43 @@ class Andw_Floating_Tools_Settings {
         // ヘルプテキスト
         echo '<div class="description" style="margin-top: 10px;">';
         echo Andw_FontAwesome_Icons::get_admin_help_text();
+        echo '</div>';
+    }
+
+    public function render_icon_display_method_field() {
+        $options = get_option($this->option_name, array());
+        $current_method = isset($options['icon_display_method']) ? $options['icon_display_method'] : 'fontawesome';
+
+        echo '<div style="margin: 15px 0; padding: 15px; border: 1px solid #ddd; border-radius: 4px; background: #f9f9f9;">';
+
+        // FontAwesome方式
+        echo '<label style="display: block; margin-bottom: 10px;">';
+        echo '<input type="radio" name="' . esc_attr($this->option_name) . '[icon_display_method]" value="fontawesome" ';
+        checked($current_method, 'fontawesome');
+        echo '> <strong>FontAwesome (推奨)</strong>';
+        echo '</label>';
+        echo '<p style="margin-left: 20px; color: #666;">Unicode入力で自由にアイコン選択。FontAwesome CDNまたはプラグインが必要。</p>';
+
+        // SVG方式
+        echo '<label style="display: block; margin-bottom: 10px;">';
+        echo '<input type="radio" name="' . esc_attr($this->option_name) . '[icon_display_method]" value="svg" ';
+        checked($current_method, 'svg');
+        echo '> <strong>内蔵SVG</strong>';
+        echo '</label>';
+        echo '<p style="margin-left: 20px; color: #666;">FontAwesome不要で確実に表示。アイコン選択肢は限定的。</p>';
+
+        echo '</div>';
+
+        // 方式別の説明
+        echo '<div class="description">';
+        echo '<h4>💡 どちらを選ぶべきか？</h4>';
+        echo '<table style="width: 100%; border-collapse: collapse; margin: 10px 0;">';
+        echo '<tr style="background: #f0f0f0;"><th style="border: 1px solid #ddd; padding: 8px;">項目</th><th style="border: 1px solid #ddd; padding: 8px;">FontAwesome</th><th style="border: 1px solid #ddd; padding: 8px;">内蔵SVG</th></tr>';
+        echo '<tr><td style="border: 1px solid #ddd; padding: 8px;">表示確実性</td><td style="border: 1px solid #ddd; padding: 8px;">△ 環境依存</td><td style="border: 1px solid #ddd; padding: 8px;">○ 確実</td></tr>';
+        echo '<tr><td style="border: 1px solid #ddd; padding: 8px;">アイコン種類</td><td style="border: 1px solid #ddd; padding: 8px;">○ 豊富</td><td style="border: 1px solid #ddd; padding: 8px;">△ 限定的</td></tr>';
+        echo '<tr><td style="border: 1px solid #ddd; padding: 8px;">外部依存</td><td style="border: 1px solid #ddd; padding: 8px;">△ CDN/プラグイン必要</td><td style="border: 1px solid #ddd; padding: 8px;">○ 不要</td></tr>';
+        echo '<tr><td style="border: 1px solid #ddd; padding: 8px;">読み込み速度</td><td style="border: 1px solid #ddd; padding: 8px;">△ 追加CSS</td><td style="border: 1px solid #ddd; padding: 8px;">○ 軽量</td></tr>';
+        echo '</table>';
         echo '</div>';
     }
 
@@ -710,6 +766,13 @@ class Andw_Floating_Tools_Settings {
 
         if (isset($input['initial_state'])) {
             $sanitized['initial_state'] = andw_sanitize_initial_state($input['initial_state']);
+        }
+
+        // アイコン表示方式のサニタイゼーション
+        if (isset($input['icon_display_method'])) {
+            $allowed_methods = array('fontawesome', 'svg');
+            $sanitized['icon_display_method'] = in_array($input['icon_display_method'], $allowed_methods, true) ?
+                $input['icon_display_method'] : 'fontawesome';
         }
 
         // FontAwesome Unicode のサニタイゼーション
