@@ -19,6 +19,7 @@
             this.bindEvents();
             this.setupTOC();
             this.setupScrollBehavior();
+            this.checkTOCVisibility();
             this.initialized = true;
         },
 
@@ -374,6 +375,76 @@
                     inThrottle = true;
                     setTimeout(function() { inThrottle = false; }, limit);
                 }
+            }
+        },
+
+        checkTOCVisibility: function() {
+            var tocButton = document.querySelector('.andw-button-toc');
+            if (!tocButton) return;
+
+            // ページ内の見出し（H2-H6）をチェック
+            var headings = document.querySelectorAll('h2, h3, h4, h5, h6');
+
+            if (headings.length === 0) {
+                // 見出しがない場合は目次ボタンを非表示
+                tocButton.style.display = 'none';
+                tocButton.setAttribute('aria-hidden', 'true');
+            } else {
+                // 見出しがある場合は目次ボタンを表示
+                tocButton.style.display = '';
+                tocButton.removeAttribute('aria-hidden');
+            }
+
+            // 動的コンテンツ変更の監視（初回のみ設定）
+            if (!this.contentObserver) {
+                this.setupContentObserver();
+            }
+        },
+
+        setupContentObserver: function() {
+            var self = this;
+
+            // MutationObserverで見出しの追加/削除を監視
+            this.contentObserver = new MutationObserver(function(mutations) {
+                var shouldRecheck = false;
+
+                mutations.forEach(function(mutation) {
+                    if (mutation.type === 'childList') {
+                        var addedNodes = Array.prototype.slice.call(mutation.addedNodes);
+                        var removedNodes = Array.prototype.slice.call(mutation.removedNodes);
+
+                        // 見出し要素が追加/削除されたかチェック
+                        var hasHeadingChanges = addedNodes.concat(removedNodes).some(function(node) {
+                            if (node.nodeType === 1) { // Element node
+                                return node.matches && (
+                                    node.matches('h2, h3, h4, h5, h6') ||
+                                    node.querySelector && node.querySelector('h2, h3, h4, h5, h6')
+                                );
+                            }
+                            return false;
+                        });
+
+                        if (hasHeadingChanges) {
+                            shouldRecheck = true;
+                        }
+                    }
+                });
+
+                if (shouldRecheck) {
+                    // デバウンスして再チェック
+                    clearTimeout(self.visibilityCheckTimeout);
+                    self.visibilityCheckTimeout = setTimeout(function() {
+                        self.checkTOCVisibility();
+                    }, 100);
+                }
+            });
+
+            // document.bodyを監視対象にする
+            if (document.body) {
+                this.contentObserver.observe(document.body, {
+                    childList: true,
+                    subtree: true
+                });
             }
         },
 

@@ -243,13 +243,7 @@ class Andw_Floating_Tools_TOC {
 
     public function render_toc_html() {
         if (empty($this->toc_data)) {
-            // 見出しがない場合でも適切なメッセージを表示
-            $html = '<nav class="andw-toc-nav andw-toc-empty" aria-label="' . esc_attr__('目次', 'andw-floating-tools') . '">';
-            $html .= '<div class="andw-toc-empty-message">';
-            $html .= esc_html__('このページには見出しがありません', 'andw-floating-tools');
-            $html .= '</div>';
-            $html .= '</nav>';
-            return $html;
+            return '';
         }
 
         $html = '<nav class="andw-toc-nav" aria-label="' . esc_attr__('目次', 'andw-floating-tools') . '">';
