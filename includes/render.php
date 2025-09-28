@@ -257,6 +257,7 @@ class Andw_Floating_Tools_Render {
         // カスタムSVGパスが設定されている場合は優先使用
         $custom_svg_paths = isset($this->options['custom_svg_paths']) ? $this->options['custom_svg_paths'] : array();
         if (!empty($custom_svg_paths[$button_type])) {
+            // SVGタグ内の内容をそのまま使用（pathタグ、circle、rect等すべて対応）
             return sprintf(
                 '<svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">%s</svg>',
                 $custom_svg_paths[$button_type]

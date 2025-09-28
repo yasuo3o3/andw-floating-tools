@@ -125,15 +125,21 @@ function andw_sanitize_initial_state($value) {
 }
 
 function andw_sanitize_svg_path($value) {
-    // SVGパスの基本的なサニタイゼーション
-    // 危険なスクリプトタグなどを除去
-    $value = wp_strip_all_tags($value);
+    // SVGコンテンツの基本的なサニタイゼーション
+    if (empty($value)) {
+        return '';
+    }
 
-    // SVGパスで使用される文字のみ許可
-    $allowed_chars = 'MLHVCSQTAZmlhvcsqtaz0-9.,\- ';
-    $value = preg_replace('/[^' . preg_quote($allowed_chars, '/') . ']/', '', $value);
+    // 危険なスクリプトタグやイベントハンドラーを除去
+    $value = preg_replace('/<script[^>]*>.*?<\/script>/is', '', $value);
+    $value = preg_replace('/on\w+\s*=\s*["\'].*?["\']/i', '', $value);
+    $value = preg_replace('/javascript\s*:/i', '', $value);
 
-    return $value;
+    // 許可するSVGタグのみを通す
+    $allowed_tags = '<path><circle><rect><line><polygon><polyline><ellipse><g><defs><use><clipPath><mask>';
+    $value = strip_tags($value, $allowed_tags);
+
+    return trim($value);
 }
 
 function andw_add_utm_to_url($url, $utm_params) {

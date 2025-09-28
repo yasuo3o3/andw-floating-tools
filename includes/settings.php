@@ -312,8 +312,9 @@ class Andw_Floating_Tools_Settings {
         echo '<p>' . esc_html__('各ボタンのアイコンをカスタマイズできます。参考サイト: ', 'andw-floating-tools');
         echo '<a href="https://heroicons.com/" target="_blank">Heroicons</a>, ';
         echo '<a href="https://feathericons.com/" target="_blank">Feather Icons</a>, ';
-        echo '<a href="https://tabler-icons.io/" target="_blank">Tabler Icons</a>';
-        echo '<br>' . esc_html__('SVGの&lt;path&gt;タグ内の d="..." 部分のみを入力してください。', 'andw-floating-tools') . '</p>';
+        echo '<a href="https://tabler-icons.io/" target="_blank">Tabler Icons</a>, ';
+        echo '<a href="https://lucide.dev/" target="_blank">Lucide</a>';
+        echo '<br>' . esc_html__('SVGタグの中身（&lt;path&gt;、&lt;circle&gt;等のタグ）をそのまま貼り付けてください。', 'andw-floating-tools') . '</p>';
     }
 
     public function render_custom_svg_field($args) {
@@ -323,11 +324,11 @@ class Andw_Floating_Tools_Settings {
         $value = isset($custom_svg_paths[$button_type]) ? $custom_svg_paths[$button_type] : '';
 
         echo '<textarea name="' . esc_attr($this->option_name) . '[custom_svg_paths][' . esc_attr($button_type) . ']" ';
-        echo 'rows="3" cols="80" class="regular-text" ';
-        echo 'placeholder="例: M12 3l-8 8h5v10h6V11h5l-8-8z">';
+        echo 'rows="4" cols="80" class="regular-text" ';
+        echo 'placeholder="例: <path d=&quot;m15 11-1 9&quot;/><path d=&quot;m19 11-4-7&quot;/><path d=&quot;M2 11h20&quot;/>">';
         echo esc_textarea($value);
         echo '</textarea>';
-        echo '<p class="description">' . esc_html__('空の場合はデフォルトアイコンを使用します。', 'andw-floating-tools') . '</p>';
+        echo '<p class="description">' . esc_html__('空の場合はデフォルトアイコンを使用します。複数のpath、circle、rect等のタグをそのまま貼り付けできます。', 'andw-floating-tools') . '</p>';
     }
 
     public function render_utm_section() {
