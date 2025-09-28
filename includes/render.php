@@ -282,10 +282,28 @@ class Andw_Floating_Tools_Render {
 
             // SVGタグ全体が含まれている場合は、統一した属性に置換
             if (strpos($svg_content, '<svg') !== false) {
-                // 既存のSVGタグの属性を統一した属性に置換
+                // 元のSVGからfillとstroke属性を抽出
+                $fill_value = 'currentColor'; // デフォルト
+                $stroke_attributes = '';
+
+                if (preg_match('/<svg[^>]*fill=["\']([^"\']*)["\']/', $svg_content, $fill_match)) {
+                    $fill_value = $fill_match[1];
+                }
+
+                // stroke関連の属性を抽出
+                $stroke_attrs = array('stroke', 'stroke-width', 'stroke-linecap', 'stroke-linejoin');
+                foreach ($stroke_attrs as $attr) {
+                    if (preg_match('/<svg[^>]*' . preg_quote($attr) . '=["\']([^"\']*)["\']/', $svg_content, $stroke_match)) {
+                        $stroke_attributes .= ' ' . $attr . '="' . esc_attr($stroke_match[1]) . '"';
+                    }
+                }
+
+                // 統一した属性で置換（元のfillとstrokeを保持）
+                $replacement = '<svg width="24" height="24" viewBox="0 0 24 24" fill="' . esc_attr($fill_value) . '"' . $stroke_attributes . ' aria-hidden="true">';
+
                 $svg_content = preg_replace(
                     '/<svg[^>]*>/i',
-                    '<svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">',
+                    $replacement,
                     $svg_content
                 );
                 return $svg_content;
