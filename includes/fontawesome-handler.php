@@ -135,7 +135,7 @@ class Andw_FontAwesome_Handler {
         // FontAwesome 6.5.1 CDN (最新安定版)
         wp_enqueue_style(
             'andw-fontawesome',
-            'https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css',
+            ANDW_FLOATING_TOOLS_PLUGIN_URL . 'assets/vendor/fontawesome/all.min.css',
             array(),
             '6.5.1'
         );
