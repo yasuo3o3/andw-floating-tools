@@ -150,7 +150,7 @@ function andw_add_utm_to_url($url, $utm_params) {
         return $url;
     }
 
-    $parsed_url = parse_url($url);
+    $parsed_url = wp_parse_url($url);
 
     if ($parsed_url === false) {
         return $url;
