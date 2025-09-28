@@ -111,7 +111,7 @@
                                 label: __('見出しの深さ', 'andw-floating-tools'),
                                 value: tocDepth,
                                 options: TOC_DEPTH_OPTIONS,
-                                onChange: function( value ) { setAttributes({ tocDepth: parseInt(value) }); },
+                                onChange: function( value ) { setAttributes({ tocDepth: parseInt(value, 10) }); },
                                 help: __('空の場合はサイト既定の設定を使用', 'andw-floating-tools')
                             }
                         ),
@@ -138,7 +138,7 @@
                             wp.element.createElement('input', {
                                 type: 'number',
                                 value: sheetMaxWidth,
-                                onChange: function( e ) { setAttributes({ sheetMaxWidth: parseInt(e.target.value) || 0 }); },
+                                onChange: function( e ) { setAttributes({ sheetMaxWidth: parseInt(e.target.value, 10) || 0 }); },
                                 min: 0,
                                 max: 800,
                                 style: { width: '100%' },
@@ -152,7 +152,7 @@
                             wp.element.createElement('input', {
                                 type: 'number',
                                 value: maxHeightVh,
-                                onChange: function( e ) { setAttributes({ maxHeightVh: parseInt(e.target.value) || 0 }); },
+                                onChange: function( e ) { setAttributes({ maxHeightVh: parseInt(e.target.value, 10) || 0 }); },
                                 min: 0,
                                 max: 100,
                                 style: { width: '100%' },
@@ -169,7 +169,7 @@
                                 wp.element.createElement('input', {
                                     type: 'number',
                                     value: gapLeft,
-                                    onChange: function( e ) { setAttributes({ gapLeft: parseInt(e.target.value) || 0 }); },
+                                    onChange: function( e ) { setAttributes({ gapLeft: parseInt(e.target.value, 10) || 0 }); },
                                     min: 0,
                                     max: 100,
                                     style: { width: '100%' },
@@ -183,7 +183,7 @@
                                 wp.element.createElement('input', {
                                     type: 'number',
                                     value: gapRight,
-                                    onChange: function( e ) { setAttributes({ gapRight: parseInt(e.target.value) || 0 }); },
+                                    onChange: function( e ) { setAttributes({ gapRight: parseInt(e.target.value, 10) || 0 }); },
                                     min: 0,
                                     max: 100,
                                     style: { width: '100%' },
@@ -198,7 +198,7 @@
                             wp.element.createElement('input', {
                                 type: 'number',
                                 value: anchorOffsetY,
-                                onChange: function( e ) { setAttributes({ anchorOffsetY: parseInt(e.target.value) || 0 }); },
+                                onChange: function( e ) { setAttributes({ anchorOffsetY: parseInt(e.target.value, 10) || 0 }); },
                                 min: 0,
                                 max: 50,
                                 style: { width: '100%' },
