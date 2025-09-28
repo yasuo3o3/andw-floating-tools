@@ -31,7 +31,6 @@ class Andw_Floating_Tools {
     }
 
     private function __construct() {
-        add_action('plugins_loaded', array($this, 'load_textdomain'));
         add_action('init', array($this, 'init'));
         add_action('wp_enqueue_scripts', array($this, 'enqueue_scripts'));
 
@@ -39,9 +38,6 @@ class Andw_Floating_Tools {
         register_deactivation_hook(__FILE__, array($this, 'on_deactivation'));
     }
 
-    public function load_textdomain() {
-        load_plugin_textdomain('andw-floating-tools', false, dirname(plugin_basename(__FILE__)) . '/languages');
-    }
 
     public function init() {
         $this->load_includes();
