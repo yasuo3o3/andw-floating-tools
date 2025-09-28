@@ -36,27 +36,6 @@
       "type": "string",
       "default": "stack-vertical-right-center"
     },
-    "offsetDesktop": {
-      "type": "object",
-      "default": {
-        "bottom": 16,
-        "right": 16
-      }
-    },
-    "offsetMobile": {
-      "type": "object",
-      "default": {
-        "bottom": 16,
-        "right": 16
-      }
-    },
-    "offsetTablet": {
-      "type": "object",
-      "default": {
-        "bottom": 16,
-        "right": 16
-      }
-    },
     "applyUrl": {
       "type": "string",
       "default": ""

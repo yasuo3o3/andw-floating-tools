@@ -13,8 +13,8 @@
     ];
 
     const LAYOUT_OPTIONS = [
-        { label: __('右端・高さ中央・縦積み', 'andw-floating-tools'), value: 'stack-vertical-right-center' },
-        { label: __('右下・横並び', 'andw-floating-tools'), value: 'bottom-right-inline' }
+        { label: __('縦積み', 'andw-floating-tools'), value: 'stack-vertical-right-center' },
+        { label: __('横並び', 'andw-floating-tools'), value: 'bottom-right-inline' }
     ];
 
     const TOC_DEPTH_OPTIONS = [
@@ -48,9 +48,6 @@
                 tocDepth,
                 tocOffset,
                 layoutDesktop,
-                offsetDesktop,
-                offsetMobile,
-                offsetTablet,
                 applyUrl,
                 applyLabel,
                 applyTarget,
@@ -115,53 +112,6 @@
                         )
                     ),
 
-                    wp.element.createElement(
-                        PanelBody,
-                        { title: __('位置設定', 'andw-floating-tools'), initialOpen: false },
-                        wp.element.createElement(
-                            'div',
-                            { style: { marginBottom: '16px' } },
-                            wp.element.createElement('strong', {}, __('デスクトップオフセット', 'andw-floating-tools')),
-                            wp.element.createElement(
-                                'div',
-                                { style: { display: 'flex', gap: '8px', marginTop: '8px' } },
-                                wp.element.createElement(
-                                    'div',
-                                    { style: { flex: '1' } },
-                                    wp.element.createElement('label', {}, __('下', 'andw-floating-tools')),
-                                    wp.element.createElement('input', {
-                                        type: 'number',
-                                        value: offsetDesktop.bottom,
-                                        onChange: function( e ) {
-                                            setAttributes({
-                                                offsetDesktop: { ...offsetDesktop, bottom: parseInt(e.target.value) || 0 }
-                                            });
-                                        },
-                                        min: 0,
-                                        max: 999,
-                                        style: { width: '100%' }
-                                    })
-                                ),
-                                wp.element.createElement(
-                                    'div',
-                                    { style: { flex: '1' } },
-                                    wp.element.createElement('label', {}, __('右', 'andw-floating-tools')),
-                                    wp.element.createElement('input', {
-                                        type: 'number',
-                                        value: offsetDesktop.right,
-                                        onChange: function( e ) {
-                                            setAttributes({
-                                                offsetDesktop: { ...offsetDesktop, right: parseInt(e.target.value) || 0 }
-                                            });
-                                        },
-                                        min: 0,
-                                        max: 999,
-                                        style: { width: '100%' }
-                                    })
-                                )
-                            )
-                        )
-                    ),
 
                     wp.element.createElement(
                         PanelBody,

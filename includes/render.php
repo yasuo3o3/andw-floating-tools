@@ -408,12 +408,6 @@ class Andw_Floating_Tools_Render {
     }
 
     private function get_offset($device) {
-        $block_attributes = $this->get_block_attributes();
-
-        if (isset($block_attributes['offset' . ucfirst($device)])) {
-            return andw_sanitize_offset($block_attributes['offset' . ucfirst($device)]);
-        }
-
         $key = 'offset_' . $device;
         return isset($this->options[$key]) ? $this->options[$key] : array('bottom' => 16, 'right' => 16);
     }

@@ -491,8 +491,8 @@ class Andw_Floating_Tools_Settings {
         $options = get_option($this->option_name, array());
         $layout = isset($options['layout_desktop']) ? $options['layout_desktop'] : 'stack-vertical-right-center';
         $layouts = array(
-            'stack-vertical-right-center' => __('右端・高さ中央・縦積み', 'andw-floating-tools'),
-            'bottom-right-inline' => __('右下・横並び', 'andw-floating-tools'),
+            'stack-vertical-right-center' => __('縦積み', 'andw-floating-tools'),
+            'bottom-right-inline' => __('横並び', 'andw-floating-tools'),
         );
 
         foreach ($layouts as $key => $label) {
