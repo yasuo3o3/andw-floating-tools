@@ -183,8 +183,12 @@ class Andw_Floating_Tools {
 
 Andw_Floating_Tools::get_instance();
 
-// デバッグモード時のアイコン検証ツール読み込み
-if (defined('WP_DEBUG') && WP_DEBUG && !is_admin()) {
-    require_once ANDW_FLOATING_TOOLS_PLUGIN_DIR . 'verify-icon-settings.php';
-}
+// デバッグモード時のアイコン検証ツール読み込み（wp_footerで安全に実行）
+add_action('wp_footer', function() {
+    if (defined('WP_DEBUG') && WP_DEBUG && !is_admin() &&
+        function_exists('current_user_can') && function_exists('wp_get_current_user') &&
+        current_user_can('manage_options')) {
+        require_once ANDW_FLOATING_TOOLS_PLUGIN_DIR . 'verify-icon-settings.php';
+    }
+});
 

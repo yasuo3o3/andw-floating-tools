@@ -9,8 +9,8 @@ if (!defined('ABSPATH')) {
     exit;
 }
 
-// 管理者のみアクセス可能
-if (!current_user_can('manage_options')) {
+// 管理者のみアクセス可能（WordPressの初期化後に呼ばれるため安全）
+if (!function_exists('current_user_can') || !current_user_can('manage_options')) {
     return;
 }
 
@@ -92,7 +92,9 @@ class Andw_Icon_Settings_Verifier {
     }
 }
 
-// 管理者でWP_DEBUGが有効な場合のみ表示
-if (defined('WP_DEBUG') && WP_DEBUG && current_user_can('manage_options')) {
+// 管理者でWP_DEBUGが有効な場合のみ表示（関数存在確認付き）
+if (defined('WP_DEBUG') && WP_DEBUG &&
+    function_exists('current_user_can') && function_exists('wp_get_current_user') &&
+    current_user_can('manage_options')) {
     add_action('wp_footer', array('Andw_Icon_Settings_Verifier', 'verify_and_display'));
 }
