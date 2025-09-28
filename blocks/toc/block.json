@@ -83,10 +83,6 @@
     "anchorOffsetY": {
       "type": "number",
       "default": 0
-    },
-    "initialState": {
-      "type": "string",
-      "default": ""
     }
   }
 }

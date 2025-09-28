@@ -421,12 +421,6 @@ class Andw_Floating_Tools_Render {
     }
 
     private function get_initial_state() {
-        $block_attributes = $this->get_block_attributes();
-
-        if (isset($block_attributes['initialState']) && !empty($block_attributes['initialState'])) {
-            return andw_sanitize_initial_state($block_attributes['initialState']);
-        }
-
         return isset($this->options['initial_state']) ? $this->options['initial_state'] : 'closed';
     }
 }

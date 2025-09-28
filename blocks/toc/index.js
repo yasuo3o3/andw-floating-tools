@@ -34,10 +34,6 @@
         { label: __('アンカーパネル', 'andw-floating-tools'), value: 'anchor-panel' }
     ];
 
-    const INITIAL_STATE_OPTIONS = [
-        { label: __('閉じた状態', 'andw-floating-tools'), value: 'closed' },
-        { label: __('ピーク状態（少し見える）', 'andw-floating-tools'), value: 'peek' }
-    ];
 
     registerBlockType('andw-floating-tools/toc', {
         edit: function( props ) {
@@ -59,8 +55,7 @@
                 maxHeightVh,
                 gapRight,
                 gapLeft,
-                anchorOffsetY,
-                initialState
+                anchorOffsetY
             } = attributes;
 
             return wp.element.createElement(
@@ -214,16 +209,6 @@
                                 style: { width: '100%' },
                                 placeholder: __('既定値を使用', 'andw-floating-tools')
                             })
-                        ),
-                        wp.element.createElement(
-                            SelectControl,
-                            {
-                                label: __('初期状態', 'andw-floating-tools'),
-                                value: initialState,
-                                options: [{ label: __('サイト既定', 'andw-floating-tools'), value: '' }].concat(INITIAL_STATE_OPTIONS),
-                                onChange: function( value ) { setAttributes({ initialState: value }); },
-                                help: __('アンカーシートモード時の初期表示状態', 'andw-floating-tools')
-                            }
                         )
                     ),
 
