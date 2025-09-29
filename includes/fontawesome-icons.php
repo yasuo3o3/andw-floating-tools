@@ -16,48 +16,6 @@ class Andw_FontAwesome_Icons {
         );
     }
 
-    /**
-     * よく使われるアイコンのサンプル（ユーザー参考用）
-     */
-    public static function get_popular_icons() {
-        return array(
-            // 申し込み・ショッピング関連
-            'f07a' => 'ショッピングカート',
-            'f290' => 'ショッピングバッグ',
-            'f09d' => 'クレジットカード',
-            'f46c' => 'クリップボードチェック',
-            'f56c' => '契約書',
-            'f2b5' => '握手',
-
-            // お問い合わせ関連
-            'f0e0' => 'メール',
-            'f086' => 'コメント',
-            'f095' => '電話',
-            'f590' => 'ヘッドセット',
-            'f059' => '質問',
-
-            // 目次関連
-            'f03a' => 'リスト',
-            'f0ca' => '箇条書き',
-            'f0c9' => 'ハンバーガーメニュー',
-            'f518' => '本を開く',
-            'f02e' => 'ブックマーク',
-
-            // ページトップ関連
-            'f062' => '上矢印',
-            'f077' => 'シェブロン上',
-            'f106' => 'アングル上',
-            'f0aa' => '円矢印上',
-            'f135' => 'ロケット',
-
-            // その他汎用
-            'f015' => 'ホーム',
-            'f005' => '星',
-            'f004' => 'ハート',
-            'f05a' => '情報',
-            'f013' => '設定',
-        );
-    }
 
     /**
      * FontAwesome Unicode からアイコンHTMLを生成
@@ -116,25 +74,21 @@ class Andw_FontAwesome_Icons {
      * 管理画面用の説明テキスト
      */
     public static function get_admin_help_text() {
-        $popular = self::get_popular_icons();
         $help_text = '<p><strong>FontAwesome Unicode 入力:</strong></p>';
         $help_text .= '<p>4-6桁の英数字コードを入力してください（例: f46c, f0e0）<br>';
         $help_text .= '空欄の場合はデフォルトアイコンが使用されます。</p>';
 
-        $help_text .= '<p><strong>よく使われるアイコン（クリックでコピー）:</strong></p>';
-        $help_text .= '<div style="max-height: 200px; overflow-y: auto; border: 1px solid #ddd; padding: 10px; background: #f9f9f9;">';
-
-        foreach ($popular as $code => $name) {
-            $help_text .= '<span style="display: inline-block; margin: 2px 4px 2px 0; white-space: nowrap; cursor: pointer; padding: 2px 4px; border: 1px solid #ccc; border-radius: 3px; background: white;" ';
-            $help_text .= 'onclick="navigator.clipboard.writeText(\'' . $code . '\'); this.style.background=\'#90EE90\'; setTimeout(() => this.style.background=\'white\', 1000);" ';
-            $help_text .= 'title="クリックでコピー: ' . $code . '">';
-            $help_text .= '<code>' . $code . '</code> ' . $name;
-            $help_text .= '</span>';
-        }
-
+        $help_text .= '<div style="padding: 10px; background: #f0f8ff; border: 1px solid #ccc; border-radius: 4px; margin: 10px 0;">';
+        $help_text .= '<p><strong>参考例:</strong></p>';
+        $help_text .= '<p>';
+        $help_text .= '• 申し込み: <code>f07a</code> (ショッピングカート), <code>f46c</code> (クリップボードチェック)<br>';
+        $help_text .= '• お問い合わせ: <code>f0e0</code> (メール), <code>f086</code> (コメント), <code>f095</code> (電話)<br>';
+        $help_text .= '• 目次: <code>f03a</code> (リスト), <code>f0ca</code> (箇条書き), <code>f0c9</code> (ハンバーガーメニュー)<br>';
+        $help_text .= '• ページトップ: <code>f062</code> (上矢印), <code>f077</code> (シェブロン上), <code>f135</code> (ロケット)';
+        $help_text .= '</p>';
         $help_text .= '</div>';
-        $help_text .= '<p><small>💡 上記のコードをクリックすると自動でコピーされます</small></p>';
-        $help_text .= '<p><a href="https://fontawesome.com/search?o=r&m=free" target="_blank" class="button">🔍 FontAwesome公式サイトでもっと探す</a></p>';
+
+        $help_text .= '<p><a href="https://fontawesome.com/search?o=r&m=free" target="_blank" class="button">🔍 FontAwesome公式サイトでアイコンを探す</a></p>';
 
         return $help_text;
     }

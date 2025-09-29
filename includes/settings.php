@@ -400,12 +400,7 @@ class Andw_Floating_Tools_Settings {
 
         // ヘルプテキスト
         echo '<div class="description" style="margin-top: 10px;">';
-        // 管理画面なので onclick 属性を許可（管理者権限でのみアクセス可能）
-        $allowed_html = wp_kses_allowed_html('post');
-        $allowed_html['span']['onclick'] = true;
-        $allowed_html['span']['title'] = true;
-        $allowed_html['span']['style'] = true;
-        echo wp_kses(Andw_FontAwesome_Icons::get_admin_help_text(), $allowed_html);
+        echo wp_kses_post(Andw_FontAwesome_Icons::get_admin_help_text());
         echo '</div>';
     }
 
