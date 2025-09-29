@@ -1,147 +1,161 @@
 # andW Floating Tools
 
-右下フローティング群とTOCドロワーを提供するWordPressプラグイン。
+A WordPress plugin that provides floating buttons and table of contents drawer functionality to enhance website usability.
 
-## 機能概要
+![Version](https://img.shields.io/badge/version-0.1.1-blue.svg)
+![WordPress](https://img.shields.io/badge/WordPress-6.3%2B-blue.svg)
+![PHP](https://img.shields.io/badge/PHP-7.4%2B-purple.svg)
+![License](https://img.shields.io/badge/license-GPL%20v2%2B-green.svg)
 
-andW Floating Toolsは、Webサイトのユーザビリティを向上させる4つのフローティングボタンとTOC機能を提供します。
+## About This Plugin
 
-### 主な機能
+This plugin is being prepared for submission to the **WordPress.org Plugin Directory**. It has been developed following WordPress coding standards and security best practices, and has undergone comprehensive plugin audit compliance testing.
 
-- **4種類のボタン**
-  - ページトップへ（50vh超で表示、上スクロールで即表示）
-  - お申し込み（CTA）
-  - お問い合わせ（CTA）
-  - 目次（TOCアンカーシート表示）
+## Features Overview
 
-- **レスポンシブ対応**
-  - Desktop: 右端・下基準・縦積み（デフォルト）または右下・横並び
-  - Mobile/Tablet: 右下・横並び固定
-  - 端末別オフセット調整可能
+andW Floating Tools provides four floating buttons and table of contents functionality to improve website usability.
 
-- **目次機能**
-  - H2/H3/H4の見出しから自動生成
-  - アンカーシートまたは右側ドロワーUI
-  - フォーカストラップ対応
-  - スクロールオフセット調整可能（固定ヘッダー対応）
+### Main Features
 
-- **CTAボタン**
-  - URL・ラベル・ターゲット設定
-  - UTM自動付与機能（既存UTMは保護）
+- **4 Types of Floating Buttons**
+  - Back to Top (appears after 50vh scroll, instant display on upward scroll)
+  - Apply/Registration (CTA)
+  - Contact (CTA)
+  - Table of Contents (anchor sheet display)
 
-- **アクセシビリティ**
-  - フォーカスリング、Esc閉じ、ARIA属性
-  - prefers-reduced-motion対応
+- **Responsive Design**
+  - Desktop: Right edge, bottom-based, vertical stack (default) or bottom-right inline
+  - Mobile/Tablet: Bottom-right inline layout (fixed)
+  - Device-specific offset adjustments available
 
-- **Gutenbergブロック**
-  - 投稿単位での設定上書き
-  - エディタサイドバーで詳細設定
+- **Table of Contents**
+  - Auto-generated from H2/H3/H4 headings
+  - Anchor sheet or right-side drawer UI
+  - Focus trap support
+  - Scroll offset adjustment (for fixed headers)
 
-## インストール
+- **CTA Buttons**
+  - URL, label, and target settings
+  - Automatic UTM parameter addition (preserves existing UTM)
 
-1. プラグインファイルを `/wp-content/plugins/andw-floating-tools/` ディレクトリにアップロード
-2. WordPress管理画面でプラグインを有効化
-3. 「設定」→「Floating Tools」で設定を行う
+- **Accessibility**
+  - Focus rings, Esc key closing, ARIA attributes
+  - prefers-reduced-motion support
 
-## 基本設定
+- **Gutenberg Block**
+  - Per-post setting overrides
+  - Detailed configuration in editor sidebar
 
-### 管理画面での設定
+## Installation
 
-1. 「設定」→「Floating Tools」にアクセス
-2. 「有効なボタン」で表示するボタンを選択
-3. 「ボタンの並び順」をドラッグ&ドロップで調整
-4. 「デスクトップレイアウト」を選択
-5. 「表示制御」でフローティングツールの表示方法を選択
+### From WordPress.org (Coming Soon)
+1. Go to WordPress Admin → Plugins → Add New
+2. Search for "andW Floating Tools"
+3. Install and activate the plugin
+4. Go to Settings → Floating Tools to configure
 
-### 表示制御について
+### Manual Installation
+1. Upload plugin files to `/wp-content/plugins/andw-floating-tools/` directory
+2. Activate the plugin from WordPress admin
+3. Go to Settings → Floating Tools to configure
 
-フローティングツールの表示方法を2つから選択できます：
+## Quick Start
 
-- **すべてのページに表示（グローバル表示）** - デフォルト設定
-  - 投稿、固定ページ、アーカイブページなど、サイト全体でフローティングツールを表示
-  - 従来通りの動作
+### Admin Configuration
 
-- **ブロック設置ページのみ表示**
-  - 「Floating Tools Settings」ブロックが配置されているページでのみ表示
-  - 特定のページにだけフローティングツールを表示したい場合に最適
-  - 投稿編集画面でブロックを追加した場合にのみ、そのページでフローティングツールが表示される
+1. Navigate to **Settings** → **Floating Tools**
+2. Select which buttons to enable under **Enabled Buttons**
+3. Drag and drop to adjust **Button Order**
+4. Choose **Desktop Layout** (vertical stack or horizontal inline)
+5. Configure **Display Control** method
 
-### 投稿単位の設定上書き
+### Display Control Options
 
-1. 投稿編集画面でGutenbergブロック「Floating Tools Settings」を追加
-2. サイドバーで詳細設定を行う
-3. 空の項目はサイト既定設定を使用
+Choose how floating tools are displayed:
 
-## カスタマイズ方法
+- **Show on All Pages (Global Display)** - Default setting
+  - Displays floating tools site-wide (posts, pages, archives)
+  - Traditional behavior
 
-### ボタンのアイコンを変更する
+- **Show Only on Block-Enabled Pages**
+  - Only displays where "Floating Tools Settings" block is placed
+  - Perfect for showing tools on specific pages only
+  - Requires adding the block to each desired page
 
-ボタンのアイコンはFontAwesome のUnicodeコードを直接入力する方式で、自由にカスタマイズできます。
+### Per-Post Customization
 
-#### 管理画面での設定
+1. Add "Floating Tools Settings" Gutenberg block in post editor
+2. Configure settings in the editor sidebar
+3. Empty fields will use site default settings
 
-1. WordPress管理画面 → **設定** → **Floating Tools**
-2. **アイコン設定** セクション
-3. 各ボタンのテキストフィールドにUnicodeコードを入力（例: `f46c`）
-4. リアルタイムプレビューで確認
-5. 保存
+## Customization
 
-#### FontAwesome Unicode 入力について
+### Icon Customization
 
-- **自由度の高い選択** - FontAwesome 全アイコンから自由に選択可能
-- **Unicode直接入力** - 4-6桁の英数字コード（例: f46c, f0e0）
-- **リアルタイムプレビュー** - 入力と同時にアイコン表示確認
-- **確実な表示** - FontAwesome 6 対応で安定表示
+Button icons can be freely customized using FontAwesome Unicode codes.
 
-#### よく使われるアイコンのUnicodeコード
+#### Admin Configuration
 
-**お申し込みボタン:**
-- `f07a` - 🛒 ショッピングカート
-- `f290` - 🛍️ ショッピングバッグ
-- `f09d` - 💳 クレジットカード
-- `f46c` - 📋 クリップボードチェック
+1. Go to WordPress Admin → **Settings** → **Floating Tools**
+2. Navigate to **Icon Settings** section
+3. Enter Unicode codes in text fields (e.g., `f46c`)
+4. Preview icons in real-time
+5. Save settings
 
-**お問い合わせボタン:**
-- `f0e0` - ✉️ メール
-- `f086` - 💬 コメント
-- `f095` - 📞 電話
-- `f590` - 🎧 ヘッドセット
+#### FontAwesome Unicode Input
 
-**目次ボタン:**
-- `f03a` - 📋 リスト
-- `f0ca` - 📝 箇条書き
-- `f0c9` - ☰ ハンバーガーメニュー
-- `f518` - 📖 本を開く
+- **High Flexibility** - Choose from all FontAwesome icons
+- **Direct Unicode Input** - 4-6 digit alphanumeric codes (e.g., f46c, f0e0)
+- **Real-time Preview** - Instant icon display confirmation
+- **Reliable Display** - FontAwesome 6 compatible for stable rendering
 
-**ページトップボタン:**
-- `f062` - ⬆️ 上矢印
-- `f077` - ⬆️ シェブロン上
-- `f135` - 🚀 ロケット
+#### Popular Icon Unicode Codes
 
-#### アイコンの探し方
+**Apply/Registration Button:**
+- `f07a` - 🛒 Shopping Cart
+- `f290` - 🛍️ Shopping Bag
+- `f09d` - 💳 Credit Card
+- `f46c` - 📋 Clipboard Check
 
-1. [FontAwesome 公式サイト](https://fontawesome.com/search?o=r&m=free) でアイコンを検索
-2. 気に入ったアイコンをクリック
-3. **Unicode** 欄に表示されるコード（例: `f46c`）をコピー
-4. 管理画面のテキストフィールドに貼り付け
+**Contact Button:**
+- `f0e0` - ✉️ Envelope
+- `f086` - 💬 Comment
+- `f095` - 📞 Phone
+- `f590` - 🎧 Headset
 
-#### 設定例
+**Table of Contents Button:**
+- `f03a` - 📋 List
+- `f0ca` - 📝 List UL
+- `f0c9` - ☰ Bars
+- `f518` - 📖 Book Open
+
+**Back to Top Button:**
+- `f062` - ⬆️ Arrow Up
+- `f077` - ⬆️ Chevron Up
+- `f135` - 🚀 Rocket
+
+#### How to Find Icons
+
+1. Search icons on [FontAwesome official site](https://fontawesome.com/search?o=r&m=free)
+2. Click on your preferred icon
+3. Copy the **Unicode** code (e.g., `f46c`)
+4. Paste into admin text field
+
+#### Configuration Example
 
 ```
-お申し込みボタン: f07a （ショッピングカート）
-お問い合わせボタン: f0e0 （メール）
-目次ボタン: f03a （リスト）
-ページトップボタン: f062 （上矢印）
+Apply Button: f07a (Shopping Cart)
+Contact Button: f0e0 (Envelope)
+TOC Button: f03a (List)
+Top Button: f062 (Arrow Up)
 ```
 
-### ボタンの色を変更する
+### Color Customization
 
-ボタンの色は `assets/css/app.css` で定義されています。
+Button colors are defined in `assets/css/app.css`:
 
 ```css
-/* assets/css/app.css 101-131行目付近 */
-
-/* お申し込みボタン（現在: 緑） */
+/* Apply Button (Current: Green) */
 .andw-button-apply {
     background: #059669;
 }
@@ -149,7 +163,7 @@ andW Floating Toolsは、Webサイトのユーザビリティを向上させる4
     background: #047857;
 }
 
-/* お問い合わせボタン（現在: 赤） */
+/* Contact Button (Current: Red) */
 .andw-button-contact {
     background: #dc2626;
 }
@@ -157,7 +171,7 @@ andW Floating Toolsは、Webサイトのユーザビリティを向上させる4
     background: #b91c1c;
 }
 
-/* 目次ボタン（現在: 紫） */
+/* TOC Button (Current: Purple) */
 .andw-button-toc {
     background: #7c3aed;
 }
@@ -165,7 +179,7 @@ andW Floating Toolsは、Webサイトのユーザビリティを向上させる4
     background: #6d28d9;
 }
 
-/* ページトップボタン（現在: グレー） */
+/* Top Button (Current: Gray) */
 .andw-button-top {
     background: #374151;
 }
@@ -174,111 +188,98 @@ andW Floating Toolsは、Webサイトのユーザビリティを向上させる4
 }
 ```
 
-#### 色の変更例
+## Technical Specifications
 
-```css
-/* オレンジに変更 */
-.andw-button-apply {
-    background: #ff6b35;
-}
-.andw-button-apply:hover {
-    background: #e55a2b;
-}
+- **WordPress**: 6.3 or higher
+- **PHP**: 7.4 or higher
+- **JavaScript**: Vanilla JS (no jQuery dependency)
+- **Performance**: Lightweight design (1 JS + 1 CSS file)
+- **Security**: Nonce verification, input sanitization, output escaping
+- **Internationalization**: i18n ready
+- **FontAwesome**: 6.5.1 bundled (auto-loading with conflict prevention)
 
-/* ブルーに変更 */
-.andw-button-contact {
-    background: #3b82f6;
-}
-.andw-button-contact:hover {
-    background: #2563eb;
-}
-```
-
-### プリセットスタイル
-
-ライトテーマやダークテーマ、サイズバリエーションも用意されています：
-
-```css
-/* ライトプリセット（473行目付近） */
-.andw-preset-light .andw-button-apply {
-    background: white;
-    color: #059669;
-    border-color: #059669;
-}
-
-/* ダークプリセット（504行目付近） */
-.andw-preset-dark .andw-floating-button {
-    background: #111827;
-    color: white;
-    border: 1px solid #374151;
-}
-
-/* サイズバリエーション（516行目付近） */
-.andw-preset-square-small .andw-floating-button {
-    width: 44px;
-    height: 44px;
-}
-```
-
-## 技術仕様
-
-- WordPress 6.3以上
-- PHP 7.4以上
-- jQuery不使用（Vanilla JavaScript）
-- 軽量設計（1JS+1CSS）
-- セキュリティ対応（nonce、sanitize/escape）
-- i18n対応
-- FontAwesome 6.5.1 対応（自動読み込み・競合回避）
-
-## ファイル構成
+## File Structure
 
 ```
 andw-floating-tools/
-├── andw-floating-tools.php          # メインプラグインファイル
+├── andw-floating-tools.php          # Main plugin file
 ├── includes/
-│   ├── settings.php                 # 設定画面
-│   ├── render.php                   # フロントエンド出力
-│   ├── toc.php                      # TOC生成機能
-│   ├── sanitization.php             # サニタイゼーション
-│   ├── fontawesome-handler.php      # FontAwesome管理
-│   ├── fontawesome-icons.php        # アイコン定義
-│   └── icon-helper.php              # レガシーアイコン
+│   ├── settings.php                 # Admin settings page
+│   ├── render.php                   # Frontend rendering
+│   ├── toc.php                      # Table of contents generation
+│   ├── sanitization.php             # Input sanitization
+│   ├── fontawesome-handler.php      # FontAwesome management
+│   ├── fontawesome-icons.php        # Icon definitions
+│   └── icon-helper.php              # Legacy icon support
 ├── assets/
-│   ├── js/app.js                    # フロントエンドJS
-│   └── css/app.css                  # スタイルシート
+│   ├── js/app.js                    # Frontend JavaScript
+│   ├── css/app.css                  # Stylesheets
+│   └── vendor/fontawesome/          # Bundled FontAwesome files
 ├── blocks/
-│   └── toc/                         # Gutenbergブロック
-└── languages/                       # 国際化ファイル
+│   └── toc/                         # Gutenberg block
+└── languages/                       # Internationalization files
 ```
 
-## 開発
+## Developer Information
 
-### デバッグモード
+### Plugin Hooks & Filters
 
-WordPressの `WP_DEBUG` を有効にすると、詳細なログが出力されます。
-
-### フックとフィルター
-
-プラグインでは以下のWordPressフックを提供しています：
+The plugin provides WordPress hooks for customization:
 
 ```php
-// フロントエンド出力前にカスタマイズ
+// Customize frontend options
 add_filter('andw_floating_tools_options', function($options) {
-    // $optionsを変更
+    // Modify $options
     return $options;
 });
 
-// TOC生成をカスタマイズ
+// Customize TOC generation
 add_filter('andw_floating_tools_toc_headings', function($headings) {
-    // $headingsを変更
+    // Modify $headings
     return $headings;
 });
 ```
 
-## ライセンス
+### Debug Mode
 
-このプラグインはGPLv2またはそれ以降のバージョンでライセンスされています。
+Enable WordPress `WP_DEBUG` for detailed logging and debug information.
 
-## サポート
+## License
 
-技術的な質問やバグ報告は、[Netservice](https://netservice.jp/) までお問い合わせください。
+This plugin is licensed under GPLv2 or later.
+
+## Support & Contributing
+
+- **Issues & Bug Reports**: Please report issues via GitHub Issues (coming soon)
+- **Technical Support**: Contact [Netservice](https://netservice.jp/)
+- **WordPress.org Support**: Available after plugin directory submission
+
+---
+
+## 日本語ドキュメント (Japanese Documentation)
+
+### 概要
+
+andW Floating Toolsは、Webサイトのユーザビリティを向上させる4つのフローティングボタンとTOC機能を提供するWordPressプラグインです。WordPress.org プラグインディレクトリへの提出を予定しており、WordPress コーディング規約とセキュリティベストプラクティスに従って開発されています。
+
+### 主な機能
+
+- **4種類のフローティングボタン**: ページトップへ、お申し込み（CTA）、お問い合わせ（CTA）、目次
+- **レスポンシブ対応**: デスクトップは縦積み/横並び選択可、モバイル・タブレットは横並び固定
+- **目次機能**: H2/H3/H4見出しから自動生成、アンカーシート表示、フォーカストラップ対応
+- **アクセシビリティ**: ARIA属性、prefers-reduced-motion対応
+- **Gutenbergブロック**: 投稿単位での設定上書き
+- **アイコンカスタマイズ**: FontAwesome Unicodeコード直接入力方式
+
+### インストール・設定
+
+1. プラグインを有効化
+2. 「設定」→「Floating Tools」で基本設定
+3. 必要に応じて投稿編集画面で「Floating Tools Settings」ブロックを追加して個別設定
+
+### 技術仕様
+
+- WordPress 6.3以上、PHP 7.4以上
+- Vanilla JavaScript（jQuery不使用）
+- セキュリティ対応（nonce検証、エスケープ処理）
+- FontAwesome 6.5.1同梱

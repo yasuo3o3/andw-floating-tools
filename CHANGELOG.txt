@@ -1,0 +1,82 @@
+# Changelog
+
+All notable changes to andW Floating Tools will be documented in this file.
+
+The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
+and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
+
+## [0.1.1] - 2025-01-29
+
+### Added
+- FontAwesome 6.5.1 bundled files for compliance with WordPress.org plugin directory policies
+- Enhanced security measures with comprehensive nonce verification
+- Improved input sanitization across all admin forms
+- Real-time icon preview functionality in admin settings
+- Comprehensive output escaping for all dynamic content
+
+### Changed
+- **CRITICAL**: Migrated from FontAwesome CDN to local bundled files
+- Updated WordPress compatibility testing to version 6.8
+- Enhanced admin UI security with proper onclick attribute handling
+- Improved boolean attribute handling in admin forms (checked/selected functions)
+- Strengthened input validation and sanitization processes
+
+### Fixed
+- **SECURITY**: Resolved WordPress.org plugin audit compliance issues
+- **SECURITY**: Fixed nonce verification across admin interfaces
+- **SECURITY**: Corrected output escaping for user-generated content
+- **COMPATIBILITY**: Fixed parseInt() function calls with explicit radix parameter
+- **COMPATIBILITY**: Removed experimental NumberControl component usage
+- **UI**: Fixed broken icon display functionality in admin panel
+- **TIMING**: Resolved wp_get_current_user() function availability issues
+- **STANDARDS**: Replaced deprecated WordPress functions (parse_url to wp_parse_url)
+
+### Removed
+- External CDN dependencies (FontAwesome now bundled locally)
+- Debug error_log() calls from production code
+- Experimental WordPress component dependencies
+- Unused debug output functions
+
+### Security
+- Enhanced nonce verification throughout admin interfaces
+- Strengthened output escaping for all dynamic content
+- Improved input sanitization and validation
+- Removed potential XSS vulnerabilities in admin forms
+- Added function existence checks to prevent fatal errors
+
+## [0.01] - 2025-01-XX
+
+### Added
+- Initial plugin release
+- 4 types of floating buttons (Top, Apply, Contact, TOC)
+- Responsive design support (Desktop/Mobile/Tablet layouts)
+- Table of Contents functionality with H2/H3/H4 heading detection
+- CTA button configuration with URL/Label/Target settings
+- UTM parameter automation (preserves existing UTM parameters)
+- Accessibility features (Focus rings, Esc key support, ARIA attributes)
+- prefers-reduced-motion support
+- Gutenberg block for per-post setting overrides
+- FontAwesome icon customization with Unicode input
+- Real-time admin preview functionality
+- Internationalization (i18n) support
+- Plugin audit compliance preparation
+
+### Technical Features
+- Vanilla JavaScript implementation (no jQuery dependency)
+- Lightweight design (1 JS + 1 CSS file)
+- WordPress 6.3+ compatibility
+- PHP 7.4+ compatibility
+- Security-first approach with nonce verification
+- Input sanitization and output escaping
+- FontAwesome 6.5.1 integration with conflict prevention
+
+---
+
+## Legend
+
+- **CRITICAL**: Breaking changes or major functionality updates
+- **SECURITY**: Security-related fixes and improvements
+- **COMPATIBILITY**: WordPress/PHP compatibility improvements
+- **UI**: User interface and user experience improvements
+- **TIMING**: Hook timing and function availability fixes
+- **STANDARDS**: Code standards and best practices compliance
