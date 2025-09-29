@@ -120,7 +120,7 @@ class Andw_FontAwesome_Handler {
      * FontAwesome読み込み
      */
     private function enqueue_fontawesome() {
-        // FontAwesome 6.5.1 CDN (最新安定版)
+        // FontAwesome 6.5.1 同梱ファイル (最新安定版)
         wp_enqueue_style(
             'andw-fontawesome',
             ANDW_FLOATING_TOOLS_PLUGIN_URL . 'assets/vendor/fontawesome/all.min.css',

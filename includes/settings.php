@@ -336,7 +336,7 @@ class Andw_Floating_Tools_Settings {
             } else {
                 echo '<div style="background: #fff3cd; padding: 10px; border-radius: 4px; margin-bottom: 15px;">';
                 echo '<strong>ℹ️ FontAwesome自動読み込み:</strong> ';
-                echo 'FontAwesome 6.5.1 CDNを自動で読み込みます。';
+                echo 'FontAwesome 6.5.1 を同梱ファイルで読み込みます。';
                 echo '</div>';
             }
         }
@@ -422,7 +422,7 @@ class Andw_Floating_Tools_Settings {
             esc_attr($this->option_name),
             checked($current_method, 'fontawesome', false)
         );
-        echo '<p style="margin-left: 20px; color: #666;">Unicode入力で自由にアイコン選択。FontAwesome CDNまたはプラグインが必要。</p>';
+        echo '<p style="margin-left: 20px; color: #666;">Unicode入力で自由にアイコン選択。同梱FontAwesomeを使用。</p>';
 
         // SVG方式
         echo '<label style="display: block; margin-bottom: 10px;">';
@@ -440,9 +440,9 @@ class Andw_Floating_Tools_Settings {
         echo '<h4>💡 どちらを選ぶべきか？</h4>';
         echo '<table style="width: 100%; border-collapse: collapse; margin: 10px 0;">';
         echo '<tr style="background: #f0f0f0;"><th style="border: 1px solid #ddd; padding: 8px;">項目</th><th style="border: 1px solid #ddd; padding: 8px;">FontAwesome</th><th style="border: 1px solid #ddd; padding: 8px;">内蔵SVG</th></tr>';
-        echo '<tr><td style="border: 1px solid #ddd; padding: 8px;">表示確実性</td><td style="border: 1px solid #ddd; padding: 8px;">△ 環境依存</td><td style="border: 1px solid #ddd; padding: 8px;">○ 確実</td></tr>';
+        echo '<tr><td style="border: 1px solid #ddd; padding: 8px;">表示確実性</td><td style="border: 1px solid #ddd; padding: 8px;">○ 同梱で確実</td><td style="border: 1px solid #ddd; padding: 8px;">○ 確実</td></tr>';
         echo '<tr><td style="border: 1px solid #ddd; padding: 8px;">アイコン種類</td><td style="border: 1px solid #ddd; padding: 8px;">○ 豊富</td><td style="border: 1px solid #ddd; padding: 8px;">△ 限定的</td></tr>';
-        echo '<tr><td style="border: 1px solid #ddd; padding: 8px;">外部依存</td><td style="border: 1px solid #ddd; padding: 8px;">△ CDN/プラグイン必要</td><td style="border: 1px solid #ddd; padding: 8px;">○ 不要</td></tr>';
+        echo '<tr><td style="border: 1px solid #ddd; padding: 8px;">外部依存</td><td style="border: 1px solid #ddd; padding: 8px;">○ 同梱ファイル使用</td><td style="border: 1px solid #ddd; padding: 8px;">○ 不要</td></tr>';
         echo '<tr><td style="border: 1px solid #ddd; padding: 8px;">読み込み速度</td><td style="border: 1px solid #ddd; padding: 8px;">△ 追加CSS</td><td style="border: 1px solid #ddd; padding: 8px;">○ 軽量</td></tr>';
         echo '</table>';
         echo '</div>';
