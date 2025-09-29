@@ -4,7 +4,7 @@ Tags: floating, tools, toc, table-of-contents, cta
 Requires at least: 6.3
 Tested up to: 6.8
 Requires PHP: 7.4
-Stable tag: 0.01
+Stable tag: 0.1.1
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
 
@@ -104,6 +104,14 @@ andW Floating Toolsは、Webサイトのユーザビリティを向上させる4
 
 == Changelog ==
 
+= 0.1.1 =
+* レビューと修正対応
+* WordPress.org プラグイン監査ルール対応
+* FontAwesome CDNから同梱ファイルに変更
+* セキュリティ関連の修正（nonce検証、エスケープ処理）
+* 管理画面UIの修正
+* 入力値のサニタイズ強化
+
 = 0.01 =
 * 初回リリース
 * 4種類のフローティングボタン実装
@@ -113,6 +121,9 @@ andW Floating Toolsは、Webサイトのユーザビリティを向上させる4
 * アクセシビリティ対応
 
 == Upgrade Notice ==
+
+= 0.1.1 =
+WordPress.org プラグイン監査対応版。セキュリティとパフォーマンス向上。
 
 = 0.01 =
 初回リリースです。

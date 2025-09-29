@@ -2,7 +2,7 @@
 /**
  * Plugin Name: andW Floating Tools
  * Description: 右下フローティング群とTOCドロワーを提供するプラグイン
- * Version: 0.01
+ * Version: 0.1.1
  * Author: Netservice
  * Author URI: https://netservice.jp/
  * License: GPLv2 or later
@@ -15,7 +15,7 @@ if (!defined('ABSPATH')) {
     exit;
 }
 
-define('ANDW_FLOATING_TOOLS_VERSION', '0.01');
+define('ANDW_FLOATING_TOOLS_VERSION', '0.1.1');
 define('ANDW_FLOATING_TOOLS_PLUGIN_FILE', __FILE__);
 define('ANDW_FLOATING_TOOLS_PLUGIN_DIR', plugin_dir_path(__FILE__));
 define('ANDW_FLOATING_TOOLS_PLUGIN_URL', plugin_dir_url(__FILE__));
