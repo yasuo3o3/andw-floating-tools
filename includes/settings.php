@@ -287,9 +287,23 @@ class Andw_Floating_Tools_Settings {
         }
 
         settings_errors('andw_floating_tools_messages');
+
+        // キャッシュクリアボタンの処理（メインフォームの外で処理）
+        if (isset($_POST['clear_cache']) && wp_verify_nonce($_POST['_wpnonce'], 'andw_clear_cache')) {
+            $this->clear_option_cache();
+            add_settings_error(
+                'andw_floating_tools_messages',
+                'andw_floating_tools_cache_cleared',
+                __('キャッシュをクリアしました。', 'andw-floating-tools'),
+                'updated'
+            );
+            settings_errors('andw_floating_tools_messages');
+        }
         ?>
         <div class="wrap">
             <h1><?php echo esc_html(get_admin_page_title()); ?></h1>
+
+            <!-- メイン設定フォーム -->
             <form action="options.php" method="post">
                 <?php
                 settings_fields($this->option_group);
@@ -297,6 +311,9 @@ class Andw_Floating_Tools_Settings {
                 submit_button(__('変更を保存', 'andw-floating-tools'));
                 ?>
             </form>
+
+            <!-- キャッシュクリアフォーム（分離） -->
+            <?php $this->render_cache_clear_form(); ?>
         </div>
         <?php
     }
@@ -315,22 +332,7 @@ class Andw_Floating_Tools_Settings {
 
     public function render_cta_section() {
         echo '<p>' . esc_html__('お申し込み・お問い合わせボタンの設定を行います。', 'andw-floating-tools') . '</p>';
-
-        // キャッシュクリアボタンの処理
-        if (isset($_POST['clear_cache']) && wp_verify_nonce($_POST['_wpnonce'], 'andw_clear_cache')) {
-            $this->clear_option_cache();
-            echo '<div class="notice notice-success"><p>' . esc_html__('キャッシュをクリアしました。', 'andw-floating-tools') . '</p></div>';
-        }
-
-        // キャッシュクリアボタン
-        echo '<div style="margin: 15px 0; padding: 10px; background: #f9f9f9; border: 1px solid #ddd;">';
-        echo '<h4 style="margin-top: 0;">' . esc_html__('トラブルシューティング', 'andw-floating-tools') . '</h4>';
-        echo '<p>' . esc_html__('URL設定が正しく反映されない場合は、以下のボタンでキャッシュをクリアしてください。', 'andw-floating-tools') . '</p>';
-        echo '<form method="post" style="display: inline;">';
-        wp_nonce_field('andw_clear_cache');
-        echo '<input type="submit" name="clear_cache" class="button button-secondary" value="' . esc_attr__('キャッシュをクリア', 'andw-floating-tools') . '">';
-        echo '</form>';
-        echo '</div>';
+        echo '<p class="description">' . esc_html__('URL設定が正しく反映されない場合は、ページ下部の「キャッシュをクリア」ボタンをお試しください。', 'andw-floating-tools') . '</p>';
     }
 
     public function render_icons_section() {
@@ -862,6 +864,20 @@ class Andw_Floating_Tools_Settings {
         }
 
         return $sanitized;
+    }
+
+    /**
+     * キャッシュクリアフォームをレンダリング
+     */
+    private function render_cache_clear_form() {
+        echo '<div style="margin-top: 30px; padding: 20px; background: #f9f9f9; border: 1px solid #ddd; border-radius: 4px;">';
+        echo '<h3 style="margin-top: 0;">' . esc_html__('トラブルシューティング', 'andw-floating-tools') . '</h3>';
+        echo '<p>' . esc_html__('設定が正しく反映されない場合は、以下のボタンでキャッシュをクリアしてください。', 'andw-floating-tools') . '</p>';
+        echo '<form method="post" action="" style="display: inline;">';
+        wp_nonce_field('andw_clear_cache');
+        echo '<input type="submit" name="clear_cache" class="button button-secondary" value="' . esc_attr__('キャッシュをクリア', 'andw-floating-tools') . '">';
+        echo '</form>';
+        echo '</div>';
     }
 
     /**
