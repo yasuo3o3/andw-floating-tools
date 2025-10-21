@@ -8,7 +8,8 @@ class Andw_Floating_Tools_Render {
     private $toc_instance;
 
     public function __construct() {
-        $this->options = get_option('andw_floating_tools_options', array());
+        // キャッシュをバイパスして強制的にオプションを再読み込み
+        $this->options = $this->get_fresh_options();
         $this->toc_instance = Andw_Floating_Tools_TOC::get_instance();
 
         add_action('wp_footer', array($this, 'render_floating_tools'));
@@ -407,6 +408,27 @@ class Andw_Floating_Tools_Render {
         }
 
         return $l10n;
+    }
+
+    /**
+     * キャッシュをバイパスして新しいオプション値を取得
+     */
+    private function get_fresh_options() {
+        // キャッシュを削除
+        wp_cache_delete('andw_floating_tools_options', 'options');
+
+        // データベースから直接取得
+        global $wpdb;
+        $option_name = 'andw_floating_tools_options';
+        $row = $wpdb->get_row($wpdb->prepare("SELECT option_value FROM {$wpdb->options} WHERE option_name = %s LIMIT 1", $option_name));
+
+        if (is_object($row)) {
+            $value = $row->option_value;
+            $value = maybe_unserialize($value);
+            return $value ? $value : array();
+        }
+
+        return array();
     }
 
 }

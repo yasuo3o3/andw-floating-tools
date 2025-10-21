@@ -28,6 +28,17 @@ class Andw_Icon_Settings_Verifier {
         echo esc_html(wp_json_encode($options, JSON_PRETTY_PRINT));
         echo '</pre>';
 
+        // CTA ボタン設定の確認
+        echo '<h4 style="margin: 10px 0 5px 0; color: #0f0;">CTA ボタン設定:</h4>';
+        echo '<div style="background: #222; padding: 10px; margin: 5px 0; border: 1px solid #555;">';
+        echo '<strong>お申し込みURL:</strong> ' . esc_html(isset($options['apply_url']) ? $options['apply_url'] : '(未設定)') . '<br>';
+        echo '<strong>お申し込みラベル:</strong> ' . esc_html(isset($options['apply_label']) ? $options['apply_label'] : '(未設定)') . '<br>';
+        echo '<strong>お申し込みターゲット:</strong> ' . esc_html(isset($options['apply_target']) ? $options['apply_target'] : '(未設定)') . '<br>';
+        echo '<strong>お問い合わせURL:</strong> ' . esc_html(isset($options['contact_url']) ? $options['contact_url'] : '(未設定)') . '<br>';
+        echo '<strong>お問い合わせラベル:</strong> ' . esc_html(isset($options['contact_label']) ? $options['contact_label'] : '(未設定)') . '<br>';
+        echo '<strong>お問い合わせターゲット:</strong> ' . esc_html(isset($options['contact_target']) ? $options['contact_target'] : '(未設定)') . '<br>';
+        echo '</div>';
+
         // FontAwesome アイコン設定の確認
         $fontawesome_icons = isset($options['fontawesome_icons']) ? $options['fontawesome_icons'] : array();
         echo '<h4 style="margin: 10px 0 5px 0; color: #ff0;">FontAwesome アイコン設定:</h4>';

@@ -315,6 +315,22 @@ class Andw_Floating_Tools_Settings {
 
     public function render_cta_section() {
         echo '<p>' . esc_html__('お申し込み・お問い合わせボタンの設定を行います。', 'andw-floating-tools') . '</p>';
+
+        // キャッシュクリアボタンの処理
+        if (isset($_POST['clear_cache']) && wp_verify_nonce($_POST['_wpnonce'], 'andw_clear_cache')) {
+            $this->clear_option_cache();
+            echo '<div class="notice notice-success"><p>' . esc_html__('キャッシュをクリアしました。', 'andw-floating-tools') . '</p></div>';
+        }
+
+        // キャッシュクリアボタン
+        echo '<div style="margin: 15px 0; padding: 10px; background: #f9f9f9; border: 1px solid #ddd;">';
+        echo '<h4 style="margin-top: 0;">' . esc_html__('トラブルシューティング', 'andw-floating-tools') . '</h4>';
+        echo '<p>' . esc_html__('URL設定が正しく反映されない場合は、以下のボタンでキャッシュをクリアしてください。', 'andw-floating-tools') . '</p>';
+        echo '<form method="post" style="display: inline;">';
+        wp_nonce_field('andw_clear_cache');
+        echo '<input type="submit" name="clear_cache" class="button button-secondary" value="' . esc_attr__('キャッシュをクリア', 'andw-floating-tools') . '">';
+        echo '</form>';
+        echo '</div>';
     }
 
     public function render_icons_section() {
@@ -735,6 +751,8 @@ class Andw_Floating_Tools_Settings {
 
         if (isset($input['apply_url'])) {
             $sanitized['apply_url'] = andw_sanitize_url($input['apply_url']);
+            // URL設定変更時はキャッシュをクリア
+            $this->clear_option_cache();
         }
 
         if (isset($input['apply_label'])) {
@@ -747,6 +765,8 @@ class Andw_Floating_Tools_Settings {
 
         if (isset($input['contact_url'])) {
             $sanitized['contact_url'] = andw_sanitize_url($input['contact_url']);
+            // URL設定変更時はキャッシュをクリア
+            $this->clear_option_cache();
         }
 
         if (isset($input['contact_label'])) {
@@ -842,5 +862,43 @@ class Andw_Floating_Tools_Settings {
         }
 
         return $sanitized;
+    }
+
+    /**
+     * オプションキャッシュをクリアする
+     */
+    private function clear_option_cache() {
+        // WordPress オブジェクトキャッシュをクリア
+        wp_cache_delete('andw_floating_tools_options', 'options');
+
+        // WordPress 全体のキャッシュをクリア（利用可能な場合）
+        if (function_exists('wp_cache_flush')) {
+            wp_cache_flush();
+        }
+
+        // 一般的なキャッシュプラグインのクリア
+        if (function_exists('wp_cache_clear_cache')) {
+            wp_cache_clear_cache();
+        }
+
+        // W3 Total Cache
+        if (function_exists('w3tc_flush_all')) {
+            w3tc_flush_all();
+        }
+
+        // WP Super Cache
+        if (function_exists('wp_cache_clear_cache')) {
+            wp_cache_clear_cache();
+        }
+
+        // LiteSpeed Cache
+        if (class_exists('LiteSpeed_Cache_API')) {
+            LiteSpeed_Cache_API::purge_all();
+        }
+
+        // WP Rocket
+        if (function_exists('rocket_clean_domain')) {
+            rocket_clean_domain();
+        }
     }
 }

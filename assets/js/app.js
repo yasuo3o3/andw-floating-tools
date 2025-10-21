@@ -66,6 +66,16 @@
             var url = button.getAttribute('data-url');
             var target = button.getAttribute('data-target') || '_blank';
 
+            // デバッグ用：クリック時の情報をコンソールに出力
+            if (window.console && window.console.log) {
+                console.group('ANDW Floating Tools - CTA Button Debug');
+                console.log('Button Type:', button.className);
+                console.log('Button Data-URL:', url);
+                console.log('Button Target:', target);
+                console.log('Button Element:', button);
+                console.groupEnd();
+            }
+
             if (url) {
                 if (target === '_blank') {
                     window.open(url, '_blank', 'noopener,noreferrer');
